@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from 'react';
+import { SCROLL_CONFIG, THREE_JS_CONFIG, getParticleCount, getParticleRange, isMobileDevice } from '../constants/animation';
 
 interface SmoothScrollCanvasProps {
   children: React.ReactNode;
@@ -15,7 +16,7 @@ export function SmoothScrollCanvas({ children }: SmoothScrollCanvasProps) {
   const scrollDataRef = useRef({
     current: 0,
     target: 0,
-    ease: 0.08,
+    ease: SCROLL_CONFIG.EASE,
     velocity: 0,
     last: 0,
     touchStartY: 0
@@ -76,7 +77,7 @@ export function SmoothScrollCanvas({ children }: SmoothScrollCanvasProps) {
     });
 
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, THREE_JS_CONFIG.MAX_DEVICE_PIXEL_RATIO));
     renderer.setClearColor(0x000000, 0);
 
     // Create elegant particle systems that complement the sophisticated background
@@ -142,14 +143,20 @@ export function SmoothScrollCanvas({ children }: SmoothScrollCanvasProps) {
       return new THREE.Points(geometry, material);
     };
 
+    // Responsive particle configuration based on device capabilities
+    const screenWidth = window.innerWidth;
+    const isMobile = isMobileDevice(screenWidth);
+    const baseParticleCount = getParticleCount(screenWidth);
+    const particleRange = getParticleRange(screenWidth);
+    
     // Elegant color palette that complements the sophisticated background
     const particleConfigs = [
-      { count: isDarkMode ? 160 : 120, size: 0.06, color: 0x475569, range: 60 }, // Slate
-      { count: isDarkMode ? 140 : 100, size: 0.05, color: 0x3b82f6, range: 50 }, // Blue
-      { count: isDarkMode ? 120 : 90, size: 0.07, color: 0x06b6d4, range: 45 },  // Cyan
-      { count: isDarkMode ? 100 : 80, size: 0.04, color: 0x10b981, range: 55 },  // Emerald
-      { count: isDarkMode ? 90 : 70, size: 0.06, color: 0x8b5cf6, range: 40 },   // Purple
-      { count: isDarkMode ? 80 : 60, size: 0.03, color: 0x6366f1, range: 35 },   // Indigo
+      { count: Math.floor(baseParticleCount * 0.3), size: THREE_JS_CONFIG.PARTICLE_SIZES.SMALL, color: 0x475569, range: particleRange }, // Slate
+      { count: Math.floor(baseParticleCount * 0.25), size: THREE_JS_CONFIG.PARTICLE_SIZES.SMALL, color: 0x3b82f6, range: particleRange * 0.8 }, // Blue
+      { count: Math.floor(baseParticleCount * 0.25), size: THREE_JS_CONFIG.PARTICLE_SIZES.MEDIUM, color: 0x06b6d4, range: particleRange * 0.7 },  // Cyan
+      { count: Math.floor(baseParticleCount * 0.2), size: THREE_JS_CONFIG.PARTICLE_SIZES.SMALL, color: 0x10b981, range: particleRange * 0.9 },  // Emerald
+      { count: Math.floor(baseParticleCount * 0.15), size: THREE_JS_CONFIG.PARTICLE_SIZES.MEDIUM, color: 0x8b5cf6, range: particleRange * 0.6 },   // Purple
+      { count: Math.floor(baseParticleCount * 0.1), size: THREE_JS_CONFIG.PARTICLE_SIZES.SMALL, color: 0x6366f1, range: particleRange * 0.5 },   // Indigo
     ];
 
     particleConfigs.forEach((config, index) => {
@@ -415,7 +422,7 @@ export function SmoothScrollCanvas({ children }: SmoothScrollCanvasProps) {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, THREE_JS_CONFIG.MAX_DEVICE_PIXEL_RATIO));
   }, []);
 
   // Touch handling

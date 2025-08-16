@@ -2,6 +2,8 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Send, MessageCircle, X, Sparkles } from 'lucide-react';
+import { validateChatInput, ChatRateLimit } from '../utils/inputValidation';
+import { chatResponses, personalInfo } from '../config/portfolioData';
 
 interface Message {
   id: string;
@@ -19,15 +21,17 @@ export function ChatPopup({ isOpen, onClose }: ChatPopupProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hi there! ✨ I'm John's AI assistant. I can answer questions about his experience, skills, and projects. What would you like to know?",
+      content: `Hi there! ✨ I'm ${personalInfo.name}'s AI assistant. I can answer questions about his experience, skills, and projects. What would you like to know?`,
       sender: 'ai',
       timestamp: new Date(Date.now() - 300000)
     }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [inputError, setInputError] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const rateLimitRef = useRef(new ChatRateLimit());
 
   // Prevent body scroll when modal is open
   useEffect(() => {
@@ -57,9 +61,26 @@ export function ChatPopup({ isOpen, onClose }: ChatPopupProps) {
   const handleSendMessage = useCallback(async () => {
     if (!inputValue.trim() || isTyping) return;
 
+    // Clear previous errors
+    setInputError('');
+
+    // Validate input
+    const validation = validateChatInput(inputValue);
+    if (!validation.isValid) {
+      setInputError(validation.errors[0]);
+      return;
+    }
+
+    // Check rate limiting
+    if (!rateLimitRef.current.canSendMessage()) {
+      const remainingTime = Math.ceil(rateLimitRef.current.getRemainingTime() / 1000);
+      setInputError(`Please wait ${remainingTime} seconds before sending another message`);
+      return;
+    }
+
     const newMessage: Message = {
       id: Date.now().toString(),
-      content: inputValue.trim(),
+      content: validation.sanitizedInput || inputValue.trim(),
       sender: 'user',
       timestamp: new Date()
     };
@@ -86,23 +107,23 @@ export function ChatPopup({ isOpen, onClose }: ChatPopupProps) {
     const lowerMessage = userMessage.toLowerCase();
     
     if (lowerMessage.includes('skills') || lowerMessage.includes('technology')) {
-      return "🚀 John's technical arsenal includes React, TypeScript, Node.js, Python, and AWS. He specializes in system architecture, microservices, and cloud technologies with over 10 years of hands-on experience!";
+      return chatResponses.skills;
     } else if (lowerMessage.includes('experience') || lowerMessage.includes('work')) {
-      return "💼 John has 10+ years as a Senior Software Architect, where he's led engineering teams and designed scalable systems for enterprise applications. His leadership has driven successful digital transformations across multiple industries.";
+      return chatResponses.experience;
     } else if (lowerMessage.includes('projects')) {
-      return "🏗️ His standout projects include a high-performance E-commerce Platform with microservices architecture, a real-time Task Management System, and a Data Analytics Dashboard with ML integration. Each project showcases his ability to deliver scalable solutions!";
+      return chatResponses.projects;
     } else if (lowerMessage.includes('education')) {
-      return "🎓 John holds an MS in Computer Science from Stanford University and a BS in Software Engineering from UC Berkeley. He also maintains multiple cloud certifications and stays current with emerging technologies.";
+      return chatResponses.education;
     } else if (lowerMessage.includes('contact') || lowerMessage.includes('reach')) {
-      return "📧 You can reach John at john.anderson@email.com or connect with him on LinkedIn. He's always open to discussing exciting opportunities and innovative projects!";
+      return `📧 You can reach ${personalInfo.name} at ${personalInfo.email} or connect with him on LinkedIn. He's always open to discussing exciting opportunities and innovative projects!`;
     } else if (lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
-      return "👋 Hello! Great to meet you! I'm here to help you learn more about John's impressive technical background, leadership experience, or standout projects. What interests you most?";
+      return chatResponses.hello;
     } else if (lowerMessage.includes('architecture') || lowerMessage.includes('design')) {
-      return "🏛️ John excels in system architecture! He's designed scalable microservices systems, implemented event-driven architectures, and led digital transformation initiatives. His architectural decisions have supported millions of users.";
+      return chatResponses.architecture;
     } else if (lowerMessage.includes('leadership') || lowerMessage.includes('team')) {
-      return "👥 As a Senior Software Architect, John has successfully led cross-functional teams of 8+ engineers, mentored junior developers, and established coding standards that improved team productivity by 40%. His collaborative leadership style inspires excellence!";
+      return chatResponses.leadership;
     } else {
-      return "✨ I'm here to help! I can share insights about John's technical skills, professional experience, leadership style, project achievements, or educational background. What specific area would you like to explore?";
+      return chatResponses.default;
     }
   };
 
@@ -151,7 +172,7 @@ export function ChatPopup({ isOpen, onClose }: ChatPopupProps) {
               </div>
               <div>
                 <h3 className="text-xl text-foreground">AI Assistant</h3>
-                <p className="text-sm text-muted-foreground">Ask me about John's background</p>
+                <p className="text-sm text-muted-foreground">Ask me about {personalInfo.name}'s background</p>
               </div>
             </div>
             <Button
@@ -227,16 +248,32 @@ export function ChatPopup({ isOpen, onClose }: ChatPopupProps) {
 
           {/* Enhanced Input Area */}
           <div className="p-6 border-t border-white/20">
+            {inputError && (
+              <div className="mb-3 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
+                <p className="text-red-600 dark:text-red-400 text-sm">{inputError}</p>
+              </div>
+            )}
             <div className="flex gap-3 items-end">
-              <Input
-                ref={inputRef}
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Ask about experience, skills, projects..."
-                className="flex-1 glass-subtle border-white/30 rounded-xl h-14 px-5 text-base placeholder:text-muted-foreground/60 focus:border-white/50 transition-all duration-300"
-                disabled={isTyping}
-              />
+              <div className="flex-1">
+                <Input
+                  ref={inputRef}
+                  value={inputValue}
+                  onChange={(e) => {
+                    setInputValue(e.target.value);
+                    if (inputError) setInputError(''); // Clear error on typing
+                  }}
+                  onKeyPress={handleKeyPress}
+                  placeholder="Ask about experience, skills, projects... (max 500 chars)"
+                  className={`glass-subtle border-white/30 rounded-xl h-14 px-5 text-base placeholder:text-muted-foreground/60 focus:border-white/50 transition-all duration-300 ${
+                    inputError ? 'border-red-500/50 focus:border-red-500/70' : ''
+                  }`}
+                  disabled={isTyping}
+                  maxLength={500}
+                />
+                <div className="text-xs text-muted-foreground mt-1 px-2">
+                  {inputValue.length}/500 characters
+                </div>
+              </div>
               <Button
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim() || isTyping}

@@ -103,8 +103,9 @@ export function FloatingNavDots() {
         // Only update visibility if it has changed
         if (currentScrolledPastHero !== previousVisibilityRef.current) {
           previousVisibilityRef.current = currentScrolledPastHero;
-          setHasScrolledPastHero(currentScrolledPastHero);
-          setIsVisible(currentScrolledPastHero);
+          // Force React state update by using a callback
+          setHasScrolledPastHero(() => currentScrolledPastHero);
+          setIsVisible(() => currentScrolledPastHero);
         }
         
         // Calculate progress from top of page (0%) to bottom of page (100%)
@@ -121,14 +122,14 @@ export function FloatingNavDots() {
             // Only update progress if it has changed significantly
             if (Math.abs(progress - previousProgressRef.current) > 0.5) {
               previousProgressRef.current = progress;
-              setScrollProgress(progress);
+              setScrollProgress(() => progress);
             }
           }
         } else {
           // Reset progress when in hero section
           if (previousProgressRef.current !== 0) {
             previousProgressRef.current = 0;
-            setScrollProgress(0);
+            setScrollProgress(() => 0);
           }
         }
       }
@@ -167,11 +168,13 @@ export function FloatingNavDots() {
       // Only update active section if it has changed
       if (newActiveSection !== previousActiveSectionRef.current) {
         previousActiveSectionRef.current = newActiveSection;
-        setActiveSection(newActiveSection);
+        setActiveSection(() => newActiveSection);
       }
     }
     
     isUpdatingRef.current = false;
+    
+    // Continue the animation loop
     animationIdRef.current = requestAnimationFrame(updateActiveSection);
   }, []);
 
@@ -183,11 +186,14 @@ export function FloatingNavDots() {
     setActiveSection(0);
     setIsInitialized(false);
     
-    // Initial call to set up the visibility state after a small delay
-    const timeoutId = setTimeout(() => {
+    // Start the animation loop immediately
+    const startUpdating = () => {
       updateActiveSection();
       setIsInitialized(true);
-    }, 100);
+    };
+    
+    // Initial call and start the loop
+    const timeoutId = setTimeout(startUpdating, 100);
 
     return () => {
       if (animationIdRef.current) {
@@ -201,11 +207,11 @@ export function FloatingNavDots() {
     <>
       {/* Desktop Navigation - Right side vertical */}
       <div 
-        className={`fixed z-40 transition-all duration-700 ease-out ${
+        className={`fixed z-50 transition-all duration-700 ease-out ${
           isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12 pointer-events-none'
         } hidden md:block right-6 top-1/2 -translate-y-1/2`}
       >
-      <div className="glass-nav rounded-2xl p-4 border border-white/20 shadow-2xl md:block">
+      <div className="glass-nav rounded-2xl p-4 border border-white/20 shadow-2xl md:block bg-black/80 backdrop-blur-md">
         <div className="flex flex-col space-y-3">
           {navSections.map((section, index) => {
             return (
@@ -275,11 +281,11 @@ export function FloatingNavDots() {
     
     {/* Mobile Navigation - Bottom horizontal bar */}
     <div 
-      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-40 transition-all duration-700 ease-out ${
+      className={`fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-700 ease-out ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12 pointer-events-none'
       } md:hidden`}
     >
-      <div className="glass-nav rounded-full px-4 py-2 border border-white/20 shadow-2xl">
+      <div className="glass-nav rounded-full px-4 py-2 border border-white/20 shadow-2xl bg-black/80 backdrop-blur-md">
         <div className="flex items-center space-x-2">
           {navSections.map((section, index) => {
             return (

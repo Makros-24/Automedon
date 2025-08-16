@@ -14,14 +14,14 @@ export const SCROLL_CONFIG = {
 export const THREE_JS_CONFIG = {
   MAX_DEVICE_PIXEL_RATIO: 2,
   PARTICLE_COUNTS: {
-    MOBILE: 200,
-    TABLET: 400,
-    DESKTOP: 710,
+    MOBILE: 100,
+    TABLET: 200,
+    DESKTOP: 350,
   },
   PARTICLE_SIZES: {
-    SMALL: 0.8,
-    MEDIUM: 1.2,
-    LARGE: 1.8,
+    SMALL: 0.3,
+    MEDIUM: 0.5,
+    LARGE: 0.7,
   },
   ANIMATION_SPEEDS: {
     SLOW: 0.001,

@@ -101,17 +101,17 @@ export function SmoothScrollCanvas({ children }: SmoothScrollCanvasProps) {
         positions[i * 3 + 2] = (Math.random() - 0.5) * (range * 0.5) - layer * 5;
 
         // Elegant, subtle colors that work with the sophisticated background
-        const colorVariation = 0.2;
-        const baseIntensity = isDarkMode ? 0.7 : 0.5; // Subtle and elegant
-        const transparency = (0.4 + Math.random() * 0.4) * baseIntensity;
+        const colorVariation = 0.1;
+        const baseIntensity = isDarkMode ? 0.3 : 0.2; // Much more subtle and elegant
+        const transparency = (0.2 + Math.random() * 0.2) * baseIntensity;
         
         colors[i * 3] = Math.min(1, (baseColor.r + (Math.random() - 0.5) * colorVariation) * transparency);
         colors[i * 3 + 1] = Math.min(1, (baseColor.g + (Math.random() - 0.5) * colorVariation) * transparency);
         colors[i * 3 + 2] = Math.min(1, (baseColor.b + (Math.random() - 0.5) * colorVariation) * transparency);
 
-        // Refined sizes for elegance
-        const sizeMultiplier = isDarkMode ? 1 : 0.8;
-        sizes[i] = (Math.random() * size + size * 0.3) * (1 + layer * 0.1) * sizeMultiplier;
+        // Refined sizes for elegance - much smaller and more subtle
+        const sizeMultiplier = isDarkMode ? 0.4 : 0.3;
+        sizes[i] = (Math.random() * size + size * 0.2) * (1 + layer * 0.05) * sizeMultiplier;
 
         // Graceful, slow movement
         const speedMultiplier = (0.006 + layer * 0.002);
@@ -129,15 +129,36 @@ export function SmoothScrollCanvas({ children }: SmoothScrollCanvasProps) {
       geometry.setAttribute('velocity', new THREE.BufferAttribute(velocities, 3));
       geometry.setAttribute('phase', new THREE.BufferAttribute(phases, 1));
 
+      // Create circular particle texture for round particles
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('2d');
+      canvas.width = 64;
+      canvas.height = 64;
+      
+      if (context) {
+        const gradient = context.createRadialGradient(32, 32, 0, 32, 32, 32);
+        gradient.addColorStop(0, 'rgba(255,255,255,1)');
+        gradient.addColorStop(0.7, 'rgba(255,255,255,0.8)');
+        gradient.addColorStop(1, 'rgba(255,255,255,0)');
+        
+        context.fillStyle = gradient;
+        context.fillRect(0, 0, 64, 64);
+      }
+      
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.needsUpdate = true;
+
       // Elegant material that complements the sophisticated background
-      const baseOpacity = isDarkMode ? (0.6 - layer * 0.08) : (0.4 - layer * 0.06);
+      const baseOpacity = isDarkMode ? (0.25 - layer * 0.05) : (0.15 - layer * 0.03);
       const material = new THREE.PointsMaterial({
-        size: size,
+        size: size * 0.4, // Make particles much smaller
         transparent: true,
         opacity: baseOpacity,
         blending: isDarkMode ? THREE.AdditiveBlending : THREE.NormalBlending,
         vertexColors: true,
         sizeAttenuation: true,
+        map: texture, // Use circular texture to make particles round
+        alphaTest: 0.1,
       });
 
       return new THREE.Points(geometry, material);

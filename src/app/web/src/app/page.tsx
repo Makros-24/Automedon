@@ -3,6 +3,7 @@ import { Navigation } from "../components/Navigation";
 import { ScrollProgress } from "../components/ScrollProgress";
 import { FloatingNavDots } from "../components/FloatingNavDots";
 import { SmoothScrollCanvas } from "../components/SmoothScrollCanvas";
+import { ErrorBoundaryWrapper } from "../components/ErrorBoundary";
 import { HeroSection } from "../components/HeroSection";
 import { AboutSection } from "../components/AboutSection";
 import { SkillsSection } from "../components/SkillsSection";
@@ -16,7 +17,8 @@ export default function Home() {
     <ThemeProvider defaultTheme="system" storageKey="portfolio-ui-theme">
       <div className="relative">
         {/* Enhanced Smooth Scrolling Canvas with Responsive Particles */}
-        <SmoothScrollCanvas>
+        <ErrorBoundaryWrapper>
+          <SmoothScrollCanvas>
           {/* Scroll Progress Indicator */}
           <ScrollProgress />
           
@@ -52,6 +54,7 @@ export default function Home() {
             <ContactSection />
           </div>
         </SmoothScrollCanvas>
+        </ErrorBoundaryWrapper>
         
         {/* Floating Navigation Dots - outside SmoothScrollCanvas for true viewport positioning */}
         <FloatingNavDots />

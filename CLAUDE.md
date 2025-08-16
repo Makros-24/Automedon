@@ -79,3 +79,4 @@ npm run lint
 - Uses Next.js App Router (not Pages Router)
 - Turbopack is enabled for faster development builds
 - Ready for implementing core features: data schema, AI chatbot integration, and portfolio layout
+- After making changes on a web page always run a browser to verify it is correctly implemented or not. you have MCP playwright

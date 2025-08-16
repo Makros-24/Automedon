@@ -1,6 +1,10 @@
 {
-    "permissions": {
-        "allow": ["mcp__playwright"],
-        "deny": []
-    }
+  "permissions": {
+    "allow": [
+      "mcp__playwright",
+      "Bash(powershell:*)",
+      "Bash(npm run dev:*)"
+    ],
+    "deny": []
+  }
 }

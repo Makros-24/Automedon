@@ -60,116 +60,118 @@ export function FloatingNavDots() {
     setActiveSection(index);
   };
 
-  // Enhanced scroll tracking with hero section detection and progress calculation
+  // Simplified scroll tracking using window.scrollY as primary method
   const updateActiveSection = useCallback(() => {
     if (isUpdatingRef.current) return;
     isUpdatingRef.current = true;
 
-    const content = document.querySelector('[style*="translate3d"]') as HTMLElement;
-    if (!content) {
-      // Fallback: try to get scroll position from window if smooth scroll isn't working
-      const scrollY = window.scrollY || document.documentElement.scrollTop;
-      const aboutElement = document.getElementById('about');
+    // Always use window scroll position as primary method
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    const aboutElement = document.getElementById('about');
+    
+    if (aboutElement) {
+      const aboutRect = aboutElement.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      
+      // Show navigation when about section is 80% visible in viewport
+      const currentScrolledPastHero = aboutRect.top < (viewportHeight * 0.8);
+      
+      // Only update visibility if it has changed
+      if (currentScrolledPastHero !== previousVisibilityRef.current) {
+        previousVisibilityRef.current = currentScrolledPastHero;
+        setHasScrolledPastHero(() => currentScrolledPastHero);
+        setIsVisible(() => currentScrolledPastHero);
+      }
+      
+      // Calculate progress relative to navigation sections (About = 0%, Contact = 100%)
+      let progress = 0;
+      
       if (aboutElement) {
-        const aboutRect = aboutElement.getBoundingClientRect();
-        const shouldShow = aboutRect.top < (window.innerHeight * 0.8);
-        if (shouldShow !== previousVisibilityRef.current) {
-          previousVisibilityRef.current = shouldShow;
-          setIsVisible(shouldShow);
-          setHasScrolledPastHero(shouldShow);
+        // Get the About section's top position when it becomes 80% visible (progress start)
+        const aboutOffsetTop = aboutElement.getBoundingClientRect().top + scrollY;
+        const progressStartPoint = aboutOffsetTop - (viewportHeight * 0.8);
+        
+        // Get the Contact section (last section) for progress end point
+        const contactElement = document.getElementById('contact');
+        let progressEndPoint = document.documentElement.scrollHeight - window.innerHeight; // fallback to page end
+        
+        if (contactElement) {
+          // Progress should reach 100% when Contact section bottom is at viewport bottom
+          const contactOffsetTop = contactElement.getBoundingClientRect().top + scrollY;
+          const contactHeight = contactElement.offsetHeight;
+          progressEndPoint = contactOffsetTop + contactHeight - window.innerHeight;
+        }
+        
+        const navigationRange = progressEndPoint - progressStartPoint;
+        
+        if (navigationRange > 0 && scrollY >= progressStartPoint) {
+          // Calculate progress as percentage (0-100) through navigation sections only
+          const currentProgressScroll = scrollY - progressStartPoint;
+          progress = Math.min(100, Math.max(0, (currentProgressScroll / navigationRange) * 100));
+        } else if (scrollY < progressStartPoint) {
+          // Before About section (80% visible)
+          progress = 0;
+        } else {
+          // Past Contact section bottom
+          progress = 100;
         }
       }
-      isUpdatingRef.current = false;
-      return;
+      
+      // Update progress with very frequent updates for ultra-smooth animation
+      // Use an even smaller threshold for maximum smoothness
+      if (Math.abs(progress - previousProgressRef.current) > 0.005) {
+        previousProgressRef.current = progress;
+        setScrollProgress(() => progress);
+      }
     }
 
-    const transformValue = content.style.transform;
-    const match = transformValue.match(/translate3d\(0px,\s*(-?\d+(?:\.\d+)?)px,\s*0px\)/);
+    // Try smooth scroll container as fallback
+    const content = document.querySelector('[style*="translate3d"]') as HTMLElement;
+    let currentScroll = scrollY;
     
-    if (match) {
-      const currentScroll = Math.abs(parseFloat(match[1]));
+    if (content) {
+      const transformValue = content.style.transform;
+      const match = transformValue.match(/translate3d\(0px,\s*(-?\d+(?:\.\d+)?)px,\s*0px\)/);
+      if (match) {
+        currentScroll = Math.abs(parseFloat(match[1]));
+      }
+    }
+
+
+    // Find the section currently in viewport
+    const centerPoint = window.innerHeight * 0.4; // Section detection point
       
-      // Check if we've scrolled past the hero section - only show when about section is visible
-      const aboutElement = document.getElementById('about');
-      
-      if (aboutElement) {
-        const aboutRect = aboutElement.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
+    let newActiveSection = 0; // Default to first nav section (about)
+
+    for (let i = 0; i < navSections.length; i++) {
+      const element = document.getElementById(navSections[i].id);
+      if (element) {
+        const rect = element.getBoundingClientRect();
         
-        // Show navigation when about section is 80% visible in viewport
-        // This ensures the dots appear when the about section starts becoming visible
-        const currentScrolledPastHero = aboutRect.top < (viewportHeight * 0.8);
-        
-        // Only update visibility if it has changed
-        if (currentScrolledPastHero !== previousVisibilityRef.current) {
-          previousVisibilityRef.current = currentScrolledPastHero;
-          // Force React state update by using a callback
-          setHasScrolledPastHero(() => currentScrolledPastHero);
-          setIsVisible(() => currentScrolledPastHero);
+        // Check if section center is within viewport detection area
+        if (rect.top <= centerPoint && rect.bottom >= centerPoint) {
+          newActiveSection = i;
+          break;
         }
         
-        // Calculate progress from top of page (0%) to bottom of page (100%)
-        if (currentScrolledPastHero) {
-          const content = document.querySelector('[style*="translate3d"]') as HTMLElement;
-          if (content) {
-            // Total scrollable distance
-            const maxScroll = content.scrollHeight - window.innerHeight;
-            
-            // Calculate percentage (0-100)
-            const progress = maxScroll > 0 ? 
-              Math.min(100, Math.max(0, (currentScroll / maxScroll) * 100)) : 0;
-            
-            // Only update progress if it has changed significantly
-            if (Math.abs(progress - previousProgressRef.current) > 0.5) {
-              previousProgressRef.current = progress;
-              setScrollProgress(() => progress);
-            }
-          }
-        } else {
-          // Reset progress when in hero section
-          if (previousProgressRef.current !== 0) {
-            previousProgressRef.current = 0;
-            setScrollProgress(() => 0);
-          }
+        // Handle first nav section when at top
+        if (i === 0 && rect.bottom > centerPoint) { // about section
+          newActiveSection = 0;
+          break;
+        }
+        
+        // Handle last section when near bottom
+        if (i === navSections.length - 1 && rect.top < window.innerHeight) {
+          newActiveSection = navSections.length - 1;
+          break;
         }
       }
+    }
 
-      // Find the section currently in viewport
-      const viewportHeight = window.innerHeight;
-      const centerPoint = viewportHeight * 0.4; // Section detection point
-      
-      let newActiveSection = 0; // Default to first nav section (about)
-
-      for (let i = 0; i < navSections.length; i++) {
-        const element = document.getElementById(navSections[i].id);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          
-          // Check if section center is within viewport detection area
-          if (rect.top <= centerPoint && rect.bottom >= centerPoint) {
-            newActiveSection = i;
-            break;
-          }
-          
-          // Handle first nav section when at top
-          if (i === 0 && rect.bottom > centerPoint) { // about section
-            newActiveSection = 0;
-            break;
-          }
-          
-          // Handle last section when near bottom
-          if (i === navSections.length - 1 && rect.top < viewportHeight) {
-            newActiveSection = navSections.length - 1;
-            break;
-          }
-        }
-      }
-
-      // Only update active section if it has changed
-      if (newActiveSection !== previousActiveSectionRef.current) {
-        previousActiveSectionRef.current = newActiveSection;
-        setActiveSection(() => newActiveSection);
-      }
+    // Only update active section if it has changed
+    if (newActiveSection !== previousActiveSectionRef.current) {
+      previousActiveSectionRef.current = newActiveSection;
+      setActiveSection(() => newActiveSection);
     }
     
     isUpdatingRef.current = false;
@@ -179,7 +181,7 @@ export function FloatingNavDots() {
   }, []);
 
   useEffect(() => {
-    // Ensure we start hidden in hero section
+    // Initialize state - start hidden in hero section
     setIsVisible(false);
     setHasScrolledPastHero(false);
     setScrollProgress(0);
@@ -269,8 +271,12 @@ export function FloatingNavDots() {
           {/* Progress Bar */}
           <div className="relative w-full h-1.5 bg-slate-200/30 dark:bg-slate-700/30 rounded-full overflow-hidden">
             <div 
-              className="absolute left-0 top-0 h-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transition-all duration-300 ease-out"
-              style={{ width: `${scrollProgress}%` }}
+              className="absolute left-0 top-0 h-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transition-all duration-75 ease-linear"
+              style={{ 
+                width: `${scrollProgress}%`,
+                transform: `translateX(0%)`,
+                willChange: 'width'
+              }}
             />
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-full animate-pulse" />
           </div>
@@ -332,8 +338,12 @@ export function FloatingNavDots() {
         <div className="mt-1.5 pt-1.5 border-t border-white/20">
           <div className="relative w-full h-0.5 bg-slate-200/30 dark:bg-slate-700/30 rounded-full overflow-hidden">
             <div 
-              className="absolute left-0 top-0 h-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transition-all duration-300 ease-out"
-              style={{ width: `${scrollProgress}%` }}
+              className="absolute left-0 top-0 h-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transition-all duration-75 ease-linear"
+              style={{ 
+                width: `${scrollProgress}%`,
+                transform: `translateX(0%)`,
+                willChange: 'width'
+              }}
             />
           </div>
         </div>

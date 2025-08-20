@@ -1,4 +1,4 @@
-# ⚔️ Automedon — Your AI-Powered Digital Twin Portfolio
+# Automedon — Your AI-Powered Digital Twin Portfolio
 
 > *A modern, AI-infused portfolio experience where every interaction reveals who you are — professionally and personally.*
 
@@ -26,44 +26,43 @@ Named after the legendary charioteer of Achilles, Automedon is your loyal, digit
 
 ## 🛣️ Roadmap
 
-### ✅ Phase 1: MVP
-- [x] Define JSON/YAML schema for CV and personal data
-- [x] Set tone and response behavior for AI
-- [ ] Build React/Next.js portfolio layout
-- [ ] Add sandboxed chatbot using OpenAI API
-- [ ] Restrict private data unless verified
-
-### 🔜 Phase 2: Interaction Layer
-- [ ] Admin dashboard for response preview & logs
-- [ ] Debug mode for inspecting AI behavior
+### Phase 1: MVP
+- [x] Build React/Next.js portfolio layout
+- [x] Define schema type for CV and personal data
 - [ ] Multilingual support
 
-### 🔮 Phase 3: Smart Matching
+### Phase 2: Interaction Layer
+- [ ] Admin dashboard for response preview & logs
+- [ ] Add sandboxed chatbot using OpenAI API
+- [ ] Restrict private data unless verified
+- [ ] Debug mode for inspecting AI behavior
+
+<!-- ### Phase 3: Smart Matching
 - [ ] Job description parser + semantic matching
 - [ ] Recruiter company-profile-aware responses
 - [ ] Schedule meeting & leave a message modules
 - [ ] Analytics dashboard for questions and usage
 
-### 🧠 Phase 4: AI Optimization
+### Phase 4: AI Optimization
 - [ ] Embeddings + vector search for better retrieval
 - [ ] Feedback loop to refine answers over time
-- [ ] LinkedIn and GitHub sync
+- [ ] LinkedIn and GitHub sync -->
 
 ---
 
-## 🧰 Tech Stack
+## Tech Stack
 
 - **Frontend**: React (Next.js), Tailwind CSS
-- **Backend**: Node.js, Express or NestJS
-- **AI**: OpenAI API (GPT-4 with structured prompt injection)
+- **Backend**: ? <!--Node.js, Express or NestJS-->
+- **AI**: ? <!--OpenAI API (GPT-4 with structured prompt injection)-->
 - **Storage**: JSON/YAML CV + later vector DB (e.g., Qdrant or Pinecone)
-- **Auth**: Token/email-based data gating
-- **Analytics**: TBD (PostHog, Plausible, custom)
-- **Deployment**: Vercel / Docker / Fly.io
+- **Auth**: ? <!--Token/email-based data gating-->
+- **Analytics**: ? <!--TBD (PostHog, Plausible, custom)
+- **Deployment**: ? <!--Vercel / Docker / Fly.io-->
 
 ---
 
-## 🙋 Why Automedon?
+## Why Automedon?
 
 In the age of AI, static resumes are no longer enough. Recruiters want quick insights, compatibility answers, and personality assessments — **without reading a wall of text**. Automedon is your **living, breathing portfolio** that speaks for you — literally.
 
@@ -71,17 +70,18 @@ Whether you're offline, asleep, or just focused — **Automedon speaks your trut
 
 ---
 
-## 📎 Current Phase
+## Current Phase
 
 - [x] Brainstorming  
 - [x] Feature Scoping  
-- [ ] Schema Design  
-- [ ] Initial Layout/Wireframe  
-- [ ] Chatbot API Integration  
+- [x] Schema Design  
+- [x] Initial Layout/Wireframe  
+- [x] UI development
+- [ ] Front Development
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
 This project is currently personal and under early development, but contributors are welcome to observe or fork for inspiration. As it evolves, contribution guidelines and issues will be opened.
 

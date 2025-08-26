@@ -8,76 +8,41 @@ Automedon is an AI-powered digital twin portfolio application that allows recrui
 
 ## Current Development Status
 
-This project is in active development with a comprehensive Next.js foundation:
+This project has been reset for a fresh rebuild:
 
-- **Phase**: UI Development Complete - Interactive portfolio with chat functionality implemented
-- **Current Status**: Next.js app with TypeScript, Tailwind CSS 4, ESLint, Jest testing, and interactive components
-- **Tech Stack**: React 19, Next.js 15, TypeScript, Tailwind CSS 4, Three.js, Radix UI, ESLint
+- **Phase**: Project Reset - Ready for clean rebuild from minimal Next.js foundation
+- **Current Status**: Minimal Next.js app with TypeScript, Tailwind CSS 4, ESLint, Jest testing configurations preserved
+- **Tech Stack**: React 19, Next.js 15, TypeScript, Tailwind CSS 4 (configurations ready)
 
 ## Repository Structure
 
 ```
 src/app/web/                    # Next.js application root
 ├── src/
-│   ├── app/                    # Next.js App Router
-│   │   ├── layout.tsx          # Root layout with theme provider
-│   │   ├── page.tsx            # Main portfolio page
-│   │   └── globals.css         # Global styles and Tailwind imports
-│   ├── components/             # React components
-│   │   ├── ui/                 # Reusable UI components (buttons, cards, etc.)
-│   │   ├── common/             # Common components (ImageWithFallback)
-│   │   ├── HeroSection.tsx     # Landing hero with particles effect
-│   │   ├── AboutSection.tsx    # About/summary section
-│   │   ├── ExperienceSection.tsx # Professional experience
-│   │   ├── SkillsSection.tsx   # Technical skills with progress bars
-│   │   ├── ProjectsSection.tsx # Portfolio projects
-│   │   ├── EducationSection.tsx # Educational background
-│   │   ├── ContactSection.tsx  # Contact information
-│   │   ├── ChatSection.tsx     # Chat interface for AI interaction
-│   │   ├── ChatPopup.tsx       # Floating chat popup
-│   │   ├── Navigation.tsx      # Main navigation bar
-│   │   ├── FloatingNavDots.tsx # Section navigation dots
-│   │   ├── ThemeProvider.tsx   # Dark/light theme context
-│   │   ├── ThemeToggle.tsx     # Theme switching component
-│   │   ├── EnhancedParticles.tsx # Three.js particle system
-│   │   ├── ScrollProgress.tsx  # Reading progress indicator
-│   │   ├── SmoothScrollCanvas.tsx # Smooth scrolling effects
-│   │   └── ErrorBoundary.tsx   # Error handling wrapper
-│   ├── config/
-│   │   └── portfolioData.ts    # Centralized data configuration
-│   ├── constants/
-│   │   └── animation.ts        # Animation constants
-│   └── utils/
-│       ├── inputValidation.ts  # Form validation utilities
-│       └── __tests__/         # Unit tests for utilities
-├── package.json               # Dependencies and scripts
-├── jest.config.js            # Jest testing configuration
-├── jest.setup.js             # Jest setup file
-├── eslint.config.mjs         # ESLint configuration
-├── next.config.ts            # Next.js configuration
-├── postcss.config.mjs        # PostCSS configuration
-└── tsconfig.json             # TypeScript configuration
+│   └── app/                    # Next.js App Router
+│       ├── layout.tsx          # Minimal root layout
+│       ├── page.tsx            # Basic "Hello World" page
+│       ├── globals.css         # Basic global styles with Tailwind
+│       └── favicon.ico         # Default favicon
+├── package.json               # Dependencies and scripts (preserved)
+├── jest.config.js            # Jest testing configuration (preserved)
+├── jest.setup.js             # Jest setup file (preserved)
+├── eslint.config.mjs         # ESLint configuration (preserved)
+├── next.config.ts            # Next.js configuration (preserved)
+├── postcss.config.mjs        # PostCSS configuration (preserved)
+└── tsconfig.json             # TypeScript configuration (preserved)
 ```
 
 ## Architecture Overview
 
-### Data Layer
-- **Portfolio Data**: Centralized in `src/config/portfolioData.ts` with TypeScript interfaces
-- **Type Definitions**: Comprehensive interfaces for PersonalInfo, Experience, Skills, Projects, Education
-- **Chat Responses**: Pre-configured responses for common queries stored in portfolioData.ts
+The project has been reset to a minimal foundation. Previous architecture included:
 
-### Component Architecture
-- **Section-based Layout**: Modular sections (Hero, About, Experience, Skills, Projects, Education, Contact, Chat)
-- **Theme System**: Context-based dark/light theme with system preference detection
-- **UI Components**: Radix UI primitives with custom styling using class-variance-authority
-- **Particle System**: Three.js-based interactive background particles
-- **Navigation**: Dual navigation (main navbar + floating section dots)
-
-### Styling System
-- **Tailwind CSS 4**: Latest version with advanced features
-- **CSS Variables**: Theme-aware color system
-- **Responsive Design**: Mobile-first approach with comprehensive breakpoints
-- **Animation**: CSS animations with Tailwind and custom keyframes
+### Planned Architecture (To Be Rebuilt)
+- **Data Layer**: Will use centralized configuration with TypeScript interfaces
+- **Component Architecture**: Modular sections approach with reusable components
+- **Theme System**: Dark/light theme with system preference detection
+- **UI Components**: Radix UI primitives with custom styling
+- **Styling System**: Tailwind CSS 4 with responsive design and animations
 
 ## Development Commands
 
@@ -116,27 +81,21 @@ npm run test:watch
 - **Configuration**: Jest configured for Next.js with path mapping (`@/` → `src/`)
 - **Test Location**: `src/utils/__tests__/` (expandable to other directories)
 
-## Key Features (Implemented)
+## Current Status
 
-### UI Features
-- ✅ Responsive portfolio layout with smooth scrolling
-- ✅ Dark/light theme switching with system preference
-- ✅ Interactive particle background using Three.js
-- ✅ Section navigation with floating dots
-- ✅ Scroll progress indicator
-- ✅ Chat interface (UI ready for API integration)
-- ✅ Contact form with validation
-- ✅ Skills visualization with progress bars
-- ✅ Project cards with technology badges
-
-### Technical Features
-- ✅ TypeScript throughout with strict configuration
-- ✅ Next.js App Router with server components
-- ✅ Tailwind CSS 4 with custom design system
+### Preserved Configuration
+- ✅ TypeScript configuration with strict settings
+- ✅ Next.js 15 with App Router setup
+- ✅ Tailwind CSS 4 configuration
 - ✅ ESLint configuration with Next.js rules
 - ✅ Jest testing setup with React Testing Library
-- ✅ Error boundaries for component error handling
-- ✅ Form validation utilities with comprehensive tests
+- ✅ PostCSS configuration
+- ✅ All dependencies maintained in package.json
+
+### Ready for Rebuild
+- 🔄 Minimal Next.js app structure with basic layout and page
+- 🔄 Clean slate for component development
+- 🔄 Fresh start for implementing features
 
 ## Planned Features (Next Phase)
 
@@ -148,24 +107,21 @@ npm run test:watch
 - [ ] Analytics dashboard
 - [ ] Debug mode for AI behavior inspection
 
-## Data Configuration
+## Next Steps for Development
 
-Portfolio content is managed through `src/config/portfolioData.ts`:
+After the project reset, you can:
 
-- **Personal Information**: Name, title, contact, summary, social links
-- **Skills**: Categorized with proficiency levels (frontend, backend, database, cloud, tools)
-- **Experience**: Professional history with achievements and technologies
-- **Projects**: Portfolio projects with features, technologies, and links
-- **Education**: Academic background with achievements
-- **Chat Responses**: Pre-configured responses for common chatbot queries
+1. **Install Dependencies**: Run `npm install` in the `src/app/web/` directory
+2. **Start Development**: Run `npm run dev` to start the development server
+3. **Begin Rebuilding**: Create components, pages, and features as needed
+4. **Test Configuration**: All testing and linting configurations are preserved and ready to use
 
 ## Important Development Notes
 
 - **Working Directory**: Always work from `src/app/web/` for all npm commands
 - **Next.js App Router**: Uses App Router (not Pages Router) - components go in `src/app/`
 - **Import Paths**: Uses `@/` alias pointing to `src/` directory
-- **Theme System**: Components should use theme-aware classes and CSS variables
-- **Component Structure**: Follow existing patterns for new components (props interfaces, error boundaries)
-- **Testing**: Write tests for utilities and complex logic, place in `__tests__` directories
-- **Data Updates**: Modify `portfolioData.ts` to update portfolio content
-- **Browser Testing**: Use MCP Playwright to verify UI changes after implementation
+- **Configuration**: All build tools (TypeScript, ESLint, Jest, PostCSS, Tailwind) are configured and ready
+- **Testing**: Jest and React Testing Library are set up for component and utility testing
+- **Development**: Start with `npm install` then `npm run dev` to begin development
+- **Fresh Start**: Project has been cleared of all previous components and data for a clean rebuild

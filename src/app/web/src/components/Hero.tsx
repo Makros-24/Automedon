@@ -3,9 +3,12 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import { ChevronDown, Download, Eye, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
 import { AIChatPopup } from './AIChatPopup';
+import { usePersonalInfo } from '@/contexts/PortfolioDataContext';
+import { Loading, SkeletonText } from './ui/loading';
 
 export function Hero() {
   const [isAIChatOpen, setIsAIChatOpen] = useState(false);
+  const { personalInfo, loading, error } = usePersonalInfo();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 300], [0, -50]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
@@ -18,13 +21,70 @@ export function Hero() {
   };
 
   const handleDownloadResume = () => {
-    // Mock download functionality
-    alert('Resume download would be implemented here');
+    if (personalInfo?.resumeUrl) {
+      // Create download link
+      const link = document.createElement('a');
+      link.href = personalInfo.resumeUrl;
+      link.download = `${personalInfo.name.replace(/\s+/g, '_')}_Resume.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      alert('Resume not available for download');
+    }
   };
 
   const handleAskAI = () => {
     setIsAIChatOpen(true);
   };
+
+  // Handle loading state
+  if (loading) {
+    return (
+      <motion.section
+        id="hero"
+        className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
+        style={{ y, opacity }}
+      >
+        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
+          <Loading size="lg" text="Loading portfolio..." />
+        </div>
+      </motion.section>
+    );
+  }
+
+  // Handle error state
+  if (error) {
+    return (
+      <motion.section
+        id="hero"
+        className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
+        style={{ y, opacity }}
+      >
+        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
+          <p className="text-lg text-red-500">Error loading portfolio data: {error}</p>
+          <Button onClick={() => window.location.reload()}>
+            Retry
+          </Button>
+        </div>
+      </motion.section>
+    );
+  }
+
+  // Handle missing data
+  if (!personalInfo) {
+    return (
+      <motion.section
+        id="hero"
+        className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
+        style={{ y, opacity }}
+      >
+        <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
+          <p className="text-lg text-foreground/70">Portfolio data not available</p>
+        </div>
+      </motion.section>
+    );
+  }
 
   return (
     <motion.section
@@ -47,7 +107,7 @@ export function Hero() {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
           >
-            Alex Thompson
+            {personalInfo.name}
           </motion.h1>
 
           {/* Title */}
@@ -58,7 +118,7 @@ export function Hero() {
             transition={{ duration: 0.8, delay: 0.5 }}
           >
             <h2 className="text-xl md:text-2xl lg:text-3xl font-medium text-foreground/80 mb-4">
-              Solution Architect
+              {personalInfo.title}
             </h2>
             <div className="w-24 h-1 bg-gradient-to-r from-blue-400 via-purple-500 to-teal-400 rounded-full mx-auto" />
           </motion.div>
@@ -70,8 +130,7 @@ export function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
           >
-            Crafting scalable solutions and architectural excellence with 8+ years of experience 
-            in full-stack development, cloud infrastructure, and enterprise systems.
+            {personalInfo.description}
           </motion.p>
 
           {/* CTAs */}

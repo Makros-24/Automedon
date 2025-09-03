@@ -8,6 +8,7 @@ import { Work } from '@/components/Work';
 import { About } from '@/components/About';
 import { Contact } from '@/components/Contact';
 import { Toaster } from '@/components/ui/sonner';
+import { PortfolioDataProvider } from '@/contexts/PortfolioDataContext';
 
 function AppContent() {
   useEffect(() => {
@@ -38,5 +39,9 @@ function AppContent() {
 }
 
 export default function Home() {
-  return <AppContent />;
+  return (
+    <PortfolioDataProvider>
+      <AppContent />
+    </PortfolioDataProvider>
+  );
 }

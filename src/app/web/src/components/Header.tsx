@@ -135,8 +135,8 @@ export function Header() {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src="https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBtYW4lMjBmYWNlJTIwaGVhZHNob3R8ZW58MXx8fHwxNzU2MjIxNDYyfDA&ixlib=rb-4.1.0&q=80&w=1080"
-                  alt="Alex Thompson"
+                  src="https://media.licdn.com/dms/image/v2/D4D03AQGgMTxGLlkEEw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1702848448399?e=1759968000&v=beta&t=oGRgNz4MoaeXcj6542T5WsF08YBrA8CO8CHrFP9Czek"
+                  alt="Mohamed IBEN EL ABED"
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10 transition-opacity duration-300 group-hover:ring-white/20" />

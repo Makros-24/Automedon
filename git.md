@@ -366,3 +366,4 @@ perf: performance improvement
 test: testing
 chore: maintenance
 ```
+- Do not mention AI generation In commits

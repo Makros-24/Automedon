@@ -4,7 +4,8 @@
       "mcp__playwright",
       "Bash(powershell:*)",
       "Bash(npm run dev:*)",
-      "Bash(npm install:*)"
+      "Bash(npm install:*)",
+      "Bash(npm test:*)"
     ],
     "deny": []
   }

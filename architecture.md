@@ -10,7 +10,7 @@ This document outlines the system architecture, design patterns, and technical d
 ├─────────────────────────────────────────────────────────────────┤
 │  Next.js App Router (SSR/SSG)                                 │
 │  ├── Hero Section (Animated Background + CTA)                 │
-│  ├── Work Portfolio (Project Showcase)                        │
+│  ├── Work Portfolio (Project Showcase + Tech Icons)           │
 │  ├── About Section (Skills Categories + Achievements)         │
 │  ├── Contact Section (Social Links + CTA)                     │
 │  └── AI Chat Interface (Modal Overlay)                        │
@@ -19,17 +19,20 @@ This document outlines the system architecture, design patterns, and technical d
 │  ├── UI Components (40+ Radix UI Components)                  │
 │  ├── Section Components (Hero, Work, About, Contact)          │
 │  ├── Interactive Components (Chat, Hidden: Charts, Carousels) │
-│  └── Layout Components (Header, Theme Provider)               │
+│  ├── Layout Components (Header, Theme Provider)               │
+│  └── Technology Icon System (Enhanced Icons + Hover Effects)  │
 ├─────────────────────────────────────────────────────────────────┤
 │                      State Layer                               │
 │  ├── Theme Context (Dark/Light Mode)                          │
 │  ├── Local Component State (React Hooks)                      │
-│  └── Animation State (Framer Motion)                          │
+│  ├── Animation State (Framer Motion)                          │
+│  └── Icon Processing State (Technology Icon Manager)          │
 ├─────────────────────────────────────────────────────────────────┤
 │                     Styling Layer                              │
 │  ├── Tailwind CSS 4 (Utility Classes)                        │
 │  ├── CSS Custom Properties (Theme Variables)                  │
 │  ├── Glass Morphism Effects (Backdrop Blur)                   │
+│  ├── Card-Level Hover Effects (Grayscale Transitions)         │
 │  └── Responsive Design (Mobile-First)                         │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -46,6 +49,13 @@ This document outlines the system architecture, design patterns, and technical d
 - **Tailwind CSS 4** - Utility-first CSS with enhanced features and better performance
 - **Framer Motion** - Declarative animations with smooth transitions
 - **Lucide React** - Consistent icon library with tree-shaking support
+
+### Technology Icon System
+- **Enhanced Icon Format** - Supports base64, URL, and Lucide fallback icons
+- **Priority System** - base64 > URL > Lucide icon fallback
+- **Hover Effects** - Card-level grayscale-to-color transitions
+- **Type Safety** - Full TypeScript support with ImageData interface
+- **Backward Compatibility** - Supports legacy string arrays
 
 ### Development Tools
 - **ESLint** - Code quality and consistency
@@ -338,6 +348,50 @@ const AccessibleMotion = motion.div.attrs({
 - **CDN Strategy**: Static assets distribution
 - **Caching Strategy**: Aggressive caching for static content
 - **Database Scaling**: Future consideration for user-generated content
+
+## Technology Icon System Architecture
+
+### Icon Processing Pipeline
+```typescript
+interface ImageData {
+  base64?: string;  // Priority 1: Base64 encoded image
+  url?: string;     // Priority 2: External URL
+}
+
+type TechnologyWithIcon = {
+  name: string;
+  icon?: ImageData | string;  // Enhanced or legacy format
+}
+```
+
+### Processing Flow
+1. **Icon Resolution**: Determine icon source (base64 > URL > Lucide fallback)
+2. **Element Creation**: Generate appropriate React element (img vs Lucide component)
+3. **Styling Application**: Apply hover effects and transitions
+4. **Rendering**: Display with card-level hover behavior
+
+### Hover Effect System
+```typescript
+// Card-level group classes for coordinated hover effects
+<motion.div className="group/card">
+  <Badge>
+    <span className="group-hover/card:grayscale-0 grayscale">
+      {iconElement}
+    </span>
+  </Badge>
+</motion.div>
+```
+
+### Type Safety Features
+- **Runtime Validation**: Icon data validation with fallback handling
+- **TypeScript Integration**: Full type safety for icon data structures
+- **Backward Compatibility**: Seamless support for legacy string arrays
+
+### Performance Optimizations
+- **Memoization**: React.useMemo for expensive icon processing
+- **Lazy Loading**: Deferred loading for image-based icons
+- **CSS Transitions**: Hardware-accelerated grayscale effects
+- **Tree Shaking**: Only bundle used Lucide icons
 
 ## Future Architecture Enhancements
 

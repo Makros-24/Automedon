@@ -152,6 +152,77 @@ const chatReducer = (state: ChatState, action: ChatAction): ChatState => {
 };
 ```
 
+#### Technology Icon Patterns
+```typescript
+// ✅ Good - Enhanced icon interface with backward compatibility
+interface ImageData {
+  base64?: string;  // Priority 1: Base64 encoded image
+  url?: string;     // Priority 2: External URL
+}
+
+type TechnologyWithIcon = {
+  name: string;
+  icon?: ImageData | string;  // Enhanced or legacy format
+}
+
+// ✅ Good - Icon processing with fallback handling
+export function getTechnologyIconElement(
+  iconData: ImageData | string | null | undefined,
+  techName: string,
+  className: string = 'w-4 h-4'
+): React.ReactElement {
+  const iconSource = getTechnologyIcon(iconData);
+  
+  // Image icons for base64/URL
+  if (iconSource.startsWith('data:') || iconSource.startsWith('http')) {
+    return React.createElement('img', {
+      src: iconSource,
+      alt: `${techName} icon`,
+      className: `${className} transition-all duration-300 ease-out`,
+      loading: 'lazy' as const
+    });
+  }
+  
+  // Lucide fallback icons
+  const IconComponent = getIconComponent(iconSource);
+  return React.createElement(IconComponent, { 
+    className: `${className} text-gray-400 hover:text-foreground transition-colors duration-300 ease-out`
+  });
+}
+
+// ✅ Good - Card-level hover effects
+export const SkillCategory = ({ category }: SkillCategoryProps) => {
+  const processedSkills = React.useMemo(() => 
+    processSkillsWithIcons(category.skills, 'w-3.5 h-3.5'), 
+    [category.skills]
+  );
+
+  return (
+    <motion.div className="group/card relative">
+      <div className="p-6 rounded-2xl glass">
+        <div className="flex flex-wrap gap-2">
+          {processedSkills.map((skill) => (
+            <Badge key={skill.name} className="flex items-center gap-1.5">
+              {/* Card hover triggers icon color change */}
+              <span className="group-hover/card:grayscale-0 grayscale transition-all duration-300 ease-out">
+                {skill.iconElement}
+              </span>
+              {skill.name}
+            </Badge>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+// ✅ Good - Memoized processing for performance
+const processedTechnologies = React.useMemo(() => 
+  processProjectTechnologies(project.technologies, 'w-3.5 h-3.5'), 
+  [project.technologies]
+);
+```
+
 ### Error Handling
 
 #### Component Error Boundaries

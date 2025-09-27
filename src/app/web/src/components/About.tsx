@@ -15,7 +15,7 @@ import { SkeletonGrid, Loading } from './ui/loading';
 export function About() {
   const { skillCategories, loading: skillsLoading, error: skillsError } = useSkillCategories();
   const { achievements, loading: achievementsLoading, error: achievementsError } = useAchievements();
-  const { ref: sectionRef, isInView } = useInViewOnce({ threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
+  const { ref: sectionRef, isInView } = useInViewOnce({ threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
 
   return (
     <section id="about" className="relative py-20 px-6 overflow-hidden">

@@ -1,37 +1,105 @@
 import { motion } from 'motion/react';
 import { useInViewOnce } from '../hooks/useInViewOnce';
-import { Mail, Github, Linkedin, MapPin, Phone, Send } from 'lucide-react';
+import { Mail, Github, Linkedin, MapPin, Phone, Send, Twitter } from 'lucide-react';
 import { Button } from './ui/button';
-
-const contactMethods = [
-  {
-    icon: Mail,
-    label: 'Email',
-    value: 'alex.thompson@example.com',
-    href: 'mailto:alex.thompson@example.com',
-    description: 'Send me an email'
-  },
-  {
-    icon: Linkedin,
-    label: 'LinkedIn',
-    value: '/in/alexthompson',
-    href: 'https://linkedin.com/in/alexthompson',
-    description: 'Connect on LinkedIn'
-  },
-  {
-    icon: Github,
-    label: 'GitHub',
-    value: '/alexthompson',
-    href: 'https://github.com/alexthompson',
-    description: 'View my code'
-  }
-];
+import { getPortfolioData } from '../utils/dataLoader';
+import { useEffect, useState, useRef } from 'react';
+import { ContactInfo } from '../types';
 
 export function Contact() {
-  const { ref: sectionRef, isInView: isVisible } = useInViewOnce({ 
-    threshold: 0.15, 
-    rootMargin: '0px 0px -8% 0px' 
-  });
+  const [contactData, setContactData] = useState<ContactInfo | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await getPortfolioData();
+        setContactData(data.contactInfo);
+      } catch (error) {
+        console.error('Error loading contact data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  // Custom intersection observer that only starts after data is loaded
+  useEffect(() => {
+    if (loading || !contactData || !sectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.unobserve(entry.target); // Trigger once
+        }
+      },
+      {
+        threshold: 0,
+        rootMargin: '0px 0px 100px 0px'
+      }
+    );
+
+    observer.observe(sectionRef.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [loading, contactData]);
+
+  // Ensure animations are visible when data is loaded and section is in view
+  const shouldAnimate = !loading && contactData && isVisible;
+
+  // Create contact methods from loaded data
+  const contactMethods = contactData ? [
+    {
+      icon: Mail,
+      label: 'Email',
+      value: contactData.email,
+      href: `mailto:${contactData.email}`,
+      description: 'Send me an email'
+    },
+    {
+      icon: Linkedin,
+      label: 'LinkedIn',
+      value: contactData.linkedin.replace('linkedin.com/', ''),
+      href: `https://${contactData.linkedin}`,
+      description: 'Connect on LinkedIn'
+    },
+    {
+      icon: Github,
+      label: 'GitHub',
+      value: contactData.github.replace('github.com/', ''),
+      href: `https://${contactData.github}`,
+      description: 'View my code'
+    },
+    {
+      icon: Twitter,
+      label: 'Twitter',
+      value: contactData.twitter.replace('x.com/', ''),
+      href: `https://${contactData.twitter}`,
+      description: 'Follow me on Twitter'
+    }
+  ] : [];
+
+  if (loading) {
+    return (
+      <section id="contact" className="relative py-20 px-4">
+        <div className="relative z-10 max-w-4xl mx-auto">
+          <div className="text-center">
+            <div className="animate-pulse">
+              <div className="h-8 bg-foreground/20 rounded mb-4 mx-auto w-64"></div>
+              <div className="h-4 bg-foreground/20 rounded mb-8 mx-auto w-96"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section ref={sectionRef} id="contact" className="relative py-20 px-4">
@@ -39,7 +107,7 @@ export function Contact() {
       <motion.div 
         className="absolute inset-0 overflow-hidden"
         initial={{ opacity: 0 }}
-        animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
+        animate={shouldAnimate ? { opacity: 1 } : { opacity: 0 }}
         transition={{ duration: 1.5, delay: 0.3 }}
       >
         <div className="absolute top-1/4 right-1/3 w-1 h-32 opacity-20 animate-pulse bg-gradient-to-b from-transparent via-white/20 to-transparent" />
@@ -53,9 +121,9 @@ export function Contact() {
           className="text-center mb-16"
           initial={{ opacity: 0, y: 50, scale: 0.9 }}
           animate={{ 
-            opacity: isVisible ? 1 : 0, 
-            y: isVisible ? 0 : 50,
-            scale: isVisible ? 1 : 0.9
+            opacity: shouldAnimate ? 1 : 0, 
+            y: shouldAnimate ? 0 : 50,
+            scale: shouldAnimate ? 1 : 0.9
           }}
           transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
         >
@@ -63,8 +131,8 @@ export function Contact() {
             className="text-3xl md:text-4xl lg:text-5xl font-light mb-4 text-foreground"
             initial={{ opacity: 0, y: 30 }}
             animate={{ 
-              opacity: isVisible ? 1 : 0, 
-              y: isVisible ? 0 : 30 
+              opacity: shouldAnimate ? 1 : 0, 
+              y: shouldAnimate ? 0 : 30 
             }}
             transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
           >
@@ -74,8 +142,8 @@ export function Contact() {
             className="text-lg text-foreground/70 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ 
-              opacity: isVisible ? 1 : 0, 
-              y: isVisible ? 0 : 20 
+              opacity: shouldAnimate ? 1 : 0, 
+              y: shouldAnimate ? 0 : 20 
             }}
             transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
           >
@@ -90,9 +158,9 @@ export function Contact() {
             className="space-y-8"
             initial={{ opacity: 0, x: -50, scale: 0.95 }}
             animate={{ 
-              opacity: isVisible ? 1 : 0, 
-              x: isVisible ? 0 : -50,
-              scale: isVisible ? 1 : 0.95
+              opacity: shouldAnimate ? 1 : 0, 
+              x: shouldAnimate ? 0 : -50,
+              scale: shouldAnimate ? 1 : 0.95
             }}
             transition={{ duration: 0.9, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
           >
@@ -101,8 +169,8 @@ export function Contact() {
               className="glass glass-hover rounded-2xl p-6 transition-all duration-300"
               initial={{ opacity: 0, y: 30 }}
               animate={{ 
-                opacity: isVisible ? 1 : 0, 
-                y: isVisible ? 0 : 30 
+                opacity: shouldAnimate ? 1 : 0, 
+                y: shouldAnimate ? 0 : 30 
               }}
               transition={{ duration: 0.7, delay: 0.8, ease: 'easeOut' }}
               whileHover={{ 
@@ -117,7 +185,12 @@ export function Contact() {
                 </div>
                 <div>
                   <h3 className="text-lg font-medium mb-1 text-foreground">Location</h3>
-                  <p className="text-foreground/70">San Francisco, CA</p>
+                  <p className="text-foreground/70">{contactData?.location || 'Remote'}</p>
+                  {contactData?.phone && (
+                    <p className="text-sm text-foreground/60 mt-1">
+                      Phone: {contactData.phone}
+                    </p>
+                  )}
                   <p className="text-sm text-foreground/60 mt-1">
                     Available for remote work and travel
                   </p>
@@ -138,9 +211,9 @@ export function Contact() {
                     className="block glass glass-hover rounded-xl p-4 transition-all duration-300 group"
                     initial={{ opacity: 0, y: 30, x: -20 }}
                     animate={{ 
-                      opacity: isVisible ? 1 : 0, 
-                      y: isVisible ? 0 : 30,
-                      x: isVisible ? 0 : -20
+                      opacity: shouldAnimate ? 1 : 0, 
+                      y: shouldAnimate ? 0 : 30,
+                      x: shouldAnimate ? 0 : -20
                     }}
                     transition={{ 
                       duration: 0.7, 
@@ -179,9 +252,9 @@ export function Contact() {
             className="glass glass-hover rounded-2xl p-8 text-center"
             initial={{ opacity: 0, x: 50, scale: 0.95 }}
             animate={{ 
-              opacity: isVisible ? 1 : 0, 
-              x: isVisible ? 0 : 50,
-              scale: isVisible ? 1 : 0.95
+              opacity: shouldAnimate ? 1 : 0, 
+              x: shouldAnimate ? 0 : 50,
+              scale: shouldAnimate ? 1 : 0.95
             }}
             transition={{ duration: 0.9, delay: 0.8, ease: [0.23, 1, 0.32, 1] }}
             whileHover={{ 
@@ -195,9 +268,9 @@ export function Contact() {
                 className="glass-light rounded-full w-20 h-20 mx-auto flex items-center justify-center animate-glow"
                 initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
                 animate={{ 
-                  opacity: isVisible ? 1 : 0,
-                  scale: isVisible ? 1 : 0.5,
-                  rotate: isVisible ? 0 : -180
+                  opacity: shouldAnimate ? 1 : 0,
+                  scale: shouldAnimate ? 1 : 0.5,
+                  rotate: shouldAnimate ? 0 : -180
                 }}
                 transition={{ duration: 0.8, delay: 1.2, ease: 'easeOut' }}
               >
@@ -207,8 +280,8 @@ export function Contact() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ 
-                  opacity: isVisible ? 1 : 0, 
-                  y: isVisible ? 0 : 20 
+                  opacity: shouldAnimate ? 1 : 0, 
+                  y: shouldAnimate ? 0 : 20 
                 }}
                 transition={{ duration: 0.7, delay: 1.4, ease: 'easeOut' }}
               >
@@ -222,23 +295,23 @@ export function Contact() {
                 className="space-y-4"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ 
-                  opacity: isVisible ? 1 : 0, 
-                  y: isVisible ? 0 : 30 
+                  opacity: shouldAnimate ? 1 : 0, 
+                  y: shouldAnimate ? 0 : 30 
                 }}
                 transition={{ duration: 0.8, delay: 1.6, ease: 'easeOut' }}
               >
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ 
-                    opacity: isVisible ? 1 : 0,
-                    scale: isVisible ? 1 : 0.9
+                    opacity: shouldAnimate ? 1 : 0,
+                    scale: shouldAnimate ? 1 : 0.9
                   }}
                   transition={{ duration: 0.6, delay: 1.8, ease: 'easeOut' }}
                 >
                   <Button 
                     size="lg" 
                     className="w-full glass glass-hover transition-all duration-300 group bg-foreground/10 hover:bg-foreground/20 text-foreground border-white/20"
-                    onClick={() => window.open('mailto:alex.thompson@example.com', '_blank')}
+                    onClick={() => window.open(`mailto:${contactData?.email}`, '_blank')}
                   >
                     <Mail className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
                     Start a Conversation
@@ -248,8 +321,8 @@ export function Contact() {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ 
-                    opacity: isVisible ? 1 : 0,
-                    scale: isVisible ? 1 : 0.9
+                    opacity: shouldAnimate ? 1 : 0,
+                    scale: shouldAnimate ? 1 : 0.9
                   }}
                   transition={{ duration: 0.6, delay: 2, ease: 'easeOut' }}
                 >
@@ -257,7 +330,7 @@ export function Contact() {
                     variant="outline" 
                     size="lg"
                     className="w-full glass glass-hover transition-all duration-300 group border-white/20 text-foreground hover:bg-white/10"
-                    onClick={() => window.open('https://calendly.com/alexthompson', '_blank')}
+                    onClick={() => window.open(`mailto:${contactData?.email}?subject=Schedule a Call`, '_blank')}
                   >
                     <Phone className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
                     Schedule a Call
@@ -269,8 +342,8 @@ export function Contact() {
                 className="text-sm text-foreground/60 pt-4 border-t border-white/10"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ 
-                  opacity: isVisible ? 1 : 0, 
-                  y: isVisible ? 0 : 10 
+                  opacity: shouldAnimate ? 1 : 0, 
+                  y: shouldAnimate ? 0 : 10 
                 }}
                 transition={{ duration: 0.6, delay: 2.2, ease: 'easeOut' }}
               >
@@ -285,14 +358,16 @@ export function Contact() {
           className="text-center mt-16 pt-8"
           initial={{ opacity: 0, y: 30, scale: 0.95 }}
           animate={{ 
-            opacity: isVisible ? 1 : 0, 
-            y: isVisible ? 0 : 30,
-            scale: isVisible ? 1 : 0.95
+            opacity: shouldAnimate ? 1 : 0, 
+            y: shouldAnimate ? 0 : 30,
+            scale: shouldAnimate ? 1 : 0.95
           }}
           transition={{ duration: 0.8, delay: 2.4, ease: 'easeOut' }}
         >
           <p className="text-sm text-foreground/60">
-            © 2024 Alex Thompson. Crafted with passion for technology and innovation.
+            © 2024 {contactData?.email?.split('@')[0]?.split('.').map(word => 
+              word.charAt(0).toUpperCase() + word.slice(1)
+            ).join(' ') || 'Portfolio Owner'}. Crafted with passion for technology and innovation.
           </p>
         </motion.div>
       </div>

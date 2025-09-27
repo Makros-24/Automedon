@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
     } else {
       // If relative path, resolve from project root
       // process.cwd() points to the web app directory, so go up 3 levels to project root
-      const projectRoot = path.resolve(process.cwd(), '../../../');
+      const projectRoot = path.resolve(process.cwd(), '../../..');
       fullPath = path.resolve(projectRoot, configPath);
     }
 

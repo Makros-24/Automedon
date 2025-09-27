@@ -121,3 +121,6 @@ temp/
 
 # Local Netlify folder
 .netlify
+
+# Local Playwright
+.playwright-mcp/

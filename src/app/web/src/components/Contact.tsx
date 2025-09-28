@@ -102,7 +102,7 @@ export function Contact() {
   }
 
   return (
-    <section ref={sectionRef} id="contact" className="relative py-20 px-4">
+    <section ref={sectionRef} id="contact" className="relative pt-20 pb-8 px-4">
       {/* Enhanced Background Animation */}
       <motion.div 
         className="absolute inset-0 overflow-hidden"
@@ -353,23 +353,7 @@ export function Contact() {
           </motion.div>
         </div>
 
-        {/* Footer */}
-        <motion.div 
-          className="text-center mt-16 pt-8"
-          initial={{ opacity: 0, y: 30, scale: 0.95 }}
-          animate={{ 
-            opacity: shouldAnimate ? 1 : 0, 
-            y: shouldAnimate ? 0 : 30,
-            scale: shouldAnimate ? 1 : 0.95
-          }}
-          transition={{ duration: 0.8, delay: 2.4, ease: 'easeOut' }}
-        >
-          <p className="text-sm text-foreground/60">
-            © 2024 {contactData?.email?.split('@')[0]?.split('.').map(word => 
-              word.charAt(0).toUpperCase() + word.slice(1)
-            ).join(' ') || 'Portfolio Owner'}. Crafted with passion for technology and innovation.
-          </p>
-        </motion.div>
+
       </div>
     </section>
   );

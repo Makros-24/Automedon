@@ -1,43 +1,31 @@
-import React from 'react'
-import { motion } from 'motion/react'
-import { Badge } from '@/components/ui/badge'
-import { useInViewOnce } from '@/hooks/useInViewOnce'
-import { processSkillsWithIcons } from '@/utils/technologyIconManager'
-import { type SkillCategory as SkillCategoryType } from '@/types'
+import React from 'react';
+import { motion, type Variants } from 'motion/react';
+import { Badge } from '@/components/ui/badge';
+import { processSkillsWithIcons } from '@/utils/technologyIconManager';
+import { type SkillCategory as SkillCategoryType } from '@/types';
 
 interface SkillCategoryProps {
-  category: SkillCategoryType
-  index: number
+  category: SkillCategoryType;
+  variants: Variants;
 }
 
-export const SkillCategory = ({ category, index }: SkillCategoryProps) => {
-  const { ref: cardRef, isInView } = useInViewOnce({ 
-    threshold: 0.3, 
-    rootMargin: '0px 0px -10% 0px' 
-  })
-  const IconComponent = category.icon
-  
+export const SkillCategory = ({ category, variants }: SkillCategoryProps) => {
+  const IconComponent = category.icon;
+
   // Process skills with enhanced icons
-  const processedSkills = React.useMemo(() => 
-    processSkillsWithIcons(category.skills, 'w-3.5 h-3.5'), 
+  const processedSkills = React.useMemo(() =>
+    processSkillsWithIcons(category.skills, 'w-3.5 h-3.5'),
     [category.skills]
-  )
+  );
 
   return (
     <motion.div
-      ref={cardRef}
       className="group/card relative"
-      initial={{ opacity: 0, y: 50, scale: 0.9 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 50, scale: 0.9 }}
-      transition={{ 
-        duration: 0.9, 
-        delay: index * 0.15, 
-        ease: [0.23, 1, 0.32, 1] 
-      }}
-      whileHover={{ 
+      variants={variants}
+      whileHover={{
         y: -5,
         scale: 1.02,
-        transition: { duration: 0.2, ease: 'easeOut' }
+        transition: { duration: 0.2, ease: 'easeOut' },
       }}
     >
       <div className="relative p-6 rounded-2xl glass transition-all duration-300 h-full border border-white/10 hover:border-white/20 group-hover/card:bg-white/8 dark:group-hover/card:bg-white/5 group-hover/card:backdrop-blur-lg flex flex-col">
@@ -57,22 +45,17 @@ export const SkillCategory = ({ category, index }: SkillCategoryProps) => {
                 <motion.div
                   className="absolute top-0 left-0 h-0.5 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full opacity-0 group-hover:opacity-100"
                   initial={{ width: 0 }}
-                  whileHover={{ width: "80px" }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  whileHover={{ width: '80px' }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
                 />
               </div>
             </div>
           </div>
-          
+
           {/* Skills section */}
           <div className="flex flex-wrap gap-2 flex-1 content-start">
-            {processedSkills.map((skill, skillIndex) => (
-              <motion.div
-                key={skill.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: (index * 0.1) + (skillIndex * 0.03) }}
-              >
+            {processedSkills.map((skill) => (
+              <motion.div key={skill.name} variants={variants}>
                 <Badge
                   variant="secondary"
                   className="bg-white/10 border border-foreground/8 dark:border-white/20 text-foreground/80 transition-colors duration-300 px-3 py-1 text-sm font-normal cursor-default flex items-center gap-1.5"
@@ -88,5 +71,5 @@ export const SkillCategory = ({ category, index }: SkillCategoryProps) => {
         </div>
       </div>
     </motion.div>
-  )
-}
+  );
+};

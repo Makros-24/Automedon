@@ -1,27 +1,21 @@
-import React from 'react'
-import { motion } from 'motion/react'
-import { ExternalLink, Github } from 'lucide-react'
-import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
-import { useInViewOnce } from '@/hooks/useInViewOnce'
-import { processProjectTechnologies } from '@/utils/technologyIconManager'
-import { getOptimizedImageUrl } from '@/utils/dataLoader'
-import { type Project } from '@/types'
+import React from 'react';
+import { motion, type Variants } from 'motion/react';
+import { ExternalLink, Github } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { processProjectTechnologies } from '@/utils/technologyIconManager';
+import { getOptimizedImageUrl } from '@/utils/dataLoader';
+import { type Project } from '@/types';
 
 interface ProjectCardProps {
-  project: Project
-  index: number
+  project: Project;
+  variants: Variants;
 }
 
-export const ProjectCard = ({ project, index }: ProjectCardProps) => {
-  const { ref: cardRef, isInView } = useInViewOnce({ 
-    threshold: 0.2, 
-    rootMargin: '0px 0px -10% 0px' 
-  });
-  
+export const ProjectCard = ({ project, variants }: ProjectCardProps) => {
   // Process technologies with enhanced icons
-  const processedTechnologies = React.useMemo(() => 
-    processProjectTechnologies(project.technologies, 'w-3.5 h-3.5'), 
+  const processedTechnologies = React.useMemo(() =>
+    processProjectTechnologies(project.technologies, 'w-3.5 h-3.5'),
     [project.technologies]
   );
 
@@ -30,25 +24,18 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
 
   return (
     <motion.div
-      ref={cardRef}
       className="group/card relative"
-      initial={{ opacity: 0, y: 60, scale: 0.95 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 60, scale: 0.95 }}
-      transition={{ 
-        duration: 0.8, 
-        delay: index * 0.2, 
-        ease: [0.23, 1, 0.32, 1] // Custom cubic-bezier for smooth easing
-      }}
-      whileHover={{ 
+      variants={variants}
+      whileHover={{
         y: -8,
-        transition: { duration: 0.3, ease: 'easeOut' }
+        transition: { duration: 0.3, ease: 'easeOut' },
       }}
     >
       {/* Glass morphism card */}
       <div className="relative overflow-hidden rounded-2xl glass glass-hover transition-all duration-500 group-hover/card:shadow-2xl group-hover/card:shadow-black/10">
         {/* Animated gradient border */}
         <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-teal-500/10 opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
-        
+
         {/* Card content */}
         <div className="relative p-6">
           {/* Project image */}
@@ -60,7 +47,7 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
               loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
-            
+
             {/* Overlay links */}
             <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
               <Button
@@ -126,5 +113,5 @@ export const ProjectCard = ({ project, index }: ProjectCardProps) => {
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-500" />
       </div>
     </motion.div>
-  )
-}
+  );
+};

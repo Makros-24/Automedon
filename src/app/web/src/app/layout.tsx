@@ -7,6 +7,10 @@ export const metadata: Metadata = {
   description: "Personal portfolio application",
 };
 
+import { PortfolioDataProvider } from "@/contexts/PortfolioDataContext";
+
+// ... (existing code)
+
 export default function RootLayout({
   children,
 }: {
@@ -15,9 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ThemeProvider defaultTheme="light">
-          {children}
-        </ThemeProvider>
+        <PortfolioDataProvider>
+          <ThemeProvider defaultTheme="light">
+            {children}
+          </ThemeProvider>
+        </PortfolioDataProvider>
       </body>
     </html>
   );

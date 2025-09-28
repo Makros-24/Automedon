@@ -7,6 +7,7 @@ import { Hero } from '@/components/Hero';
 import { Work } from '@/components/Work';
 import { About } from '@/components/About';
 import { Contact } from '@/components/Contact';
+import { Footer } from '@/components/Footer';
 import { Toaster } from '@/components/ui/sonner';
 import { PortfolioDataProvider } from '@/contexts/PortfolioDataContext';
 
@@ -30,6 +31,7 @@ function AppContent() {
           <Work />
           <About />
           <Contact />
+		  <Footer />
         </main>
       </div>
       

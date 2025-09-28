@@ -1,9 +1,11 @@
-import { useEffect, useRef } from 'react';
-import { motion } from 'motion/react';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useAnimation } from 'motion/react';
 
 export function AnimatedBackground() {
   const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
   const blobRef = useRef<HTMLDivElement>(null);
+  const [isBrowserTabFocused, setIsBrowserTabFocused] = useState(true);
+  const controls = useAnimation();
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -13,9 +15,34 @@ export function AnimatedBackground() {
       }
     };
 
+    const handleVisibilityChange = () => {
+      setIsBrowserTabFocused(document.visibilityState === 'visible');
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
   }, []);
+
+  useEffect(() => {
+    if (isBrowserTabFocused) {
+      controls.start({
+        scale: [1, 1.1, 1],
+        rotate: [0, 10, 0],
+        transition: {
+          duration: 20,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        },
+      });
+    } else {
+      controls.stop();
+    }
+  }, [isBrowserTabFocused, controls]);
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden">
@@ -32,25 +59,17 @@ export function AnimatedBackground() {
         style={{
           background: 'radial-gradient(circle, rgba(59,130,246,0.4) 0%, rgba(147,51,234,0.3) 50%, rgba(20,184,166,0.2) 100%)',
         }}
-        animate={{
-          scale: [1, 1.1, 1],
-          rotate: [0, 10, 0],
-        }}
-        transition={{
-          duration: 20,
-          repeat: Infinity,
-          ease: 'easeInOut',
-        }}
+        animate={controls}
       />
 
       {/* Floating gradient orbs */}
       <motion.div
         className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full opacity-30 dark:opacity-20 blur-2xl bg-gradient-to-br from-purple-400 to-pink-400 dark:from-purple-600 dark:to-pink-600"
-        animate={{
+        animate={isBrowserTabFocused ? {
           x: [0, 50, 0],
           y: [0, -30, 0],
           scale: [1, 1.2, 1],
-        }}
+        } : {}}
         transition={{
           duration: 15,
           repeat: Infinity,
@@ -60,11 +79,11 @@ export function AnimatedBackground() {
 
       <motion.div
         className="absolute bottom-1/3 right-1/3 w-40 h-40 rounded-full opacity-25 dark:opacity-15 blur-2xl bg-gradient-to-br from-blue-400 to-teal-400 dark:from-blue-600 dark:to-teal-600"
-        animate={{
+        animate={isBrowserTabFocused ? {
           x: [0, -40, 0],
           y: [0, 40, 0],
           scale: [1, 0.8, 1],
-        }}
+        } : {}}
         transition={{
           duration: 18,
           repeat: Infinity,
@@ -75,11 +94,11 @@ export function AnimatedBackground() {
 
       <motion.div
         className="absolute top-2/3 left-1/6 w-24 h-24 rounded-full opacity-35 dark:opacity-25 blur-xl bg-gradient-to-br from-indigo-400 to-cyan-400 dark:from-indigo-600 dark:to-cyan-600"
-        animate={{
+        animate={isBrowserTabFocused ? {
           x: [0, 30, 0],
           y: [0, -50, 0],
           rotate: [0, 180, 360],
-        }}
+        } : {}}
         transition={{
           duration: 12,
           repeat: Infinity,
@@ -96,9 +115,9 @@ export function AnimatedBackground() {
           border: '1px solid rgba(0,0,0,0.1)',
           borderRadius: '8px',
         }}
-        animate={{
+        animate={isBrowserTabFocused ? {
           rotate: [0, 360],
-        }}
+        } : {}}
         transition={{
           duration: 25,
           repeat: Infinity,
@@ -113,10 +132,10 @@ export function AnimatedBackground() {
           border: '1px solid rgba(0,0,0,0.08)',
           borderRadius: '50%',
         }}
-        animate={{
+        animate={isBrowserTabFocused ? {
           rotate: [360, 0],
           scale: [1, 1.3, 1],
-        }}
+        } : {}}
         transition={{
           duration: 20,
           repeat: Infinity,

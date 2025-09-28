@@ -1,34 +1,21 @@
-import React from 'react'
-import { motion } from 'motion/react'
-import { useInViewOnce } from '@/hooks/useInViewOnce'
-import { type Achievement as AchievementType } from '@/types'
+import React from 'react';
+import { motion, type Variants } from 'motion/react';
+import { type Achievement as AchievementType } from '@/types';
 
 interface AchievementProps {
-  achievement: AchievementType
-  index: number
+  achievement: AchievementType;
+  variants: Variants;
 }
 
-export const Achievement = ({ achievement, index }: AchievementProps) => {
-  const { ref: cardRef, isInView } = useInViewOnce({ 
-    threshold: 0.3, 
-    rootMargin: '0px 0px -10% 0px' 
-  })
-
+export const Achievement = ({ achievement, variants }: AchievementProps) => {
   return (
     <motion.div
-      ref={cardRef}
       className="text-center group"
-      initial={{ opacity: 0, y: 40, scale: 0.9 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 40, scale: 0.9 }}
-      transition={{ 
-        duration: 0.8, 
-        delay: index * 0.15, 
-        ease: [0.23, 1, 0.32, 1] 
-      }}
-      whileHover={{ 
+      variants={variants}
+      whileHover={{
         y: -3,
         scale: 1.05,
-        transition: { duration: 0.2, ease: 'easeOut' }
+        transition: { duration: 0.2, ease: 'easeOut' },
       }}
     >
       <div className="relative p-6 rounded-2xl glass glass-hover transition-all duration-300 group-hover:bg-white/5">
@@ -48,5 +35,5 @@ export const Achievement = ({ achievement, index }: AchievementProps) => {
         </p>
       </div>
     </motion.div>
-  )
-}
+  );
+};

@@ -22,13 +22,7 @@ export function Hero() {
 
   const handleDownloadResume = () => {
     if (personalInfo?.resumeUrl) {
-      // Create download link
-      const link = document.createElement('a');
-      link.href = personalInfo.resumeUrl;
-      link.download = `${personalInfo.name.replace(/\s+/g, '_')}_Resume.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      window.open(personalInfo.resumeUrl, '_blank');
     } else {
       alert('Resume not available for download');
     }
@@ -156,9 +150,8 @@ export function Hero() {
             {/* Secondary CTA */}
             <Button
               onClick={handleDownloadResume}
-              variant="outline"
               size="lg"
-              className="group relative bg-white/5 hover:bg-white/10 border border-white/20 hover:border-white/30 backdrop-blur-sm rounded-full px-8 py-3 transition-all duration-300 w-full md:w-auto"
+              className="group relative bg-slate-200/20 hover:bg-slate-200/30 border border-slate-200/30 hover:border-slate-200/40 text-slate-800 dark:bg-white/5 dark:hover:bg-white/10 dark:border-white/20 dark:hover:border-white/30 dark:text-white backdrop-blur-sm rounded-full px-8 py-3 transition-all duration-300 w-full md:w-auto hover:scale-105 active:scale-95"
             >
               <span className="flex items-center gap-2">
                 <Download className="w-4 h-4" />

@@ -2,15 +2,9 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { type PortfolioData } from '@/types';
+
 import { getPortfolioData } from '@/utils/dataLoader';
 import { processSkillCategory, processAchievement } from '@/utils/iconMapper';
-
-interface PortfolioDataContextType {
-  data: PortfolioData | null;
-  loading: boolean;
-  error: string | null;
-  refetch: () => Promise<void>;
-}
 
 const PortfolioDataContext = createContext<PortfolioDataContextType | undefined>(undefined);
 

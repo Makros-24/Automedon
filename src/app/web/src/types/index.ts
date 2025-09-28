@@ -58,6 +58,13 @@ export interface Achievement {
   description: string
 }
 
+// Footer information
+export interface FooterInfo {
+  copyrightName: string;
+  copyrightYear: number;
+  madeWithText: string;
+}
+
 // Complete portfolio data structure
 export interface PortfolioData {
   personalInfo: PersonalInfo
@@ -65,6 +72,7 @@ export interface PortfolioData {
   skillCategories: SkillCategory[]
   achievements: Achievement[]
   contactInfo: ContactInfo
+  footer: FooterInfo
 }
 
 // Animation types

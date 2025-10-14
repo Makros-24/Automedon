@@ -20,9 +20,16 @@ import {
   GitBranch, 
   Wrench, 
   Box,
+  Mail,
+  Github,
+  Linkedin,
+  MapPin,
+  Phone,
+  Send,
+  Twitter,
   type LucideIcon
 } from 'lucide-react';
-import { type SkillCategory as SkillCategoryType, type Achievement as AchievementType } from '@/types';
+import { type SkillCategory as SkillCategoryType, type Achievement as AchievementType, type ContactInfo as ContactInfoType } from '@/types';
 
 // Icon name to Lucide icon mapping
 const iconMap: Record<string, LucideIcon> = {
@@ -51,6 +58,15 @@ const iconMap: Record<string, LucideIcon> = {
   'GitBranch': GitBranch,
   'Wrench': Wrench,
   'Box': Box,
+
+  // Contact
+  'Mail': Mail,
+  'Github': Github,
+  'Linkedin': Linkedin,
+  'MapPin': MapPin,
+  'Phone': Phone,
+  'Send': Send,
+  'Twitter': Twitter,
 };
 
 /**
@@ -97,6 +113,24 @@ export function processAchievement(achievement: AchievementType): AchievementTyp
   return {
     ...achievement,
     icon: processedIcon
+  };
+}
+
+/**
+ * Convert contact info with string icons to component-based icons
+ */
+export function processContactInfo(contactInfo: ContactInfoType): ContactInfoType {
+  const processedMethods = { ...contactInfo.methods };
+  for (const key in processedMethods) {
+    const method = processedMethods[key as keyof typeof processedMethods];
+    if (method && typeof method.icon === 'string') {
+      method.icon = getIconComponent(method.icon);
+    }
+  }
+
+  return {
+    ...contactInfo,
+    methods: processedMethods,
   };
 }
 

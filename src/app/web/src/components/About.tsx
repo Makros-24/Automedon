@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useInViewOnce } from '../hooks/useInViewOnce';
-import { useSkillCategories, useAchievements } from '@/contexts/PortfolioDataContext';
+import { useSkillCategories, useAchievements, useAbout } from '@/contexts/PortfolioDataContext';
 import { SkillCategory } from './skills/SkillCategory';
 import { Achievement } from './achievements/Achievement';
 import { SkeletonGrid } from './ui/loading';
@@ -21,6 +21,7 @@ const itemVariants = {
 };
 
 export function About() {
+  const { about } = useAbout();
   const { skillCategories, loading: skillsLoading, error: skillsError } = useSkillCategories();
   const { achievements, loading: achievementsLoading, error: achievementsError } = useAchievements();
   const { ref: sectionRef, isInView } = useInViewOnce({ threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
@@ -49,12 +50,10 @@ export function About() {
         {/* Section header */}
         <motion.div className="text-center mb-16" variants={itemVariants}>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-            About Me
+            {about?.title || 'About Me'}
           </h2>
           <p className="text-xl text-foreground/70 max-w-4xl mx-auto leading-relaxed">
-            Passionate about creating innovative solutions that bridge the gap between complex technical
-            requirements and elegant user experiences. I specialize in architecting scalable systems
-            that drive business success.
+            {about?.description || 'Passionate about creating innovative solutions that bridge the gap between complex technical requirements and elegant user experiences. I specialize in architecting scalable systems that drive business success.'}
           </p>
         </motion.div>
 
@@ -65,7 +64,7 @@ export function About() {
               className="text-3xl font-semibold text-foreground mb-12 text-center"
               variants={itemVariants}
             >
-              Technologies
+              {about?.skillsTitle || 'Technologies'}
             </motion.h3>
 
             {skillsLoading ? (
@@ -96,7 +95,7 @@ export function About() {
               className="text-3xl font-semibold text-foreground mb-12 text-center"
               variants={itemVariants}
             >
-              Key Achievements
+              {about?.achievementsTitle || 'Key Achievements'}
             </motion.h3>
             {achievementsLoading ? (
               <SkeletonGrid className="grid-cols-1 md:grid-cols-2 lg:grid-cols-4" columns={4} rows={1} />

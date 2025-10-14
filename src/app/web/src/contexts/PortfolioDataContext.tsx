@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { type PortfolioData } from '@/types';
 
 import { getPortfolioData } from '@/utils/dataLoader';
-import { processSkillCategory, processAchievement } from '@/utils/iconMapper';
+import { processSkillCategory, processAchievement, processContactInfo } from '@/utils/iconMapper';
 
 const PortfolioDataContext = createContext<PortfolioDataContextType | undefined>(undefined);
 
@@ -28,7 +28,8 @@ export function PortfolioDataProvider({ children }: PortfolioDataProviderProps) 
       const processedData: PortfolioData = {
         ...portfolioData,
         skillCategories: portfolioData.skillCategories.map(processSkillCategory),
-        achievements: portfolioData.achievements.map(processAchievement)
+        achievements: portfolioData.achievements.map(processAchievement),
+        contactInfo: processContactInfo(portfolioData.contactInfo)
       };
       
       setData(processedData);
@@ -73,6 +74,16 @@ export function usePersonalInfo() {
   return { personalInfo: data?.personalInfo || null, loading, error };
 }
 
+export function useAbout() {
+  const { data, loading, error } = usePortfolioData();
+  return { about: data?.about || null, loading, error };
+}
+
+export function useWork() {
+  const { data, loading, error } = usePortfolioData();
+  return { work: data?.work || null, loading, error };
+}
+
 export function useProjects() {
   const { data, loading, error } = usePortfolioData();
   return { projects: data?.projects || [], loading, error };
@@ -91,4 +102,11 @@ export function useAchievements() {
 export function useContactInfo() {
   const { data, loading, error } = usePortfolioData();
   return { contactInfo: data?.contactInfo || null, loading, error };
+}
+
+interface PortfolioDataContextType {
+    data: PortfolioData | null;
+    loading: boolean;
+    error: string | null;
+    refetch: () => void;
 }

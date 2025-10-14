@@ -1,206 +1,142 @@
 import { motion } from 'motion/react';
 import { useInViewOnce } from '../hooks/useInViewOnce';
-import { Mail, Github, Linkedin, MapPin, Phone, Send, Twitter } from 'lucide-react';
+import { Mail, MapPin, Phone, Send, Linkedin as LinkedinIcon, Github as GithubIcon, Twitter as TwitterIcon } from 'lucide-react';
 import { Button } from './ui/button';
-import { getPortfolioData } from '../utils/dataLoader';
-import { useEffect, useState, useRef } from 'react';
-import { ContactInfo } from '../types';
+import { useContactInfo } from '@/contexts/PortfolioDataContext';
+
+// Animation variants matching Work section pattern
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0 },
+};
 
 export function Contact() {
-  const [contactData, setContactData] = useState<ContactInfo | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [isVisible, setIsVisible] = useState(false);
-  const sectionRef = useRef<HTMLElement>(null);
+  const { contactInfo: contactData, loading } = useContactInfo();
+  const { ref: sectionRef, isInView } = useInViewOnce({ threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
 
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const data = await getPortfolioData();
-        setContactData(data.contactInfo);
-      } catch (error) {
-        console.error('Error loading contact data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
-
-  // Custom intersection observer that only starts after data is loaded
-  useEffect(() => {
-    if (loading || !contactData || !sectionRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target); // Trigger once
-        }
-      },
-      {
-        threshold: 0,
-        rootMargin: '0px 0px 100px 0px'
-      }
-    );
-
-    observer.observe(sectionRef.current);
-
-    return () => {
-      observer.disconnect();
-    };
-  }, [loading, contactData]);
-
-  // Ensure animations are visible when data is loaded and section is in view
-  const shouldAnimate = !loading && contactData && isVisible;
-
-  // Create contact methods from loaded data
+  // Prepare contact methods (outside conditional to avoid hooks issues)
   const contactMethods = contactData ? [
     {
       icon: Mail,
       label: 'Email',
       value: contactData.email,
       href: `mailto:${contactData.email}`,
-      description: 'Send me an email'
     },
     {
-      icon: Linkedin,
+      icon: LinkedinIcon,
       label: 'LinkedIn',
-      value: contactData.linkedin.replace('linkedin.com/', ''),
+      value: contactData.linkedin.replace('www.linkedin.com/in/', ''),
       href: `https://${contactData.linkedin}`,
-      description: 'Connect on LinkedIn'
     },
     {
-      icon: Github,
+      icon: GithubIcon,
       label: 'GitHub',
       value: contactData.github.replace('github.com/', ''),
       href: `https://${contactData.github}`,
-      description: 'View my code'
     },
     {
-      icon: Twitter,
+      icon: TwitterIcon,
       label: 'Twitter',
-      value: contactData.twitter.replace('x.com/', ''),
+      value: 'Twitter',
       href: `https://${contactData.twitter}`,
-      description: 'Follow me on Twitter'
-    }
+    },
   ] : [];
 
-  if (loading) {
-    return (
-      <section id="contact" className="relative py-20 px-4">
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <div className="text-center">
-            <div className="animate-pulse">
-              <div className="h-8 bg-foreground/20 rounded mb-4 mx-auto w-64"></div>
-              <div className="h-4 bg-foreground/20 rounded mb-8 mx-auto w-96"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
-    <section ref={sectionRef} id="contact" className="relative pt-20 pb-8 px-4">
-      {/* Enhanced Background Animation */}
-      <motion.div 
+    <motion.section
+      id="contact"
+      className="relative py-20 px-6 overflow-hidden"
+      ref={sectionRef}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
+      variants={containerVariants}
+    >
+      {/* Background Animation - matching Work section pattern */}
+      <motion.div
         className="absolute inset-0 overflow-hidden"
-        initial={{ opacity: 0 }}
-        animate={shouldAnimate ? { opacity: 1 } : { opacity: 0 }}
-        transition={{ duration: 1.5, delay: 0.3 }}
+        variants={{ hidden: { opacity: 0 }, visible: { opacity: 1 } }}
+        transition={{ duration: 1.2, delay: 0.3 }}
       >
-        <div className="absolute top-1/4 right-1/3 w-1 h-32 opacity-20 animate-pulse bg-gradient-to-b from-transparent via-white/20 to-transparent" />
-        <div className="absolute bottom-1/3 left-1/4 w-48 h-48 rounded-full blur-3xl opacity-20 animate-float bg-gradient-to-r from-blue-400/20 to-purple-500/20" style={{ animationDelay: '3s' }} />
-        <div className="absolute top-1/2 right-1/5 w-64 h-64 rounded-full blur-2xl opacity-15 animate-float bg-gradient-to-r from-teal-400/15 to-indigo-500/15" style={{ animationDelay: '1s' }} />
-        <div className="absolute bottom-1/4 right-1/2 w-32 h-32 rounded-full blur-xl opacity-25 animate-float bg-gradient-to-r from-amber-400/20 to-orange-500/20" style={{ animationDelay: '5s' }} />
+        <div className="absolute top-1/4 left-1/4 w-64 h-64 rounded-full blur-3xl opacity-10 animate-float bg-gradient-to-r from-blue-400/30 to-purple-500/30" style={{ animationDelay: '2s' }} />
+        <div className="absolute bottom-1/3 right-1/4 w-48 h-48 rounded-full blur-2xl opacity-15 animate-float bg-gradient-to-r from-teal-400/25 to-indigo-500/25" style={{ animationDelay: '4s' }} />
       </motion.div>
 
       <div className="relative z-10 max-w-4xl mx-auto">
-        <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 50, scale: 0.9 }}
-          animate={{ 
-            opacity: shouldAnimate ? 1 : 0, 
-            y: shouldAnimate ? 0 : 50,
-            scale: shouldAnimate ? 1 : 0.9
-          }}
-          transition={{ duration: 1, ease: [0.23, 1, 0.32, 1] }}
-        >
-          <motion.h2 
-            className="text-3xl md:text-4xl lg:text-5xl font-light mb-4 text-foreground"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ 
-              opacity: shouldAnimate ? 1 : 0, 
-              y: shouldAnimate ? 0 : 30 
-            }}
-            transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-          >
-            Let's <span className="font-medium">Connect</span>
-          </motion.h2>
-          <motion.p 
-            className="text-lg text-foreground/70 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ 
-              opacity: shouldAnimate ? 1 : 0, 
-              y: shouldAnimate ? 0 : 20 
-            }}
-            transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
-          >
-            I'm always interested in discussing new opportunities, innovative projects, 
-            and connecting with fellow technology enthusiasts.
-          </motion.p>
-        </motion.div>
+        {/* Loading State */}
+        {loading ? (
+          <div className="text-center mb-16">
+            <div className="animate-pulse space-y-4">
+              <div className="h-12 bg-foreground/10 rounded-lg w-64 mx-auto"></div>
+              <div className="h-6 bg-foreground/10 rounded-lg w-96 mx-auto"></div>
+            </div>
+          </div>
+        ) : !contactData ? (
+          /* Error State */
+          <div className="text-center text-foreground/70">
+            <p>Contact information not available</p>
+          </div>
+        ) : (
+          /* Main Content */
+          <>
+            {/* Section Header */}
+            <motion.div className="text-center mb-16" variants={itemVariants}>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent mb-4">
+                {contactData.title}
+              </h2>
+              <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
+                {contactData.description}
+              </p>
+            </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Contact Information */}
-          <motion.div 
-            className="space-y-8"
-            initial={{ opacity: 0, x: -50, scale: 0.95 }}
-            animate={{ 
-              opacity: shouldAnimate ? 1 : 0, 
-              x: shouldAnimate ? 0 : -50,
-              scale: shouldAnimate ? 1 : 0.95
-            }}
-            transition={{ duration: 0.9, delay: 0.6, ease: [0.23, 1, 0.32, 1] }}
-          >
-            {/* Location */}
-            <motion.div 
+        {/* Two-Column Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Left Column: Contact Information */}
+          <div className="space-y-6">
+            {/* Location Card */}
+            <motion.div
               className="glass glass-hover rounded-2xl p-6 transition-all duration-300"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ 
-                opacity: shouldAnimate ? 1 : 0, 
-                y: shouldAnimate ? 0 : 30 
-              }}
-              transition={{ duration: 0.7, delay: 0.8, ease: 'easeOut' }}
-              whileHover={{ 
+              variants={itemVariants}
+              whileHover={{
                 y: -3,
                 scale: 1.02,
                 transition: { duration: 0.2, ease: 'easeOut' }
               }}
             >
               <div className="flex items-start space-x-4">
-                <div className="glass-light rounded-lg p-3 animate-glow">
+                <div className="glass-light rounded-lg p-3">
                   <MapPin className="h-6 w-6 text-foreground/70" />
                 </div>
-                <div>
-                  <h3 className="text-lg font-medium mb-1 text-foreground">Location</h3>
-                  <p className="text-foreground/70">{contactData?.location || 'Remote'}</p>
-                  {contactData?.phone && (
-                    <p className="text-sm text-foreground/60 mt-1">
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold mb-1 text-foreground">
+                    {contactData.locationTitle}
+                  </h3>
+                  <p className="text-foreground/70 mb-1">{contactData.location}</p>
+                  {contactData.phone && (
+                    <p className="text-sm text-foreground/60 mb-1">
                       Phone: {contactData.phone}
                     </p>
                   )}
-                  <p className="text-sm text-foreground/60 mt-1">
-                    Available for remote work and travel
+                  <p className="text-sm text-foreground/60">
+                    {contactData.locationDescription}
                   </p>
                 </div>
               </div>
             </motion.div>
 
             {/* Contact Methods */}
-            <div className="space-y-4">
-              {contactMethods.map((method, index) => {
+            <div className="space-y-3">
+              {contactMethods.map((method) => {
                 const Icon = method.icon;
                 return (
                   <motion.a
@@ -209,32 +145,22 @@ export function Contact() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block glass glass-hover rounded-xl p-4 transition-all duration-300 group"
-                    initial={{ opacity: 0, y: 30, x: -20 }}
-                    animate={{ 
-                      opacity: shouldAnimate ? 1 : 0, 
-                      y: shouldAnimate ? 0 : 30,
-                      x: shouldAnimate ? 0 : -20
-                    }}
-                    transition={{ 
-                      duration: 0.7, 
-                      delay: 1 + index * 0.15,
-                      ease: [0.23, 1, 0.32, 1]
-                    }}
-                    whileHover={{ 
-                      scale: 1.03,
+                    variants={itemVariants}
+                    whileHover={{
+                      scale: 1.02,
                       y: -2,
                       transition: { duration: 0.2, ease: 'easeOut' }
                     }}
-                    whileTap={{ scale: 0.97 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     <div className="flex items-center space-x-4">
-                      <div className="glass-light rounded-lg p-2 group-hover:bg-white/20 transition-colors">
-                        <Icon className="h-5 w-5 text-foreground/70 group-hover:text-foreground transition-colors" />
+                      <div className="glass-light rounded-lg p-2.5 group-hover:bg-white/20 transition-colors duration-300">
+                        <Icon className="h-5 w-5 text-foreground/70 group-hover:text-foreground transition-colors duration-300" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
                           <span className="font-medium text-foreground">{method.label}</span>
-                          <Send className="h-4 w-4 text-foreground/60 group-hover:text-foreground/80 transition-colors" />
+                          <Send className="h-4 w-4 text-foreground/40 group-hover:text-foreground/80 group-hover:translate-x-0.5 transition-all duration-300" />
                         </div>
                         <p className="text-sm text-foreground/70 truncate">
                           {method.value}
@@ -245,116 +171,68 @@ export function Contact() {
                 );
               })}
             </div>
-          </motion.div>
+          </div>
 
-          {/* Call to Action */}
-          <motion.div 
-            className="glass glass-hover rounded-2xl p-8 text-center"
-            initial={{ opacity: 0, x: 50, scale: 0.95 }}
-            animate={{ 
-              opacity: shouldAnimate ? 1 : 0, 
-              x: shouldAnimate ? 0 : 50,
-              scale: shouldAnimate ? 1 : 0.95
-            }}
-            transition={{ duration: 0.9, delay: 0.8, ease: [0.23, 1, 0.32, 1] }}
-            whileHover={{ 
+          {/* Right Column: Call to Action Card */}
+          <motion.div
+            className="glass glass-hover rounded-2xl p-8 text-center h-fit"
+            variants={itemVariants}
+            whileHover={{
               y: -5,
               scale: 1.02,
               transition: { duration: 0.3, ease: 'easeOut' }
             }}
           >
             <div className="space-y-6">
-              <motion.div 
-                className="glass-light rounded-full w-20 h-20 mx-auto flex items-center justify-center animate-glow"
-                initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
-                animate={{ 
-                  opacity: shouldAnimate ? 1 : 0,
-                  scale: shouldAnimate ? 1 : 0.5,
-                  rotate: shouldAnimate ? 0 : -180
-                }}
-                transition={{ duration: 0.8, delay: 1.2, ease: 'easeOut' }}
-              >
-                <Phone className="h-8 w-8 text-foreground/70" />
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ 
-                  opacity: shouldAnimate ? 1 : 0, 
-                  y: shouldAnimate ? 0 : 20 
-                }}
-                transition={{ duration: 0.7, delay: 1.4, ease: 'easeOut' }}
-              >
-                <h3 className="text-xl font-medium mb-2 text-foreground">Ready to Start?</h3>
-                <p className="text-foreground/70 mb-6">
-                  Let's discuss how I can help architect solutions for your next big project.
+              {/* Icon */}
+              <div className="glass-light rounded-full w-20 h-20 mx-auto flex items-center justify-center">
+                <Phone className="h-9 w-9 text-foreground/70" />
+              </div>
+
+              {/* Title and Description */}
+              <div>
+                <h3 className="text-2xl font-bold mb-3 text-foreground">
+                  {contactData.cta.title}
+                </h3>
+                <p className="text-foreground/70">
+                  {contactData.cta.description}
                 </p>
-              </motion.div>
+              </div>
 
-              <motion.div 
-                className="space-y-4"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ 
-                  opacity: shouldAnimate ? 1 : 0, 
-                  y: shouldAnimate ? 0 : 30 
-                }}
-                transition={{ duration: 0.8, delay: 1.6, ease: 'easeOut' }}
-              >
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ 
-                    opacity: shouldAnimate ? 1 : 0,
-                    scale: shouldAnimate ? 1 : 0.9
-                  }}
-                  transition={{ duration: 0.6, delay: 1.8, ease: 'easeOut' }}
+              {/* Action Buttons */}
+              <div className="space-y-3">
+                <Button
+                  size="lg"
+                  className="w-full glass glass-hover transition-all duration-300 group bg-foreground/10 hover:bg-foreground/20 text-foreground border-white/20"
+                  onClick={() => window.open(`mailto:${contactData.email}`, '_blank')}
                 >
-                  <Button 
-                    size="lg" 
-                    className="w-full glass glass-hover transition-all duration-300 group bg-foreground/10 hover:bg-foreground/20 text-foreground border-white/20"
-                    onClick={() => window.open(`mailto:${contactData?.email}`, '_blank')}
-                  >
-                    <Mail className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-                    Start a Conversation
-                  </Button>
-                </motion.div>
-                
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ 
-                    opacity: shouldAnimate ? 1 : 0,
-                    scale: shouldAnimate ? 1 : 0.9
-                  }}
-                  transition={{ duration: 0.6, delay: 2, ease: 'easeOut' }}
-                >
-                  <Button 
-                    variant="outline" 
-                    size="lg"
-                    className="w-full glass glass-hover transition-all duration-300 group border-white/20 text-foreground hover:bg-white/10"
-                    onClick={() => window.open(`mailto:${contactData?.email}?subject=Schedule a Call`, '_blank')}
-                  >
-                    <Phone className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform" />
-                    Schedule a Call
-                  </Button>
-                </motion.div>
-              </motion.div>
+                  <Mail className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
+                  {contactData.cta.button1}
+                </Button>
 
-              <motion.div 
-                className="text-sm text-foreground/60 pt-4 border-t border-white/10"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ 
-                  opacity: shouldAnimate ? 1 : 0, 
-                  y: shouldAnimate ? 0 : 10 
-                }}
-                transition={{ duration: 0.6, delay: 2.2, ease: 'easeOut' }}
-              >
-                <p>Response time: Usually within 24 hours</p>
-              </motion.div>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="w-full glass glass-hover transition-all duration-300 group border-white/20 text-foreground hover:bg-white/10"
+                  onClick={() => window.open(`mailto:${contactData.email}?subject=Schedule a Call`, '_blank')}
+                >
+                  <Phone className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
+                  {contactData.cta.button2}
+                </Button>
+              </div>
+
+              {/* Response Time */}
+              <div className="pt-4 border-t border-white/10">
+                <p className="text-sm text-foreground/60">
+                  {contactData.responseTime}
+                </p>
+              </div>
             </div>
           </motion.div>
         </div>
-
-
+          </>
+        )}
       </div>
-    </section>
+    </motion.section>
   );
 }

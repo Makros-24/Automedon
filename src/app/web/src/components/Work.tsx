@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useInViewOnce } from '../hooks/useInViewOnce';
-import { useProjects } from '@/contexts/PortfolioDataContext';
+import { useProjects, useWork } from '@/contexts/PortfolioDataContext';
 import { ProjectCard } from './projects/ProjectCard';
 import { SkeletonGrid } from './ui/loading';
 
@@ -21,6 +21,7 @@ const itemVariants = {
 
 export function Work() {
   const { projects, loading, error } = useProjects();
+  const { work } = useWork();
   const { ref: sectionRef, isInView } = useInViewOnce({ threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
 
   return (
@@ -46,11 +47,10 @@ export function Work() {
         {/* Section header */}
         <motion.div className="text-center mb-16" variants={itemVariants}>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent mb-4">
-            Featured Work
+            {work?.title || 'Featured Work'}
           </h2>
           <p className="text-lg text-foreground/70 max-w-2xl mx-auto">
-            A selection of projects that showcase my expertise in solution architecture,
-            full-stack development, and cloud infrastructure.
+            {work?.description || 'A selection of projects that showcase my expertise in solution architecture, full-stack development, and cloud infrastructure.'}
           </p>
         </motion.div>
 

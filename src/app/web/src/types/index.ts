@@ -22,12 +22,29 @@ export interface PersonalInfo {
 
 // Contact information
 export interface ContactInfo {
-  email: string
-  linkedin: string
-  github: string
-  twitter: string
-  phone?: string
-  location?: string
+  title: string;
+  description: string;
+  locationTitle: string;
+  locationDescription: string;
+  cta: {
+    title: string;
+    description: string;
+    button1: string;
+    button2: string;
+  };
+  responseTime: string;
+  email: string;
+  linkedin: string;
+  github: string;
+  twitter: string;
+  phone?: string;
+  location?: string;
+  methods: {
+    email: { description: string };
+    linkedin: { description: string };
+    github: { description: string };
+    twitter: { description: string };
+  };
 }
 
 // Core data types for the portfolio
@@ -65,9 +82,23 @@ export interface FooterInfo {
   madeWithText: string;
 }
 
+export interface AboutData {
+  title: string;
+  description: string;
+  skillsTitle: string;
+  achievementsTitle: string;
+}
+
+export interface WorkData {
+  title: string;
+  description: string;
+}
+
 // Complete portfolio data structure
 export interface PortfolioData {
   personalInfo: PersonalInfo
+  about: AboutData;
+  work: WorkData;
   projects: Project[]
   skillCategories: SkillCategory[]
   achievements: Achievement[]

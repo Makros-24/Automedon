@@ -56,6 +56,15 @@ npm run test:watch
 - **Import Paths**: Uses `@/` alias pointing to `src/` directory
 - **Configuration**: All build tools (TypeScript, ESLint, Jest, PostCSS, Tailwind) are configured and ready
 
+## Development Conventions
+
+- **Data Source**: All portfolio data is managed in the `portfolio-data.json` file in the project root. The frontend fetches this data through the `/api/portfolio` API route. The path to this file is configured via the `PORTFOLIO_CONFIG_PATH` environment variable.
+- **State Management**: The portfolio data is managed globally using React Context (`PortfolioDataContext`) for efficient state distribution across components.
+- **API Endpoint**: The backend is implemented as a Next.js API route. The main endpoint is `/api/portfolio`, which serves the portfolio data with validation and caching.
+- **Styling**: The project uses Tailwind CSS utility classes directly in JSX code for component styling. Custom variants are managed using class-variance-authority (CVA).
+- **Testing**: The project uses Jest and React Testing Library for testing. Test files are located in `__tests__` directories alongside the components they are testing.
+- **Component Architecture**: Reusable components are located in the `src/app/web/src/components` directory, organized by type (ui, sections, forms, layout).
+
 ## Project Documentation
 
 ### Context Files
@@ -89,6 +98,7 @@ For comprehensive project guidance, refer to these documentation files:
 #### Technical Terms
 - **SSR-Compatible**: Components that work with server-side rendering
 - **Theme Provider**: Context provider managing dark/light theme state
+- **Portfolio Data Context**: React Context (`PortfolioDataContext`) for global portfolio data state management
 - **Glass Morphism**: UI design technique using backdrop-blur and transparency
 - **Radix Primitives**: Unstyled, accessible component foundations
 - **Enhanced Icons**: Technology icon system supporting base64, URL, and Lucide fallback icons

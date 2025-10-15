@@ -26,31 +26,36 @@ export function Contact() {
   const { ref: sectionRef, isInView } = useInViewOnce({ threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
 
   // Prepare contact methods (outside conditional to avoid hooks issues)
+  // Filter out empty/undefined contact methods
   const contactMethods = contactData ? [
-    {
+    // Email - show if exists and not empty
+    ...(contactData.email ? [{
       icon: Mail,
       label: 'Email',
       value: contactData.email,
       href: `mailto:${contactData.email}`,
-    },
-    {
+    }] : []),
+    // LinkedIn - show if exists and not empty
+    ...(contactData.linkedin ? [{
       icon: LinkedinIcon,
       label: 'LinkedIn',
       value: contactData.linkedin.replace('www.linkedin.com/in/', ''),
       href: `https://${contactData.linkedin}`,
-    },
-    {
+    }] : []),
+    // GitHub - show if exists and not empty
+    ...(contactData.github ? [{
       icon: GithubIcon,
       label: 'GitHub',
       value: contactData.github.replace('github.com/', ''),
       href: `https://${contactData.github}`,
-    },
-    {
+    }] : []),
+    // Twitter - show if exists and not empty
+    ...(contactData.twitter ? [{
       icon: TwitterIcon,
       label: 'Twitter',
       value: 'Twitter',
       href: `https://${contactData.twitter}`,
-    },
+    }] : []),
   ] : [];
 
   return (

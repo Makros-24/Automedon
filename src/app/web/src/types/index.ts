@@ -54,6 +54,7 @@ export interface Project {
   company: string
   role: string
   description: string
+  markdownDescription?: string // Optional rich markdown content for detailed view
   image: ImageData | string // Support both new and legacy format
   technologies: (string | TechnologyWithIcon)[] // Support both string and enhanced format
   links: {

@@ -2,11 +2,11 @@
   "permissions": {
     "allow": [
       "mcp__playwright",
-      "Bash(powershell:*)",
       "Bash(npm run dev:*)",
       "Bash(npm install:*)",
       "Bash(npm test:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(npm run build)"
     ],
     "deny": []
   }

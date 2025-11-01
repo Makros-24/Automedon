@@ -37,6 +37,10 @@ next-env.d.ts
 # Testing
 coverage/
 *.lcov
+test-*.js
+test-*.mjs
+test-*.ts
+nul
 
 # IDE
 .vscode/

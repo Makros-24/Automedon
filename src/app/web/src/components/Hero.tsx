@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { ChevronDown, Download, Eye, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
-import { AIChatPopup } from './AIChatPopup';
 import { usePersonalInfo } from '@/contexts/PortfolioDataContext';
 import { Loading, SkeletonText } from './ui/loading';
+import * as Dialog from '@radix-ui/react-dialog';
 
 export function Hero() {
-  const [isAIChatOpen, setIsAIChatOpen] = useState(false);
+  const [isWipDialogOpen, setIsWipDialogOpen] = useState(false);
   const { personalInfo, loading, error } = usePersonalInfo();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 300], [0, -50]);
@@ -29,7 +29,7 @@ export function Hero() {
   };
 
   const handleAskAI = () => {
-    setIsAIChatOpen(true);
+    setIsWipDialogOpen(true);
   };
 
   // Handle loading state
@@ -196,11 +196,31 @@ export function Hero() {
         </div>
       </motion.div>
 
-      {/* AI Chat Popup */}
-      <AIChatPopup 
-        isOpen={isAIChatOpen} 
-        onClose={() => setIsAIChatOpen(false)} 
-      />
+      {/* Work In Progress Dialog */}
+      <Dialog.Root open={isWipDialogOpen} onOpenChange={setIsWipDialogOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
+          <Dialog.Content className="fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] p-6 rounded-2xl glass duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]">
+            <div className="flex flex-col space-y-4">
+              <Dialog.Title className="text-2xl font-semibold tracking-tight text-foreground flex items-center gap-2">
+                <Sparkles className="w-6 h-6 text-amber-500" />
+                AI Assistant
+              </Dialog.Title>
+              <Dialog.Description className="text-base text-foreground/70 leading-relaxed">
+                This feature is currently under development. The AI-powered assistant will soon be available to answer questions about my background, skills, and experience.
+              </Dialog.Description>
+              <div className="flex justify-end pt-4">
+                <Button
+                  onClick={() => setIsWipDialogOpen(false)}
+                  className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 rounded-full px-6 py-2 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300"
+                >
+                  Got it
+                </Button>
+              </div>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
     </motion.section>
   );
 }

@@ -36,7 +36,7 @@ export const ProjectDetailsDialog = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="!max-w-[95vw] sm:!max-w-[85vw] lg:!max-w-[800px] xl:!max-w-[900px] max-h-[95vh] overflow-hidden bg-background border-foreground/10 p-0 gap-0">
+      <DialogContent className="!max-w-[95vw] sm:!max-w-[85vw] lg:!max-w-[800px] xl:!max-w-[900px] max-h-[95vh] overflow-hidden bg-background/95 backdrop-blur-xl border border-foreground/10 rounded-2xl p-0 gap-0">
         {/* Accessibility Components - Screen Reader Only */}
         <DialogHeader className="sr-only">
           <DialogTitle>{project.title}</DialogTitle>
@@ -48,16 +48,16 @@ export const ProjectDetailsDialog = ({
         {/* Close Button */}
         <button
           onClick={() => onOpenChange(false)}
-          className="absolute top-4 right-4 z-50 rounded-full p-2 bg-background/90 hover:bg-background border border-foreground/10 backdrop-blur-sm transition-all duration-200"
+          className="absolute top-4 right-4 z-50 rounded-full p-2 glass glass-hover transition-all duration-300"
           aria-label="Close dialog"
         >
-          <X className="w-4 h-4 text-foreground/60 hover:text-foreground" />
+          <X className="w-4 h-4 text-foreground/60 hover:text-foreground transition-colors" />
         </button>
 
         {/* Scrollable Content */}
-        <div className="overflow-y-auto max-h-[95vh]">
+        <div className="overflow-y-auto max-h-[95vh] scrollbar-hide scroll-smooth">
           {/* Hero Image */}
-          <div className="relative w-full h-[250px] sm:h-[320px] overflow-hidden bg-foreground/5">
+          <div className="relative w-full h-[250px] sm:h-[320px] overflow-hidden bg-foreground/5 rounded-t-2xl">
             <img
               src={imageSrc}
               alt={project.title}
@@ -68,9 +68,9 @@ export const ProjectDetailsDialog = ({
           </div>
 
           {/* Content Container */}
-          <article className="max-w-4xl mx-auto px-6 sm:px-10 lg:px-16">
+          <article className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10">
             {/* Header */}
-            <header className="pt-8 pb-10 sm:pt-12 sm:pb-14">
+            <header className="pt-6 pb-8 sm:pt-8 sm:pb-10">
               {/* Meta Information - Simplified */}
               <div className="flex flex-wrap items-center gap-3 mb-6 text-sm text-foreground/60">
                 <span className="flex items-center gap-1.5">
@@ -90,8 +90,8 @@ export const ProjectDetailsDialog = ({
               </h1>
             </header>
 
-            {/* Main Content - Increased spacing */}
-            <div className="pb-12 space-y-12 sm:space-y-16">
+            {/* Main Content - Card-style spacing */}
+            <div className="pb-8 space-y-8 sm:space-y-10">
               {/* Project Overview */}
               <section>
                 <div className="prose prose-slate max-w-none dark:prose-invert prose-headings:font-semibold prose-a:text-blue-600 dark:prose-a:text-blue-400">
@@ -101,21 +101,21 @@ export const ProjectDetailsDialog = ({
                 </div>
               </section>
 
-              {/* Technologies - More minimal design */}
+              {/* Technologies - Card-style design with glass effect */}
               <section>
-                <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-6 pb-3 border-b border-foreground/10">
+                <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-5">
                   Technologies
                 </h2>
-                <div className="flex flex-wrap gap-2.5">
+                <div className="flex flex-wrap gap-2">
                   {processedTechnologies.map((tech) => (
                     <div
                       key={tech.name}
-                      className="group inline-flex items-center gap-2 px-3.5 py-2 rounded-md bg-foreground/[0.03] hover:bg-foreground/[0.06] border border-foreground/[0.08] hover:border-foreground/[0.15] transition-all duration-200"
+                      className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-lg glass-light glass-hover transition-all duration-300"
                     >
-                      <div className="flex-shrink-0 opacity-40 group-hover:opacity-100 grayscale group-hover:grayscale-0 transition-all duration-200">
+                      <div className="flex-shrink-0 opacity-50 group-hover:opacity-100 grayscale group-hover:grayscale-0 transition-all duration-300">
                         {tech.iconElement}
                       </div>
-                      <span className="text-sm text-foreground/60 group-hover:text-foreground/80 transition-colors">
+                      <span className="text-sm text-foreground/70 group-hover:text-foreground transition-colors duration-300">
                         {tech.name}
                       </span>
                     </div>
@@ -123,8 +123,8 @@ export const ProjectDetailsDialog = ({
                 </div>
               </section>
 
-              {/* Call-to-Action - More minimal */}
-              <section className="pt-6 border-t border-foreground/10">
+              {/* Call-to-Action - Card-style with glass buttons */}
+              <section className="pt-4 border-t border-white/10 dark:border-white/5">
                 <div className="flex flex-col sm:flex-row gap-3">
                   <Button
                     onClick={() => window.open(project.links.live, '_blank')}

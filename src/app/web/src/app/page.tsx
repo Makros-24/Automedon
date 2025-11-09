@@ -21,7 +21,7 @@ function AppContent() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
+    <div className="relative bg-background text-foreground">
       <AnimatedBackground />
       
       <div className="relative z-10">

@@ -129,6 +129,12 @@
 
   body {
     @apply bg-background text-foreground;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  html, body {
+    height: 100%;
   }
 }
 
@@ -288,12 +294,22 @@ html {
     -ms-user-select: none;
     user-select: none;
   }
-  
+
   .select-text {
     -webkit-user-select: text;
     -moz-user-select: text;
     -ms-user-select: text;
     user-select: text;
+  }
+
+  /* Hide scrollbar while keeping scrollability */
+  .scrollbar-hide {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;  /* Safari and Chrome */
   }
 }
 

@@ -6,6 +6,9 @@ import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import { processProjectTechnologies } from '@/utils/technologyIconManager';
 import { getOptimizedImageUrl } from '@/utils/dataLoader';
@@ -34,6 +37,14 @@ export const ProjectDetailsDialog = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="!max-w-[95vw] sm:!max-w-[85vw] lg:!max-w-[800px] xl:!max-w-[900px] max-h-[95vh] overflow-hidden bg-background border-foreground/10 p-0 gap-0">
+        {/* Accessibility Components - Screen Reader Only */}
+        <DialogHeader className="sr-only">
+          <DialogTitle>{project.title}</DialogTitle>
+          <DialogDescription>
+            Detailed information about {project.title} including role, technologies, and implementation details.
+          </DialogDescription>
+        </DialogHeader>
+
         {/* Close Button */}
         <button
           onClick={() => onOpenChange(false)}

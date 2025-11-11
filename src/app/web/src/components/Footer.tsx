@@ -64,7 +64,7 @@ export function Footer() {
   return (
     <motion.footer
       ref={sectionRef}
-className="text-center mt-16 py-8"
+      className="text-center mt-6 py-8"
       initial={{ opacity: 0, y: 30, scale: 0.95 }}
       animate={{
         opacity: shouldAnimate ? 1 : 0,

@@ -44,6 +44,7 @@
     "cmdk": "^1.1.1",
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
+    "lightningcss": "^1.30.2",
     "lucide-react": "^0.539.0",
     "motion": "^12.23.12",
     "next": "15.4.5",

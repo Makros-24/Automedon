@@ -2,8 +2,18 @@
   "personalInfo": {
     "name": "Mohamed IBEN EL ABED",
     "title": "Senior Backend Developer & Technical Lead",
-    "description": "Experienced Backend Developer with Network background, excelling in JAVA and BPMN. Proven track record in banking and insurance, delivering optimized solutions for retail and corporate contexts with 5+ years of experience.",
-    "resumeUrl": "/resume.pdf"
+    "description": "Experienced Backend Developer with a background in Networking, excelling in JAVA and BPMN. Proven track record in banking and insurance, delivering optimized solutions for retail and corporate contexts with over 5 years of experience.",
+    "resumeUrl": "https://drive.google.com/file/d/1GlttHmMtXq8A2D1LwwdqaCg-NElsiXKS/view?usp=drive_link"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "Passionate about creating innovative solutions that bridge the gap between complex technical requirements and elegant user experiences. I specialize in architecting scalable systems that drive business success.",
+    "skillsTitle": "Technologies",
+    "achievementsTitle": "Key Achievements"
+  },
+  "work": {
+    "title": "Featured Work",
+    "description": "A selection of projects that showcase my expertise in solution architecture, full-stack development, and cloud infrastructure."
   },
   "projects": [
     {
@@ -11,7 +21,8 @@
       "title": "Bankerise Corporate Banking Platform",
       "company": "Proxym Group",
       "role": "Senior Backend Developer & Technical Lead",
-      "description": "Maintained and evolved a comprehensive corporate banking solution serving enterprise clients. Built with Domain-Driven Design and Hexagonal Architecture, streamlining approval processes with Flowable BPMN engine.",
+      "description": "Maintained and evolved a comprehensive corporate banking solution serving enterprise clients, built with Domain-Driven Design and Hexagonal Architecture principles.",
+      "markdownDescription": "# Senior Backend Developer & Technical Lead - Bankerise Corporate Banking Platform\n\n## Project Overview\nMaintained and evolved a comprehensive corporate banking solution serving enterprise clients, built with Domain-Driven Design and Hexagonal Architecture principles. The platform handles complex financial operations and multi-level approval workflows for corporate banking needs.\n\n## Key Responsibilities & Achievements\n\n- **Architecture & Design**: Applied Domain-Driven Design (DDD) and Hexagonal Architecture principles to maintain clean separation of concerns and improve system maintainability\n- **Transaction Optimization**: Optimized transaction workflows, reducing processing time and improving system throughput for high-volume operations\n- **Approval Process**: Streamlined multi-level approval processes for corporate banking operations, enhancing user experience and operational efficiency\n- **Code Quality**: Maintained high code quality standards through rigorous code reviews and implementation of best practices\n- **Technical Leadership**: Provided technical guidance and mentorship to team members on architectural decisions and implementation patterns\n- **System Evolution**: Continuously evolved the platform to meet changing business requirements while maintaining system stability and performance",
       "image": {
         "url": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop"
       },
@@ -28,10 +39,42 @@
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
           }
         },
-        "Flowable BPMN",
-        "Keycloak",
-        "Liquibase",
-        "Domain-Driven Design"
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Keycloak",
+          "icon": {
+            "url": "https://www.keycloak.org/resources/images/logo.svg"
+          }
+        },
+        {
+          "name": "Liquibase",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/liquibase/liquibase-original.svg"
+          }
+        },
+        {
+          "name": "Domain-Driven Design",
+          "icon": {
+            "url": "https://example.com/ddd-icon.svg"
+          }
+        },
+        {
+          "name": "Hexagonal Architecture",
+          "icon": {
+            "url": "https://www.svgrepo.com/show/44395/hexagon.svg"
+          }
+        }
       ],
       "links": {
         "live": "#",
@@ -43,7 +86,8 @@
       "title": "BNA Retail Digital Banking",
       "company": "Proxym Group",
       "role": "Product Integration Specialist",
-      "description": "Developed Digital Retail application for BNA, leveraging Proxym's Banking platform Bankerise. Integrated digital booster solutions and implemented core banking providers through REST APIs.",
+      "description": "Contributed to the development of a Digital Retail application for BNA, leveraging Proxym's Banking platform Bankerise. Led digital transformation in the banking sector with innovative solutions.",
+      "markdownDescription": "# Backend Developer - BNA Retail Client Project\n\n## Project Overview\nAs a Backend Developer for the BNA Retail Client Project, I contributed to the development of a Digital Retail application for BNA, leveraging Proxym's Banking platform Bankerise. This role placed me at the forefront of digital transformation in the banking sector, working collaboratively with a diverse team to deliver innovative solutions for BNA Retail.\n\n## Key Responsibilities & Achievements\n\n- **Platform Integration**: Integrated a digital booster solution into the Bankerise platform\n- **API Development**: Implemented various core banking providers through REST APIs to enhance functionality\n- **DevOps**: Prepared and executed CI/CD pipelines across multiple environments\n- **Team Leadership**: Mentored and provided guidance to new developers, conducting code reviews and enforcing coding standards\n- **Requirements Analysis**: Reviewed and translated business requirements into technical specifications\n- **Feature Development**: Developed key features, including complex processes like Client Onboarding and registration",
       "image": {
         "url": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop"
       },
@@ -60,9 +104,30 @@
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
           }
         },
-        "REST APIs",
-        "CI/CD",
-        "Bankerise Platform"
+        {
+          "name": "REST APIs",
+          "icon": {
+            "url": "https://www.svgrepo.com/svg/447473/rest-api"
+          }
+        },
+        {
+          "name": "CI/CD",
+          "icon": {
+            "url": "https://www.svgrepo.com/svg/445634/cicd"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        }
       ],
       "links": {
         "live": "#",
@@ -74,16 +139,48 @@
       "title": "BICICI Banking Web Application",
       "company": "Proxym Group",
       "role": "Technical Lead",
-      "description": "Led development of web application for The International Bank for Commerce and Industry of Côte d'Ivoire. Enhanced services for BANK Agents with scalable Intelligent Business Process Automation using FLOWABLE BPM.",
+      "description": "Led development of a web application for The International Bank for Commerce and Industry of Côte d'Ivoire to enhance services for bank agents.",
+      "markdownDescription": "# Technical Lead - BICICI Banking Web Application\n\n## Project Overview\nLed the development of a comprehensive web application for The International Bank for Commerce and Industry of Côte d'Ivoire (BICICI) to enhance services for bank agents. The project focused on implementing scalable Intelligent Business Process Automation using FLOWABLE BPM to streamline banking operations.\n\n## Key Responsibilities & Achievements\n\n- **Technical Leadership**: Led the technical team in designing and implementing the banking web application architecture\n- **BPMN Implementation**: Designed and implemented complex business process workflows using FLOWABLE BPM for automated banking operations\n- **Agent Portal Development**: Built a comprehensive web portal for bank agents with intuitive user interfaces using Formio for dynamic form generation\n- **Process Automation**: Implemented Intelligent Business Process Automation to reduce manual intervention and improve operational efficiency\n- **System Integration**: Integrated the application with core banking systems and third-party services\n- **Scalability**: Architected the solution for scalability to handle growing transaction volumes and user base\n- **Quality Assurance**: Established testing protocols and quality standards to ensure reliability and performance",
       "image": {
         "url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop"
       },
       "technologies": [
-        "Java",
-        "Formio",
-        "FLOWABLE BPM",
-        "REST APIs",
-        "Responsive Design"
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "Flowable BPMN",
+          "icon": {
+            "url": "https://www.svgrepo.com/show/395899/process.svg"
+          }
+        },
+        {
+          "name": "Formio",
+          "icon": {
+            "url": "https://example.com/formio-icon.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        }
       ],
       "links": {
         "live": "#",
@@ -95,15 +192,48 @@
       "title": "Insurise® Digital Insurance Platform",
       "company": "Proxym Group",
       "role": "Backend Developer",
-      "description": "Developed innovative omnichannel digital insurance solution enhancing customer experience. Clients can access real-time insights, track claims, manage healthcare, and navigate insurance portfolios seamlessly.",
+      "description": "Developed an innovative omnichannel digital insurance solution to enhance customer experience, serving over 20,000 users.",
+      "markdownDescription": "# Backend Developer - Insurise® Digital Insurance Platform\n\n## Project Overview\nDeveloped an innovative omnichannel digital insurance solution designed to enhance customer experience and streamline insurance operations. The platform serves over 20,000 users, allowing clients to access real-time insights, track claims, and manage their insurance portfolio through multiple channels.\n\n## Key Responsibilities & Achievements\n\n- **Platform Development**: Built the backend infrastructure for a comprehensive digital insurance platform using Spring Boot and microservices architecture\n- **Omnichannel Integration**: Implemented seamless integration across multiple channels (web, mobile, agents) for consistent user experience\n- **Real-time Analytics**: Developed real-time data processing capabilities for insurance insights and reporting\n- **Claims Management**: Built a comprehensive claims tracking and management system with automated workflows\n- **Portfolio Management**: Implemented features for clients to view and manage their insurance policies and coverage\n- **Database Architecture**: Designed and implemented hybrid database architecture using PostgreSQL for transactional data and MongoDB for document storage\n- **API Development**: Created RESTful APIs for client applications and third-party integrations\n- **Performance Optimization**: Optimized system performance to handle 20,000+ concurrent users with minimal latency\n- **Data Security**: Implemented robust security measures to protect sensitive insurance and personal data",
       "image": {
         "url": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&h=400&fit=crop"
       },
       "technologies": [
-        "Java",
-        "Spring Framework",
-        "Insurance APIs",
-        "Integration Testing"
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "MongoDB",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+          }
+        },
+        {
+          "name": "REST APIs",
+          "icon": {
+            "url": "https://www.svgrepo.com/svg/447473/rest-api"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        }
       ],
       "links": {
         "live": "#",
@@ -129,21 +259,9 @@
           }
         },
         {
-          "name": "Spring Framework",
-          "icon": {
-            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
-          }
-        },
-        {
           "name": "REST APIs",
           "icon": {
             "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNjFEQUZCIi8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkFQSTwvdGV4dD4KPC9zdmc+"
-          }
-        },
-        {
-          "name": "Microservices",
-          "icon": {
-            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNiIgY3k9IjYiIHI9IjMiIGZpbGw9IiMxMEM5N0YiLz4KPGNpcmNsZSBjeD0iMTgiIGN5PSI2IiByPSIzIiBmaWxsPSIjMzM4NEY2Ii8+CjxjaXJjbGUgY3g9IjYiIGN5PSIxOCIgcj0iMyIgZmlsbD0iI0Y1OUUwQiIvPgo8Y2lyY2xlIGN4PSIxOCIgY3k9IjE4IiByPSIzIiBmaWxsPSIjRUY0NDQ0Ii8+CjxsaW5lIHgxPSI5IiB5MT0iNiIgeDI9IjE1IiB5Mj0iNiIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjEiLz4KPGxpbmUgeDE9IjYiIHkxPSI5IiB4Mj0iNiIgeTI9IjE1IiBzdHJva2U9IiM3NzciIHN0cm9rZS13aWR0aD0iMSIvPgo8bGluZSB4MT0iOSIgeTE9IjE4IiB4Mj0iMTUiIHkyPSIxOCIgc3Ryb2tlPSIjNzc3IiBzdHJva2Utd2lkdGg9IjEiLz4KPGxpbmUgeDE9IjE4IiB5MT0iOSIgeDI9IjE4IiB5Mj0iMTUiIHN0cm9rZT0iIzc3NyIgc3Ryb2tlLXdpZHRoPSIxIi8+Cjwvc3ZnPg=="
           }
         }
       ]
@@ -163,12 +281,6 @@
           "icon": {
             "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMTBDOTdGIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkZMT1c8L3RleHQ+Cjwvc3ZnPg=="
           }
-        },
-        {
-          "name": "Business Process Automation",
-          "icon": {
-            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiNGNTlFMEIiLz4KPHN0YXIgY3g9IjEyIiBjeT0iMTIiIHI9IjQiIGZpbGw9IiNGRkYiLz4KPC9zdmc+"
-          }
         }
       ]
     },
@@ -180,6 +292,24 @@
           "name": "CI/CD",
           "icon": {
             "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNiIgY3k9IjEyIiByPSIzIiBmaWxsPSIjMTBDOTdGIi8+CjxjaXJjbGUgY3g9IjE4IiBjeT0iMTIiIHI9IjMiIGZpbGw9IiMzQzc3RjAiLz4KPGxpbmUgeDE9IjkiIHkxPSIxMiIgeDI9IjE1IiB5Mj0iMTIiIHN0cm9rZT0iIzMzODRGNiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0xNSA5TDE4IDEyTDE1IDE1IiBzdHJva2U9IiMzMzg0RjYiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4="
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Jenkins",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg"
+          }
+        },
+        {
+          "name": "GitLab",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
           }
         },
         {
@@ -219,6 +349,18 @@
       "icon": "Database",
       "skills": [
         {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "MongoDB",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+          }
+        },
+        {
           "name": "MySQL",
           "icon": {
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
@@ -243,6 +385,12 @@
       "icon": "Monitor",
       "skills": [
         {
+          "name": "React",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+          }
+        },
+        {
           "name": "Angular",
           "icon": {
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg"
@@ -252,12 +400,6 @@
           "name": "Formio",
           "icon": {
             "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNDI5RkY0Ii8+Cjx0ZXh0IHg9IjQiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5GTzwvdGV4dD4KPC9zdmc+"
-          }
-        },
-        {
-          "name": "Responsive Design",
-          "icon": {
-            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMTBDOTdGIi8+CjxyZWN0IHg9IjQiIHk9IjQiIHdpZHRoPSIxNiIgaGVpZ2h0PSIxMCIgZmlsbD0iI0ZGRiIvPgo8cmVjdCB4PSI2IiB5PSIxNiIgd2lkdGg9IjQiIGhlaWdodD0iNCIgZmlsbD0iI0ZGRiIvPgo8L3N2Zz4="
           }
         }
       ]
@@ -271,30 +413,48 @@
       "description": "Specialized in Backend Development and software architecture"
     },
     {
-      "icon": "Building",
-      "number": "4+",
-      "title": "Banking Projects",
+      "icon": "Built",
+      "number": "6+",
+      "title": "Projects Delivered",
       "description": "Successfully delivered banking and insurance solutions"
-    },
-    {
-      "icon": "Award",
-      "number": "Enterprise",
-      "title": "Scale Solutions",
-      "description": "Built systems serving corporate and retail banking clients"
-    },
-    {
-      "icon": "Code",
-      "number": "Technical",
-      "title": "Leadership",
-      "description": "Led development teams and mentored junior developers"
     }
   ],
   "contactInfo": {
+    "title": "Let's Connect",
+    "description": "I'm always interested in discussing new opportunities, innovative projects, and connecting with fellow technology enthusiasts.",
+    "locationTitle": "Location",
+    "locationDescription": "Available for remote work and travel",
+    "cta": {
+      "title": "Ready to Start?",
+      "description": "Let's discuss how I can help architect solutions for your next big project.",
+      "button1": "Start a Conversation",
+      "button2": "Schedule a Call"
+    },
+    "responseTime": "Response time: Usually within 24 hours",
     "email": "mohamed.el.abed.24@gmail.com",
-    "linkedin": "linkedin.com/in/mohamediben-el-abed",
-    "github": "#",
-    "twitter": "#",
-    "phone": "+216 XX XXX XXX",
-    "location": "Sousse, Tunisia"
+    "linkedin": "www.linkedin.com/in/mohamed-iben-el-abed",
+    "github": "github.com/Makros-24",
+    "twitter": "",
+    "phone": "+216-50-622-368",
+    "location": "Sousse, Tunisia",
+    "methods": {
+      "email": {
+        "description": "Send me an email"
+      },
+      "linkedin": {
+        "description": "Connect on LinkedIn"
+      },
+      "github": {
+        "description": "View my code"
+      },
+      "twitter": {
+        "description": "Follow me on X"
+      }
+    }
+  },
+  "footer": {
+    "copyrightName": "Mohamed IBEN EL ABED",
+    "copyrightYear": 2024,
+    "madeWithText": "Crafted with passion for technology and innovation."
   }
 }

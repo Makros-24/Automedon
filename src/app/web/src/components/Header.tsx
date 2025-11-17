@@ -4,6 +4,9 @@ import { Moon, Sun, Menu } from 'lucide-react';
 import { useTheme } from './ThemeProvider';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from './ui/sheet';
+import { LanguageSwitcher } from './LanguageSwitcher';
+import { usePersonalInfo } from '@/contexts/PortfolioDataContext';
+import { getAvatarSource } from '@/utils/avatarHelper';
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,6 +14,14 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const { scrollY } = useScroll();
+  const { personalInfo } = usePersonalInfo();
+
+  // Get avatar source with fallback
+  const avatarSrc = getAvatarSource(
+    personalInfo?.avatar,
+    'https://media.licdn.com/dms/image/v2/D4D03AQGgMTxGLlkEEw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1702848448399?e=1764806400&v=beta&t=5RvrhDBleeUQ1ZBMknfra5uoekMPReLZ5wJdkYGT_n0'
+  );
+  const avatarAlt = personalInfo?.name || 'Profile';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -135,9 +146,17 @@ export function Header() {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src="https://media.licdn.com/dms/image/v2/D4D03AQGgMTxGLlkEEw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1702848448399?e=1759968000&v=beta&t=oGRgNz4MoaeXcj6542T5WsF08YBrA8CO8CHrFP9Czek"
-                  alt="Mohamed IBEN EL ABED"
+                  src={avatarSrc}
+                  alt={avatarAlt}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="eager"
+                  onError={(e) => {
+                    // Fallback to a stable LinkedIn profile image URL
+                    const target = e.currentTarget;
+                    if (!target.src.includes('shrink_400_400')) {
+                      target.src = "https://media.licdn.com/dms/image/v2/D4D03AQGgMTxGLlkEEw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1702848448399?e=1764806400&v=beta&t=5RvrhDBleeUQ1ZBMknfra5uoekMPReLZ5wJdkYGT_n0";
+                    }
+                  }}
                 />
                 <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10 transition-opacity duration-300 group-hover:ring-white/20" />
                 
@@ -215,15 +234,25 @@ export function Header() {
             ))}
           </div>
 
-          {/* Enhanced Theme Toggle & Mobile Menu */}
+          {/* Language Switcher, Theme Toggle & Mobile Menu */}
           <div className="flex items-center space-x-2">
+            {/* Language Switcher */}
+            <div className={`transition-all duration-300 ${
+              isScrolled
+                ? 'glass-light hover:glass border border-white/10 rounded-full'
+                : 'bg-white/10 hover:bg-white/20 border border-white/20 rounded-full'
+            }`}>
+              <LanguageSwitcher />
+            </div>
+
+            {/* Theme Toggle */}
             <Button
               variant="ghost"
               size="sm"
               onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
               className={`relative rounded-full w-10 h-10 p-0 transition-all duration-300 hover:scale-105 ${
-                isScrolled 
-                  ? 'glass-light hover:glass border border-white/10' 
+                isScrolled
+                  ? 'glass-light hover:glass border border-white/10'
                   : 'bg-white/10 hover:bg-white/20 border border-white/20'
               }`}
             >

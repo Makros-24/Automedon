@@ -1,0 +1,38 @@
+{
+  "navigation": {
+    "work": "الأعمال",
+    "about": "نبذة",
+    "contact": "تواصل",
+    "menu": "قائمة التنقل",
+    "menuDescription": "انتقل إلى أقسام مختلفة من الملف الشخصي"
+  },
+  "buttons": {
+    "viewWork": "عرض أعمالي",
+    "downloadResume": "تحميل السيرة الذاتية",
+    "askAI": "اسأل الذكاء الاصطناعي",
+    "viewProject": "عرض المشروع",
+    "viewGithub": "عرض على GitHub",
+    "sendMessage": "إرسال رسالة",
+    "scrollToExplore": "مرر للاستكشاف"
+  },
+  "loading": {
+    "portfolio": "جارٍ تحميل الملف الشخصي...",
+    "pleaseWait": "يرجى الانتظار بينما نقوم بتحميل المحتوى"
+  },
+  "errors": {
+    "loadingFailed": "خطأ في تحميل بيانات الملف الشخصي",
+    "fetchFailed": "فشل جلب البيانات. يرجى المحاولة مرة أخرى.",
+    "tryAgain": "حاول مرة أخرى"
+  },
+  "dialogs": {
+    "underDevelopment": "هذه الميزة قيد التطوير حاليًا.",
+    "comingSoon": "قريبًا! ترقبوا التحديثات."
+  },
+  "accessibility": {
+    "scrollToExplore": "مرر لاستكشاف الملف الشخصي",
+    "toggleTheme": "تبديل السمة",
+    "toggleLanguage": "تغيير اللغة",
+    "closeDialog": "إغلاق مربع الحوار",
+    "openMenu": "فتح قائمة التنقل"
+  }
+}

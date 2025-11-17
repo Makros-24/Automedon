@@ -3,31 +3,42 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { validatePortfolioData } from '@/utils/dataLoader';
 
+// Supported languages
+type Language = 'en' | 'fr' | 'de' | 'ar';
+const SUPPORTED_LANGUAGES: Language[] = ['en', 'fr', 'de', 'ar'];
+const DEFAULT_LANGUAGE: Language = 'en';
+
 /**
- * API route for portfolio data
+ * API route for portfolio data with multi-language support
  * Handles server-side loading of portfolio data from JSON files
+ *
+ * Query Parameters:
+ * - lang: Language code (en, fr, de, ar). Defaults to 'en'
  */
 export async function GET(request: NextRequest) {
   try {
+    // Extract language from query parameter
+    const { searchParams } = new URL(request.url);
+    const requestedLang = searchParams.get('lang') as Language | null;
+
+    // Validate and set language (default to English if invalid)
+    const language: Language = requestedLang && SUPPORTED_LANGUAGES.includes(requestedLang)
+      ? requestedLang
+      : DEFAULT_LANGUAGE;
+
     // Get the portfolio config path from environment variables
-    const configPath = process.env.PORTFOLIO_CONFIG_PATH;
-    
-    if (!configPath) {
-      return NextResponse.json(
-        { error: 'PORTFOLIO_CONFIG_PATH environment variable is not set' },
-        { status: 500 }
-      );
-    }
+    // This now points to the portfolio-data directory
+    const configPath = process.env.PORTFOLIO_CONFIG_PATH || './portfolio-data';
 
     // Resolve the file path relative to the project root
     let fullPath: string;
     if (path.isAbsolute(configPath)) {
-      fullPath = configPath;
+      fullPath = path.join(configPath, `${language}.json`);
     } else {
       // If relative path, resolve from project root
       // process.cwd() points to the web app directory, so go up 3 levels to project root
       const projectRoot = path.resolve(process.cwd(), '../../..');
-      fullPath = path.resolve(projectRoot, configPath);
+      fullPath = path.resolve(projectRoot, configPath, `${language}.json`);
     }
 
     // Check if file exists
@@ -64,12 +75,16 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(portfolioData, {
       headers: {
         'Content-Type': 'application/json',
+        'Content-Language': language,
+        'X-Portfolio-Language': language,
         // Prevent caching in development, allow caching in production
-        'Cache-Control': process.env.NODE_ENV === 'development' 
-          ? 'no-cache, no-store, must-revalidate' 
+        'Cache-Control': process.env.NODE_ENV === 'development'
+          ? 'no-cache, no-store, must-revalidate'
           : 'public, max-age=300, s-maxage=600', // 5min client, 10min CDN
         'Pragma': 'no-cache',
-        'Expires': '0'
+        'Expires': '0',
+        // Vary header to cache different language versions separately
+        'Vary': 'Accept-Language'
       }
     });
 

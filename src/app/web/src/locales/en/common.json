@@ -1,0 +1,38 @@
+{
+  "navigation": {
+    "work": "Work",
+    "about": "About",
+    "contact": "Contact",
+    "menu": "Navigation Menu",
+    "menuDescription": "Navigate to different sections of the portfolio"
+  },
+  "buttons": {
+    "viewWork": "View My Work",
+    "downloadResume": "Download Resume",
+    "askAI": "Ask AI About Me",
+    "viewProject": "View Project",
+    "viewGithub": "View on GitHub",
+    "sendMessage": "Send Message",
+    "scrollToExplore": "Scroll to explore"
+  },
+  "loading": {
+    "portfolio": "Loading portfolio...",
+    "pleaseWait": "Please wait while we load the content"
+  },
+  "errors": {
+    "loadingFailed": "Error loading portfolio data",
+    "fetchFailed": "Failed to fetch data. Please try again.",
+    "tryAgain": "Try Again"
+  },
+  "dialogs": {
+    "underDevelopment": "This feature is currently under development.",
+    "comingSoon": "Coming soon! Stay tuned for updates."
+  },
+  "accessibility": {
+    "scrollToExplore": "Scroll to explore portfolio",
+    "toggleTheme": "Toggle theme",
+    "toggleLanguage": "Change language",
+    "closeDialog": "Close dialog",
+    "openMenu": "Open navigation menu"
+  }
+}

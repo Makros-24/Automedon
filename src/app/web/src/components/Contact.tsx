@@ -1,6 +1,6 @@
 import { motion } from 'motion/react';
 import { useInViewOnce } from '../hooks/useInViewOnce';
-import { Mail, MapPin, Phone, Send, Linkedin as LinkedinIcon, Github as GithubIcon, Twitter as TwitterIcon } from 'lucide-react';
+import { Mail, MapPin, Phone, Send, Linkedin as LinkedinIcon, Github as GithubIcon, Twitter as TwitterIcon, MessageCircle, Calendar } from 'lucide-react';
 import { Button } from './ui/button';
 import { useContactInfo } from '@/contexts/PortfolioDataContext';
 
@@ -19,6 +19,37 @@ const containerVariants = {
 const itemVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: { opacity: 1, y: 0 },
+};
+
+// Helper function to check if it's business hours in Tunisia (GMT+1)
+const isBusinessHours = (): boolean => {
+  const now = new Date();
+  const tunisiaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Africa/Tunis' }));
+  const hours = tunisiaTime.getHours();
+  const day = tunisiaTime.getDay();
+
+  // Business hours: Monday-Friday, 9 AM - 6 PM Tunisia time
+  const isWeekday = day >= 1 && day <= 5;
+  const isWorkingHours = hours >= 9 && hours < 18;
+
+  return isWeekday && isWorkingHours;
+};
+
+// Helper function to detect if user is on mobile
+const isMobileDevice = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+};
+
+// Helper function to generate WhatsApp link
+const getWhatsAppLink = (phoneNumber: string, message: string): string => {
+  const cleanPhone = phoneNumber.replace(/\D/g, '');
+  const encodedMessage = encodeURIComponent(message);
+
+  if (isMobileDevice()) {
+    return `whatsapp://send?phone=${cleanPhone}&text=${encodedMessage}`;
+  }
+  return `https://wa.me/${cleanPhone}?text=${encodedMessage}`;
 };
 
 export function Contact() {
@@ -208,20 +239,28 @@ export function Contact() {
               <div className="space-y-3">
                 <Button
                   size="lg"
-                  className="w-full glass glass-hover transition-all duration-300 group bg-foreground/10 hover:bg-foreground/20 text-foreground border-white/20"
-                  onClick={() => window.open(`mailto:${contactData.email}`, '_blank')}
+                  className="w-full glass glass-hover transition-all duration-300 group bg-foreground/10 hover:bg-foreground/20 text-foreground border-white/20 relative"
+                  onClick={() => {
+                    const whatsappLink = getWhatsAppLink(contactData.phone || '', '');
+                    window.open(whatsappLink, '_blank');
+                  }}
+                  title="Message me on WhatsApp"
                 >
-                  <Mail className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
+                  <MessageCircle className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
                   {contactData.cta.button1}
                 </Button>
 
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-full glass glass-hover transition-all duration-300 group border-white/20 text-foreground hover:bg-white/10"
-                  onClick={() => window.open(`mailto:${contactData.email}?subject=Schedule a Call`, '_blank')}
+                  className="w-full glass glass-hover transition-all duration-300 group border-white/20 text-foreground hover:bg-white/10 relative"
+                  onClick={() => {
+                    const whatsappLink = getWhatsAppLink(contactData.phone || '', '');
+                    window.open(whatsappLink, '_blank');
+                  }}
+                  title="Schedule a call on WhatsApp"
                 >
-                  <Phone className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
+                  <Calendar className="mr-2 h-4 w-4 group-hover:scale-110 transition-transform duration-300" />
                   {contactData.cta.button2}
                 </Button>
               </div>

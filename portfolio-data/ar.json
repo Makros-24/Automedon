@@ -1,0 +1,463 @@
+{
+  "personalInfo": {
+    "name": "محمد ابن العابد",
+    "title": "مطور backend أول ومسؤول تقني",
+    "description": "مطور Backend ذو خبرة واسعة في الشبكات، متميز في JAVA و BPMN. سجل حافل في القطاعين المصرفي والتأميني، تقديم حلول محسّنة للسياقات التجارية والخاصة بالشركات مع أكثر من 5 سنوات من الخبرة.",
+    "avatar": {
+      "url": "https://media.licdn.com/dms/image/v2/D4D03AQGgMTxGLlkEEw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1702848448399?e=1764806400&v=beta&t=5RvrhDBleeUQ1ZBMknfra5uoekMPReLZ5wJdkYGT_n0"
+    },
+    "resumeUrl": "https://drive.google.com/file/d/1GlttHmMtXq8A2D1LwwdqaCg-NElsiXKS/view?usp=drive_link"
+  },
+  "about": {
+    "title": "نبذة عني",
+    "description": "شغوف بإنشاء حلول مبتكرة تسد الفجوة بين المتطلبات التقنية المعقدة وتجارب المستخدم الأنيقة. أنا متخصص في تصميم أنظمة قابلة للتوسع تدفع النجاح التجاري.",
+    "skillsTitle": "التقنيات",
+    "achievementsTitle": "الإنجازات الرئيسية"
+  },
+  "work": {
+    "title": "المشاريع المميزة",
+    "description": "مجموعة مختارة من المشاريع التي تعرض خبرتي في هندسة الحلول وتطوير Full-Stack والبنية التحتية السحابية."
+  },
+  "projects": [
+    {
+      "id": 1,
+      "title": "منصة Bankerise المصرفية للشركات",
+      "company": "Proxym Group",
+      "role": "مطور Backend أول ومسؤول تقني",
+      "description": "صيانة وتطوير حل مصرفي شامل للشركات يخدم عملاء المؤسسات، تم بناؤه وفقًا لمبادئ Domain-Driven Design و Hexagonal Architecture.",
+      "markdownDescription": "# مطور Backend أول ومسؤول تقني - منصة Bankerise المصرفية للشركات\n\n## نظرة عامة على المشروع\nصيانة وتطوير حل مصرفي شامل للشركات يخدم عملاء المؤسسات، تم بناؤه وفقًا لمبادئ Domain-Driven Design و Hexagonal Architecture. تتعامل المنصة مع العمليات المالية المعقدة وسير عمل الموافقات متعددة المستويات لاحتياجات الخدمات المصرفية للشركات.\n\n## المسؤوليات والإنجازات الرئيسية\n\n- **الهندسة والتصميم**: تطبيق مبادئ Domain-Driven Design (DDD) و Hexagonal Architecture للحفاظ على فصل واضح للمخاوف وتحسين قابلية صيانة النظام\n- **تحسين المعاملات**: تحسين سير عمل المعاملات، تقليل وقت المعالجة وتحسين إنتاجية النظام للعمليات ذات الحجم الكبير\n- **عملية الموافقة**: تبسيط عمليات الموافقة متعددة المستويات لعمليات الخدمات المصرفية للشركات، تحسين تجربة المستخدم والكفاءة التشغيلية\n- **جودة الكود**: الحفاظ على معايير عالية لجودة الكود من خلال مراجعات صارمة للكود وتنفيذ أفضل الممارسات\n- **القيادة التقنية**: تقديم التوجيه التقني والإرشاد لأعضاء الفريق بشأن القرارات المعمارية وأنماط التنفيذ\n- **تطوير النظام**: التطوير المستمر للمنصة لتلبية المتطلبات التجارية المتغيرة مع الحفاظ على استقرار النظام وأدائه",
+      "image": {
+        "url": "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop"
+      },
+      "technologies": [
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Keycloak",
+          "icon": {
+            "url": "https://www.keycloak.org/resources/images/logo.svg"
+          }
+        },
+        {
+          "name": "Liquibase",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/liquibase/liquibase-original.svg"
+          }
+        },
+        {
+          "name": "Domain-Driven Design",
+          "icon": {
+            "url": "https://example.com/ddd-icon.svg"
+          }
+        },
+        {
+          "name": "البنية السداسية",
+          "icon": {
+            "url": "https://www.svgrepo.com/show/44395/hexagon.svg"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      }
+    },
+    {
+      "id": 2,
+      "title": "الخدمات المصرفية الرقمية BNA للأفراد",
+      "company": "Proxym Group",
+      "role": "أخصائي تكامل المنتجات",
+      "description": "المساهمة في تطوير تطبيق رقمي للأفراد لـ BNA، باستخدام منصة Bankerise المصرفية من Proxym. قيادة التحول الرقمي في القطاع المصرفي بحلول مبتكرة.",
+      "markdownDescription": "# مطور Backend - مشروع عميل BNA للأفراد\n\n## نظرة عامة على المشروع\nكمطور Backend لمشروع عميل BNA للأفراد، ساهمت في تطوير تطبيق رقمي للأفراد لـ BNA، باستخدام منصة Bankerise المصرفية من Proxym. وضعني هذا الدور في طليعة التحول الرقمي في القطاع المصرفي، والعمل بشكل تعاوني مع فريق متنوع لتقديم حلول مبتكرة لـ BNA للأفراد.\n\n## المسؤوليات والإنجازات الرئيسية\n\n- **تكامل المنصة**: تكامل حل معزز رقمي في منصة Bankerise\n- **تطوير API**: تنفيذ مختلف مزودي الخدمات المصرفية الأساسية من خلال REST APIs لتحسين الوظائف\n- **DevOps**: إعداد وتنفيذ خطوط CI/CD عبر بيئات متعددة\n- **قيادة الفريق**: الإرشاد وتقديم التوجيه للمطورين الجدد، إجراء مراجعات للكود وإنفاذ معايير الترميز\n- **تحليل المتطلبات**: مراجعة وترجمة متطلبات الأعمال إلى مواصفات تقنية\n- **تطوير الميزات**: تطوير الميزات الرئيسية، بما في ذلك العمليات المعقدة مثل تأهيل العملاء والتسجيل",
+      "image": {
+        "url": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop"
+      },
+      "technologies": [
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "REST APIs",
+          "icon": {
+            "url": "https://www.svgrepo.com/svg/447473/rest-api"
+          }
+        },
+        {
+          "name": "CI/CD",
+          "icon": {
+            "url": "https://www.svgrepo.com/svg/445634/cicd"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      }
+    },
+    {
+      "id": 3,
+      "title": "تطبيق الويب المصرفي BICICI",
+      "company": "Proxym Group",
+      "role": "مسؤول تقني",
+      "description": "قيادة تطوير تطبيق ويب للبنك الدولي للتجارة والصناعة في ساحل العاج لتحسين الخدمات لوكلاء البنوك.",
+      "markdownDescription": "# مسؤول تقني - تطبيق الويب المصرفي BICICI\n\n## نظرة عامة على المشروع\nقيادة تطوير تطبيق ويب شامل للبنك الدولي للتجارة والصناعة في ساحل العاج (BICICI) لتحسين الخدمات لوكلاء البنوك. ركز المشروع على تنفيذ أتمتة عمليات الأعمال الذكية القابلة للتوسع باستخدام FLOWABLE BPM لتبسيط العمليات المصرفية.\n\n## المسؤوليات والإنجازات الرئيسية\n\n- **القيادة التقنية**: قيادة الفريق التقني في تصميم وتنفيذ بنية تطبيق الويب المصرفي\n- **تنفيذ BPMN**: تصميم وتنفيذ سير عمل عمليات الأعمال المعقدة باستخدام FLOWABLE BPM للعمليات المصرفية الآلية\n- **تطوير بوابة الوكلاء**: بناء بوابة ويب شاملة لوكلاء البنوك مع واجهات مستخدم بديهية باستخدام Formio لإنشاء نماذج ديناميكية\n- **أتمتة العمليات**: تنفيذ أتمتة عمليات الأعمال الذكية لتقليل التدخل اليدوي وتحسين الكفاءة التشغيلية\n- **تكامل النظام**: تكامل التطبيق مع أنظمة الخدمات المصرفية الأساسية وخدمات الطرف الثالث\n- **قابلية التوسع**: تصميم الحل لقابلية التوسع للتعامل مع أحجام المعاملات المتزايدة وقاعدة المستخدمين\n- **ضمان الجودة**: إنشاء بروتوكولات الاختبار ومعايير الجودة لضمان الموثوقية والأداء",
+      "image": {
+        "url": "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop"
+      },
+      "technologies": [
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "Flowable BPMN",
+          "icon": {
+            "url": "https://www.svgrepo.com/show/395899/process.svg"
+          }
+        },
+        {
+          "name": "Formio",
+          "icon": {
+            "url": "https://example.com/formio-icon.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      }
+    },
+    {
+      "id": 4,
+      "title": "منصة Insurise® للتأمين الرقمي",
+      "company": "Proxym Group",
+      "role": "مطور Backend",
+      "description": "تطوير حل تأمين رقمي متعدد القنوات مبتكر لتحسين تجربة العملاء، يخدم أكثر من 20,000 مستخدم.",
+      "markdownDescription": "# مطور Backend - منصة Insurise® للتأمين الرقمي\n\n## نظرة عامة على المشروع\nتطوير حل تأمين رقمي متعدد القنوات مبتكر مصمم لتحسين تجربة العملاء وتبسيط عمليات التأمين. تخدم المنصة أكثر من 20,000 مستخدم، مما يسمح للعملاء بالوصول إلى رؤى في الوقت الفعلي وتتبع المطالبات وإدارة محفظة التأمين الخاصة بهم عبر قنوات متعددة.\n\n## المسؤوليات والإنجازات الرئيسية\n\n- **تطوير المنصة**: بناء البنية التحتية الخلفية لمنصة تأمين رقمية شاملة باستخدام Spring Boot وبنية الخدمات الصغيرة\n- **التكامل متعدد القنوات**: تنفيذ تكامل سلس عبر قنوات متعددة (الويب، الجوال، الوكلاء) لتجربة مستخدم متسقة\n- **التحليلات في الوقت الفعلي**: تطوير قدرات معالجة البيانات في الوقت الفعلي لرؤى التأمين والتقارير\n- **إدارة المطالبات**: بناء نظام شامل لتتبع وإدارة المطالبات مع سير عمل آلي\n- **إدارة المحفظة**: تنفيذ ميزات للعملاء لعرض وإدارة وثائق التأمين والتغطية الخاصة بهم\n- **بنية قاعدة البيانات**: تصميم وتنفيذ بنية قاعدة بيانات هجينة باستخدام PostgreSQL لبيانات المعاملات و MongoDB لتخزين المستندات\n- **تطوير API**: إنشاء REST APIs لتطبيقات العملاء وتكامل الطرف الثالث\n- **تحسين الأداء**: تحسين أداء النظام للتعامل مع أكثر من 20,000 مستخدم متزامن بأقل قدر من الكمون\n- **أمن البيانات**: تنفيذ تدابير أمنية قوية لحماية بيانات التأمين والبيانات الشخصية الحساسة",
+      "image": {
+        "url": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600&h=400&fit=crop"
+      },
+      "technologies": [
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "MongoDB",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+          }
+        },
+        {
+          "name": "REST APIs",
+          "icon": {
+            "url": "https://www.svgrepo.com/svg/447473/rest-api"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      }
+    }
+  ],
+  "skillCategories": [
+    {
+      "name": "تطوير Backend",
+      "icon": "Server",
+      "skills": [
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "REST APIs",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNjFEQUZCIi8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkFQSTwvdGV4dD4KPC9zdmc+"
+          }
+        }
+      ]
+    },
+    {
+      "name": "أتمتة العمليات",
+      "icon": "Workflow",
+      "skills": [
+        {
+          "name": "BPMN",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMzM4NEY2Ii8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkJQTU48L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
+          "name": "Flowable BPM",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMTBDOTdGIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkZMT1c8L3RleHQ+Cjwvc3ZnPg=="
+          }
+        }
+      ]
+    },
+    {
+      "name": "DevOps والأدوات",
+      "icon": "Settings",
+      "skills": [
+        {
+          "name": "CI/CD",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNiIgY3k9IjEyIiByPSIzIiBmaWxsPSIjMTBDOTdGIi8+CjxjaXJjbGUgY3g9IjE4IiBjeT0iMTIiIHI9IjMiIGZpbGw9IiMzQzc3RjAiLz4KPGxpbmUgeDE9IjkiIHkxPSIxMiIgeDI9IjE1IiB5Mj0iMTIiIHN0cm9rZT0iIzMzODRGNiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0xNSA5TDE4IDEyTDE1IDE1IiBzdHJva2U9IiMzMzg0RjYiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4="
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Jenkins",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg"
+          }
+        },
+        {
+          "name": "GitLab",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
+          }
+        },
+        {
+          "name": "Liquibase",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMkY4MUY3Ii8+Cjx0ZXh0IHg9IjUiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5MQjwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "Git",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+          }
+        }
+      ]
+    },
+    {
+      "name": "المصادقة والأمان",
+      "icon": "Shield",
+      "skills": [
+        {
+          "name": "Keycloak",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNEQ0RDRGIi8+Cjx0ZXh0IHg9IjUiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5LQzwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "OAuth2/OIDC",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiNGRkY1NTIiLz4KPHN0YXIgY3g9IjEyIiBjeT0iMTIiIHI9IjQiIGZpbGw9IiMzMzMiLz4KPC9zdmc+"
+          }
+        }
+      ]
+    },
+    {
+      "name": "قاعدة البيانات والهندسة",
+      "icon": "Database",
+      "skills": [
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "MongoDB",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+          }
+        },
+        {
+          "name": "MySQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+          }
+        },
+        {
+          "name": "Domain-Driven Design",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNkY0MkMxIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5ERDs8L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
+          "name": "البنية السداسية",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBvbHlnb24gcG9pbnRzPSIxMiwyIDIwLDYgMjAsMTggMTIsMjIgNCwxOCA0LDYiIGZpbGw9IiNFRjQ0NDQiLz4KPHN0YXIgY3g9IjEyIiBjeT0iMTIiIHI9IjMiIGZpbGw9IiNGRkYiLz4KPC9zdmc+"
+          }
+        }
+      ]
+    },
+    {
+      "name": "تقنيات Frontend",
+      "icon": "Monitor",
+      "skills": [
+        {
+          "name": "React",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+          }
+        },
+        {
+          "name": "Angular",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg"
+          }
+        },
+        {
+          "name": "Formio",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNDI5RkY0Ii8+Cjx0ZXh0IHg9IjQiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5GTzwvdGV4dD4KPC9zdmc+"
+          }
+        }
+      ]
+    }
+  ],
+  "achievements": [
+    {
+      "icon": "Users",
+      "number": "5+",
+      "title": "سنوات من الخبرة",
+      "description": "متخصص في تطوير Backend وهندسة البرمجيات"
+    },
+    {
+      "icon": "Built",
+      "number": "6+",
+      "title": "المشاريع المنجزة",
+      "description": "حلول مصرفية وتأمينية منجزة بنجاح"
+    }
+  ],
+  "contactInfo": {
+    "title": "لنتواصل",
+    "description": "أنا دائمًا مهتم بمناقشة الفرص الجديدة والمشاريع المبتكرة والتواصل مع زملائي من عشاق التكنولوجيا.",
+    "locationTitle": "الموقع",
+    "locationDescription": "متاح للعمل عن بُعد والسفر",
+    "cta": {
+      "title": "جاهز للبدء؟",
+      "description": "دعنا نناقش كيف يمكنني المساعدة في تصميم حلول لمشروعك الكبير التالي.",
+      "button1": "ابدأ محادثة",
+      "button2": "جدولة مكالمة"
+    },
+    "responseTime": "وقت الاستجابة: عادة في غضون 24 ساعة",
+    "email": "mohamed.el.abed.24@gmail.com",
+    "linkedin": "www.linkedin.com/in/mohamed-iben-el-abed",
+    "github": "github.com/Makros-24",
+    "twitter": "",
+    "phone": "+216-50-622-368",
+    "location": "سوسة، تونس",
+    "methods": {
+      "email": {
+        "description": "أرسل لي بريدًا إلكترونيًا"
+      },
+      "linkedin": {
+        "description": "تواصل على LinkedIn"
+      },
+      "github": {
+        "description": "عرض الكود الخاص بي"
+      },
+      "twitter": {
+        "description": "تابعني على X"
+      }
+    }
+  },
+  "footer": {
+    "copyrightName": "محمد ابن العابد",
+    "copyrightYear": 2024,
+    "madeWithText": "صُنع بشغف من أجل التكنولوجيا والابتكار."
+  }
+}

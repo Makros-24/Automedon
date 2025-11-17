@@ -1,0 +1,38 @@
+{
+  "navigation": {
+    "work": "Travaux",
+    "about": "À Propos",
+    "contact": "Contact",
+    "menu": "Menu de Navigation",
+    "menuDescription": "Naviguez vers différentes sections du portfolio"
+  },
+  "buttons": {
+    "viewWork": "Voir Mon Travail",
+    "downloadResume": "Télécharger CV",
+    "askAI": "Demandez à l'IA",
+    "viewProject": "Voir le Projet",
+    "viewGithub": "Voir sur GitHub",
+    "sendMessage": "Envoyer un Message",
+    "scrollToExplore": "Faites défiler pour explorer"
+  },
+  "loading": {
+    "portfolio": "Chargement du portfolio...",
+    "pleaseWait": "Veuillez patienter pendant le chargement du contenu"
+  },
+  "errors": {
+    "loadingFailed": "Erreur de chargement des données du portfolio",
+    "fetchFailed": "Échec de récupération des données. Veuillez réessayer.",
+    "tryAgain": "Réessayer"
+  },
+  "dialogs": {
+    "underDevelopment": "Cette fonctionnalité est actuellement en développement.",
+    "comingSoon": "Bientôt disponible ! Restez à l'écoute pour les mises à jour."
+  },
+  "accessibility": {
+    "scrollToExplore": "Faites défiler pour explorer le portfolio",
+    "toggleTheme": "Changer le thème",
+    "toggleLanguage": "Changer de langue",
+    "closeDialog": "Fermer la boîte de dialogue",
+    "openMenu": "Ouvrir le menu de navigation"
+  }
+}

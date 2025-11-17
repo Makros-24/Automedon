@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { type PortfolioData } from '@/types';
-
+import { useLanguage } from '@/contexts/LanguageContext';
 import { getPortfolioData } from '@/utils/dataLoader';
 import { processSkillCategory, processAchievement, processContactInfo } from '@/utils/iconMapper';
 
@@ -12,7 +12,13 @@ interface PortfolioDataProviderProps {
   children: React.ReactNode;
 }
 
+/**
+ * Portfolio Data Provider with multi-language support
+ *
+ * Automatically refetches data when the language changes
+ */
 export function PortfolioDataProvider({ children }: PortfolioDataProviderProps) {
+  const { language } = useLanguage();
   const [data, setData] = useState<PortfolioData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -20,9 +26,9 @@ export function PortfolioDataProvider({ children }: PortfolioDataProviderProps) 
   const fetchData = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
-      const portfolioData = await getPortfolioData();
+      const portfolioData = await getPortfolioData(language);
       
       // Process the data to convert string icons to components
       const processedData: PortfolioData = {
@@ -44,7 +50,8 @@ export function PortfolioDataProvider({ children }: PortfolioDataProviderProps) 
 
   useEffect(() => {
     fetchData();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [language]); // Refetch data when language changes
 
   const contextValue: PortfolioDataContextType = {
     data,

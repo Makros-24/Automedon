@@ -500,3 +500,147 @@ html {
 .carousel-container .slick-slide [data-slide-index] {
   pointer-events: auto;
 }
+
+/* ============================================================================
+   RTL (Right-to-Left) Support for Arabic
+   ============================================================================ */
+
+/* Base RTL styles */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="rtl"] body {
+  text-align: right;
+}
+
+/* RTL-specific text alignment */
+[dir="rtl"] .text-left {
+  text-align: right !important;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left !important;
+}
+
+/* RTL margin and padding utilities */
+[dir="rtl"] .mr-auto {
+  margin-right: unset;
+  margin-left: auto;
+}
+
+[dir="rtl"] .ml-auto {
+  margin-left: unset;
+  margin-right: auto;
+}
+
+/* RTL flexbox reversals */
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .flex-row-reverse {
+  flex-direction: row;
+}
+
+/* RTL positioning */
+[dir="rtl"] .left-0 {
+  left: unset;
+  right: 0;
+}
+
+[dir="rtl"] .right-0 {
+  right: unset;
+  left: 0;
+}
+
+/* RTL border radius */
+[dir="rtl"] .rounded-l,
+[dir="rtl"] .rounded-tl,
+[dir="rtl"] .rounded-bl {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-top-right-radius: var(--radius);
+  border-bottom-right-radius: var(--radius);
+}
+
+[dir="rtl"] .rounded-r,
+[dir="rtl"] .rounded-tr,
+[dir="rtl"] .rounded-br {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-top-left-radius: var(--radius);
+  border-bottom-left-radius: var(--radius);
+}
+
+/* RTL transforms for animations */
+[dir="rtl"] .translate-x-2 {
+  transform: translateX(-0.5rem);
+}
+
+[dir="rtl"] .translate-x-4 {
+  transform: translateX(-1rem);
+}
+
+[dir="rtl"] .-translate-x-2 {
+  transform: translateX(0.5rem);
+}
+
+[dir="rtl"] .-translate-x-4 {
+  transform: translateX(1rem);
+}
+
+/* RTL icon reversals (for directional icons like arrows) */
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* RTL dropdown menu alignment */
+[dir="rtl"] [role="menu"],
+[dir="rtl"] [role="listbox"] {
+  text-align: right;
+}
+
+/* RTL navigation */
+[dir="rtl"] nav ul {
+  padding-right: 0;
+}
+
+/* RTL form inputs */
+[dir="rtl"] input,
+[dir="rtl"] textarea,
+[dir="rtl"] select {
+  text-align: right;
+}
+
+/* Glass morphism RTL compatibility */
+[dir="rtl"] .glass,
+[dir="rtl"] .glass-strong {
+  /* No special overrides needed - glass effects are direction-agnostic */
+}
+
+/* Language-specific class utilities */
+.lang-ar {
+  font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+  line-height: 1.8; /* Better line height for Arabic */
+}
+
+/* Ensure smooth transitions for RTL switches */
+* {
+  transition-property: margin, padding, left, right, transform;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+}
+
+/* Disable transitions on direction change to avoid jarring effects */
+[dir] * {
+  transition: none !important;
+}
+
+/* Re-enable after initial render */
+[dir].loaded * {
+  transition-property: margin, padding, left, right, transform !important;
+  transition-duration: 0.2s !important;
+  transition-timing-function: ease-out !important;
+}

@@ -1,16 +1,20 @@
-import type { PortfolioData, ImageData, PersonalInfo, Project, SkillCategory, Achievement, ContactInfo } from '@/types';
+import type { PortfolioData, ImageData, PersonalInfo, Project, SkillCategory, Achievement, ContactInfo, Language } from '@/types';
 
 /**
- * Load portfolio data from API endpoint
+ * Load portfolio data from API endpoint with language support
+ *
+ * @param language - Language code (en, fr, de, ar). Defaults to 'en'
  */
-export async function loadPortfolioData(): Promise<PortfolioData> {
-  const apiEndpoint = '/api/portfolio';
-  
+export async function loadPortfolioData(language: Language = 'en'): Promise<PortfolioData> {
+  // Build API endpoint with language parameter
+  const apiEndpoint = `/api/portfolio?lang=${language}`;
+
   try {
     const response = await fetch(apiEndpoint, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Accept-Language': language,
         // Add cache-busting in development
         ...(process.env.NODE_ENV === 'development' && {
           'Cache-Control': 'no-cache',
@@ -202,30 +206,43 @@ function validateContactInfo(contactInfo: any): contactInfo is ContactInfo {
 
 /**
  * Cache for loaded portfolio data to avoid repeated network calls
+ * Organized by language for multi-language support
  */
-let portfolioDataCache: PortfolioData | null = null;
+const portfolioDataCache: Map<Language, PortfolioData> = new Map();
 
 /**
- * Get portfolio data with caching
+ * Get portfolio data with caching and language support
+ *
+ * @param language - Language code (en, fr, de, ar). Defaults to 'en'
+ * @param useCache - Whether to use cached data. Defaults to true
  */
-export async function getPortfolioData(useCache: boolean = true): Promise<PortfolioData> {
+export async function getPortfolioData(
+  language: Language = 'en',
+  useCache: boolean = true
+): Promise<PortfolioData> {
   // In development, always bypass cache for better DX
   const shouldUseCache = useCache && process.env.NODE_ENV !== 'development';
-  
-  if (shouldUseCache && portfolioDataCache) {
-    return portfolioDataCache;
+
+  if (shouldUseCache && portfolioDataCache.has(language)) {
+    return portfolioDataCache.get(language)!;
   }
 
-  const data = await loadPortfolioData();
-  portfolioDataCache = data;
+  const data = await loadPortfolioData(language);
+  portfolioDataCache.set(language, data);
   return data;
 }
 
 /**
- * Clear the portfolio data cache
+ * Clear the portfolio data cache for a specific language or all languages
+ *
+ * @param language - Optional language to clear. If not provided, clears all
  */
-export function clearPortfolioDataCache(): void {
-  portfolioDataCache = null;
+export function clearPortfolioDataCache(language?: Language): void {
+  if (language) {
+    portfolioDataCache.delete(language);
+  } else {
+    portfolioDataCache.clear();
+  }
 }
 
 /**

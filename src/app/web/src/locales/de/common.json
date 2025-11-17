@@ -1,0 +1,38 @@
+{
+  "navigation": {
+    "work": "Arbeit",
+    "about": "Über",
+    "contact": "Kontakt",
+    "menu": "Navigationsmenü",
+    "menuDescription": "Navigieren Sie zu verschiedenen Abschnitten des Portfolios"
+  },
+  "buttons": {
+    "viewWork": "Meine Arbeit Ansehen",
+    "downloadResume": "Lebenslauf Herunterladen",
+    "askAI": "Fragen Sie die KI",
+    "viewProject": "Projekt Ansehen",
+    "viewGithub": "Auf GitHub Ansehen",
+    "sendMessage": "Nachricht Senden",
+    "scrollToExplore": "Scrollen Sie zum Erkunden"
+  },
+  "loading": {
+    "portfolio": "Portfolio wird geladen...",
+    "pleaseWait": "Bitte warten Sie, während wir den Inhalt laden"
+  },
+  "errors": {
+    "loadingFailed": "Fehler beim Laden der Portfolio-Daten",
+    "fetchFailed": "Fehler beim Abrufen der Daten. Bitte versuchen Sie es erneut.",
+    "tryAgain": "Erneut Versuchen"
+  },
+  "dialogs": {
+    "underDevelopment": "Diese Funktion befindet sich derzeit in der Entwicklung.",
+    "comingSoon": "Bald verfügbar! Bleiben Sie dran für Updates."
+  },
+  "accessibility": {
+    "scrollToExplore": "Scrollen Sie, um das Portfolio zu erkunden",
+    "toggleTheme": "Thema wechseln",
+    "toggleLanguage": "Sprache ändern",
+    "closeDialog": "Dialog schließen",
+    "openMenu": "Navigationsmenü öffnen"
+  }
+}

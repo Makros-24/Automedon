@@ -12,11 +12,71 @@ export interface TechnologyWithIcon {
   icon?: ImageData | string // Support ImageData object, string (Lucide icon name), or none
 }
 
+// ============================================================================
+// Internationalization (i18n) Types
+// ============================================================================
+
+// Supported languages
+export type Language = 'en' | 'fr' | 'de' | 'ar'
+
+// Language context type
+export interface LanguageContextType {
+  language: Language
+  setLanguage: (language: Language) => void
+  isRTL: boolean
+}
+
+// Utility type for localized content
+export type LocalizedContent<T> = {
+  [K in Language]: T
+}
+
+// UI translation keys and structure
+export interface UITranslations {
+  navigation: {
+    work: string
+    about: string
+    contact: string
+    menu: string
+    menuDescription: string
+  }
+  buttons: {
+    viewWork: string
+    downloadResume: string
+    askAI: string
+    viewProject: string
+    viewGithub: string
+    sendMessage: string
+  }
+  loading: {
+    portfolio: string
+    pleaseWait: string
+  }
+  errors: {
+    loadingFailed: string
+    fetchFailed: string
+    tryAgain: string
+  }
+  dialogs: {
+    underDevelopment: string
+    comingSoon: string
+  }
+  accessibility: {
+    scrollToExplore: string
+    toggleTheme: string
+    toggleLanguage: string
+    closeDialog: string
+    openMenu: string
+  }
+}
+
+// ============================================================================
 // Personal information
 export interface PersonalInfo {
   name: string
   title: string
   description: string
+  avatar?: ImageData | string // Support both base64/URL format and legacy string URL
   resumeUrl?: string
 }
 

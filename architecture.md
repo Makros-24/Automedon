@@ -23,16 +23,19 @@ This document outlines the system architecture, design patterns, and technical d
 │  └── Technology Icon System (Enhanced Icons + Hover Effects)  │
 ├─────────────────────────────────────────────────────────────────┤
 │                      State Layer                               │
+│  ├── Language Context (Multilingual + RTL Support)            │
 │  ├── Theme Context (Dark/Light Mode)                          │
+│  ├── Portfolio Data Context (Language-aware Data Loading)     │
 │  ├── Local Component State (React Hooks)                      │
 │  ├── Animation State (Framer Motion)                          │
 │  └── Icon Processing State (Technology Icon Manager)          │
 ├─────────────────────────────────────────────────────────────────┤
 │                     Styling Layer                              │
-│  ├── Tailwind CSS 4 (Utility Classes)                        │
+│  ├── Tailwind CSS 4 (Utility Classes + RTL Support)          │
 │  ├── CSS Custom Properties (Theme Variables)                  │
 │  ├── Glass Morphism Effects (Backdrop Blur)                   │
 │  ├── Card-Level Hover Effects (Grayscale Transitions)         │
+│  ├── RTL/LTR Layout System (Directional Styling)              │
 │  └── Responsive Design (Mobile-First)                         │
 └─────────────────────────────────────────────────────────────────┘
 ```
@@ -103,16 +106,20 @@ const useInViewOnce = (threshold = 0.1) => {
 ### State Management Strategy
 
 #### Context for Global State
-- **Theme Context**: Dark/light mode preferences
-- **Scoped to specific concerns**: Avoid god objects
+- **Language Context**: Language selection, RTL/LTR layout, locale-specific formatting
+- **Theme Context**: Dark/light mode preferences with system detection
+- **Portfolio Data Context**: Language-aware portfolio data with API integration
+- **Scoped to specific concerns**: Single responsibility, avoid god objects
 
 #### Local State for Components
-- **Component-specific data**: Form inputs, modal states
+- **Component-specific data**: Form inputs, modal states, dialog visibility
 - **Performance consideration**: Keep state as local as possible
+- **Memoization**: React.useMemo for expensive computations
 
 #### Animation State
-- **Framer Motion**: Declarative animation states
+- **Framer Motion**: Declarative animation states with variants
 - **Scroll-triggered animations**: IntersectionObserver integration
+- **Accessibility**: Respects prefers-reduced-motion settings
 
 ## Component Structure
 
@@ -155,49 +162,82 @@ interface LayoutComponent {
 
 **Examples**: `Header`, `ThemeProvider`, `AnimatedBackground`
 
-## Database Schema
+## Data Schema
 
-Currently using static data with typed interfaces. Future database schema:
+Currently using JSON-based portfolio data with multilingual support. Schema per language file:
 
 ```typescript
-interface User {
-  id: string;
-  name: string;
-  title: string;
-  bio: string;
-  skills: Skill[];
+interface PortfolioData {
+  personalInfo: {
+    name: string;
+    title: string;
+    description: string;
+    avatar: ImageData;
+    resumeUrl: string;
+  };
+  about: {
+    title: string;
+    description: string;
+    skillsTitle: string;
+    achievementsTitle: string;
+  };
+  work: {
+    title: string;
+    description: string;
+  };
   projects: Project[];
-  contact: ContactInfo;
+  skillCategories: SkillCategory[];
+  achievements: Achievement[];
+  contactInfo: ContactInfo;
+  footer: FooterData;
 }
 
 interface Project {
-  id: string;
+  id: number;
   title: string;
+  company: string;
+  role: string;
   description: string;
-  technologies: string[];
-  imageUrl: string;
-  projectUrl?: string;
-  githubUrl?: string;
-  featured: boolean;
+  markdownDescription: string; // Detailed markdown content
+  image: ImageData;
+  technologies: TechnologyWithIcon[];
+  links: {
+    live?: string;
+    github?: string;
+  };
 }
 
-interface Skill {
-  id: string;
+interface TechnologyWithIcon {
   name: string;
-  category: SkillCategory;
-  proficiency: number; // 1-100
-  icon?: string;
+  icon?: ImageData | string; // Enhanced or legacy format
+}
+
+interface ImageData {
+  base64?: string;
+  url?: string;
 }
 ```
 
 ## API Design Principles
 
+### Portfolio Data API
+```typescript
+// Current implementation
+GET /api/portfolio?lang=<code>
+{
+  lang: 'en' | 'fr' | 'de' | 'ar' // Language code
+}
+
+Response: PortfolioData // Language-specific portfolio data
+```
+
 ### Future AI Chat API
 ```typescript
-// RESTful endpoint design
+// Planned endpoint design
 POST /api/chat
 {
   message: string;
+  lang: string; // Language for response
   context?: {
     section: 'experience' | 'skills' | 'projects' | 'general';
     projectId?: string;
@@ -205,16 +245,18 @@ POST /api/chat
 }
 
 Response: {
-  response: string;
+  response: string; // Localized response
   sources?: string[];
   confidence: number;
 }
 ```
 
 ### Data Fetching Strategy
-- **Static Generation**: Portfolio content (ISG for updates)
-- **Client-side**: Interactive features (chat, theme preferences)
-- **Error Boundaries**: Graceful failure handling
+- **Server-Side**: Portfolio data via API routes with language support
+- **Static Generation**: HTML structure (ISG for updates)
+- **Client-side**: Interactive features (chat, theme, language switching)
+- **Error Boundaries**: Graceful failure handling with fallbacks
+- **Caching**: Server-side caching per language with cache invalidation
 
 ## Performance Considerations
 
@@ -393,17 +435,50 @@ type TechnologyWithIcon = {
 - **CSS Transitions**: Hardware-accelerated grayscale effects
 - **Tree Shaking**: Only bundle used Lucide icons
 
+## Internationalization Architecture
+
+### Language Management
+```typescript
+interface LanguageContextValue {
+  language: string; // Current language code
+  setLanguage: (lang: string) => void;
+  isRTL: boolean; // Right-to-left layout flag
+  supportedLanguages: string[]; // Available languages
+}
+```
+
+### RTL Support Implementation
+- **Layout Direction**: Automatic `dir` attribute switching on HTML element
+- **CSS Adjustments**: Tailwind directionality utilities (rtl: prefix)
+- **Text Alignment**: Logical properties for start/end instead of left/right
+- **Icon Mirroring**: Conditional icon flipping for directional icons
+
+### Language File Structure
+```
+portfolio-data/
+├── en.json    # English (default)
+├── fr.json    # French
+├── de.json    # German
+└── ar.json    # Arabic (RTL)
+```
+
+### Language Persistence
+- **Primary**: URL query parameter (?lang=en)
+- **Fallback**: localStorage for user preference
+- **Default**: English (en) if no preference
+
 ## Future Architecture Enhancements
 
 ### Planned Improvements
 1. **Micro-frontends**: Modular development approach
-2. **GraphQL API**: Efficient data fetching
-3. **Real-time Features**: WebSocket integration for live chat
-4. **PWA Features**: Offline capability, push notifications
-5. **Internationalization**: Multi-language support
+2. **GraphQL API**: Efficient data fetching with language-aware queries
+3. **Real-time Features**: WebSocket integration for live chat with i18n
+4. **PWA Features**: Offline capability with cached translations
+5. **Additional Languages**: Expand to more languages (ES, IT, ZH, JA)
+6. **Translation Management**: Integration with translation services (Crowdin, Lokalise)
 
 ### Monitoring & Observability
-- **Error Tracking**: Sentry integration
-- **Performance Monitoring**: Real User Monitoring (RUM)
-- **Analytics**: Privacy-focused analytics solution
-- **A/B Testing**: Feature flag implementation
+- **Error Tracking**: Sentry integration with language context
+- **Performance Monitoring**: Real User Monitoring per language/region
+- **Analytics**: Privacy-focused analytics with language segmentation
+- **A/B Testing**: Feature flags with language-specific variations

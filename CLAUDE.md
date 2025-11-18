@@ -8,16 +8,18 @@ Automedon is an AI-powered digital twin portfolio application that allows recrui
 
 ## Current Development Status
 
-**Phase**: Dynamic Data Loading Complete - Technology Icon System Enhanced
+**Phase**: Multilingual Support Complete - Full Internationalization
 
-- **Current Status**: Fully functional portfolio with dynamic JSON-based data loading, server-side API integration, and enhanced technology icon system
+- **Current Status**: Fully functional portfolio with multilingual support (English, French, German, Arabic with RTL), dynamic JSON-based data loading, and enhanced UI components
 - **Tech Stack**: React 19, Next.js 15, TypeScript, Tailwind CSS 4, Radix UI, Framer Motion
-- **Architecture**: Component-based with 40+ UI components, theme provider, animation system, and comprehensive technology icon management
-- **Recent Enhancements**: 
-  - Converted from static to dynamic JSON-based data loading via API routes
-  - Implemented comprehensive technology icon manager with base64/URL support and Lucide fallbacks
-  - Added extensive test coverage for technology icon system
-  - Created server-side portfolio data API with validation and caching
+- **Architecture**: Component-based with 40+ UI components, theme provider, animation system, multilingual system, and comprehensive technology icon management
+- **Recent Enhancements**:
+  - Implemented multilingual support with 4 languages (EN, FR, DE, AR)
+  - Added RTL (Right-to-Left) support for Arabic language
+  - Enhanced project cards with markdown support and ProjectDetailsDialog
+  - Improved accessibility with screen reader support
+  - Implemented Work In Progress dialog for AI assistant feature
+  - Optimized layout with glass morphism effects and badge truncation
 
 ## Development Commands
 
@@ -58,12 +60,13 @@ npm run test:watch
 
 ## Development Conventions
 
-- **Data Source**: All portfolio data is managed in the `portfolio-data.json` file in the project root. The frontend fetches this data through the `/api/portfolio` API route. The path to this file is configured via the `PORTFOLIO_CONFIG_PATH` environment variable.
-- **State Management**: The portfolio data is managed globally using React Context (`PortfolioDataContext`) for efficient state distribution across components.
-- **API Endpoint**: The backend is implemented as a Next.js API route. The main endpoint is `/api/portfolio`, which serves the portfolio data with validation and caching.
-- **Styling**: The project uses Tailwind CSS utility classes directly in JSX code for component styling. Custom variants are managed using class-variance-authority (CVA).
-- **Testing**: The project uses Jest and React Testing Library for testing. Test files are located in `__tests__` directories alongside the components they are testing.
-- **Component Architecture**: Reusable components are located in the `src/app/web/src/components` directory, organized by type (ui, sections, forms, layout).
+- **Data Source**: Portfolio data is organized by language in the `portfolio-data/` directory (en.json, fr.json, de.json, ar.json). The frontend fetches language-specific data through the `/api/portfolio?lang=<code>` API route.
+- **Internationalization**: Language selection managed through URL query parameters and localStorage persistence. Supports EN, FR, DE, AR with automatic RTL layout for Arabic.
+- **State Management**: Portfolio data and language preferences managed globally using React Context (`PortfolioDataContext`, `LanguageContext`) for efficient state distribution.
+- **API Endpoint**: The backend is implemented as a Next.js API route. The main endpoint is `/api/portfolio?lang=<code>`, serving language-specific portfolio data with validation and caching.
+- **Styling**: Tailwind CSS utility classes with RTL support. Custom variants managed using class-variance-authority (CVA). Glass morphism effects for modern design aesthetic.
+- **Testing**: Jest and React Testing Library for testing. Test files located in `__tests__` directories alongside components.
+- **Component Architecture**: Reusable components in `src/app/web/src/components`, organized by type (ui, sections, forms, layout).
 
 ## Project Documentation
 
@@ -87,18 +90,19 @@ For comprehensive project guidance, refer to these documentation files:
 - **Theme Components**: Components related to dark/light theme switching
 
 #### Features
-- **Digital Twin**: AI chatbot representing the portfolio owner (UI implemented, backend pending)
-- **Tech Radar**: Interactive chart showing technology proficiency (currently hidden)
-- **Skill Carousel**: Scrolling showcase of core skills (currently hidden)
-- **Portfolio Showcase**: Featured work and project displays
+- **Multilingual Support**: Full internationalization with EN, FR, DE, AR languages and RTL support
+- **Digital Twin**: AI chatbot representing the portfolio owner (UI implemented with WIP dialog, backend pending)
+- **Portfolio Showcase**: Featured work with detailed project dialogs, markdown support, and technology badges
 - **Skills Categories**: Detailed technology categorization with interactive cards and enhanced icons
 - **Achievements Showcase**: Key metrics and professional accomplishments
 - **Technology Icons**: Enhanced icon system supporting base64/URL icons with card-level hover effects
+- **Project Details**: Modal dialogs with markdown rendering, accessibility features, and screen reader support
 
 #### Technical Terms
 - **SSR-Compatible**: Components that work with server-side rendering
 - **Theme Provider**: Context provider managing dark/light theme state
 - **Portfolio Data Context**: React Context (`PortfolioDataContext`) for global portfolio data state management
+- **Language Context**: React Context managing language selection and RTL layout switching
 - **Glass Morphism**: UI design technique using backdrop-blur and transparency
 - **Radix Primitives**: Unstyled, accessible component foundations
 - **Enhanced Icons**: Technology icon system supporting base64, URL, and Lucide fallback icons
@@ -110,52 +114,76 @@ For comprehensive project guidance, refer to these documentation files:
 
 ## Recent Development Work
 
-### Dynamic Data Loading Implementation (Completed)
-- **Objective**: Convert static portfolio data to dynamic JSON-based loading with environment variable support
-- **Approach**: Test-driven development with comprehensive test coverage
+### Multilingual Support Implementation (Completed)
+- **Objective**: Add full internationalization with multiple languages and RTL support
+- **Approach**: Language-specific JSON files with API route integration
 - **Key Changes**:
-  - Created server-side API route `/api/portfolio` for data serving
-  - Updated `dataLoader.ts` to fetch from API endpoint instead of static imports
-  - Added development cache-busting for immediate JSON file updates
+  - Created language-specific portfolio data files (en.json, fr.json, de.json, ar.json)
+  - Implemented language switching with URL query parameters and localStorage
+  - Added RTL layout support for Arabic language
+  - Updated API route to serve language-specific data
+  - Created LanguageContext for global language state management
+
+### Enhanced Project Components (Completed)
+- **Objective**: Improve project showcase with detailed information and better UX
+- **Approach**: Component-driven development with accessibility focus
+- **Key Changes**:
+  - Created ProjectDetailsDialog with markdown rendering support
+  - Added screen reader support and ARIA labels for accessibility
+  - Implemented badge truncation for technology lists
+  - Enhanced layout with glass morphism effects
+  - Added Work In Progress dialog for AI assistant feature
+  - Improved project card layout and technology display
+
+### Dynamic Data Loading Implementation (Completed)
+- **Objective**: Convert static portfolio data to dynamic JSON-based loading
+- **Key Changes**:
+  - Created server-side API route `/api/portfolio?lang=<code>` for data serving
   - Implemented portfolio data validation and error handling
-  - Converted from client-side to server-side data loading
+  - Added language-aware data loading with fallback mechanisms
 
 ### Technology Icon System Enhancement (Completed)
-- **Objective**: Extend technology icons to support base64/URL format like project images
-- **Approach**: Test-driven development with extensive test suite
+- **Objective**: Support base64/URL format icons with fallback handling
 - **Key Changes**:
-  - Extended type definitions with `ImageData` interface and `TechnologyWithIcon` type
-  - Created comprehensive `technologyIconManager.ts` utility system
-  - Implemented icon processing pipeline with priority system (base64 → URL → Lucide)
-  - Added 28 test cases covering all functionality and edge cases
+  - Extended type definitions with `ImageData` interface
+  - Created comprehensive `technologyIconManager.ts` utility
+  - Implemented icon processing pipeline (base64 → URL → Lucide)
   - Maintained backward compatibility with legacy string arrays
 
 ### Key Files Created/Modified
-- `src/app/web/src/app/api/portfolio/route.ts` - Server-side portfolio data API
-- `src/app/web/src/utils/dataLoader.ts` - Updated to use API endpoint
+- `portfolio-data/en.json` - English portfolio data with project details and markdown
+- `portfolio-data/fr.json` - French translation of portfolio data
+- `portfolio-data/de.json` - German translation of portfolio data
+- `portfolio-data/ar.json` - Arabic translation with RTL support considerations
+- `src/app/web/src/app/api/portfolio/route.ts` - Server-side API with language parameter support
+- `src/app/web/src/components/sections/ProjectDetailsDialog.tsx` - Project details modal with markdown
+- `src/app/web/src/components/ui/WIPDialog.tsx` - Work In Progress dialog component
+- `src/app/web/src/contexts/LanguageContext.tsx` - Language state management
+- `src/app/web/src/utils/dataLoader.ts` - Updated to support language-specific loading
 - `src/app/web/src/utils/technologyIconManager.ts` - Technology icon processing system
-- `src/app/web/src/utils/__tests__/dataLoader.test.ts` - 20 test cases for data loading
-- `src/app/web/src/utils/__tests__/technologyIconManager.test.ts` - 28 test cases for icon system
-- `src/app/web/src/types/index.ts` - Extended with enhanced technology icon types
-- `portfolio-data.json` - Root-level JSON data file with base64 SVG images
+- `src/app/web/src/types/index.ts` - Extended with multilingual and project types
 
 ### Environment Configuration
 The application uses a `.env.local` file in the `src/app/web/` directory for configuration:
 
 ```env
 # Portfolio Configuration
-PORTFOLIO_CONFIG_PATH=./portfolio-data.json
+PORTFOLIO_DATA_DIR=./portfolio-data
 
 # Application Environment
 NODE_ENV=development
 NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Supported Languages (comma-separated)
+NEXT_PUBLIC_SUPPORTED_LANGUAGES=en,fr,de,ar
+NEXT_PUBLIC_DEFAULT_LANGUAGE=en
 
 # Development Options
 NEXT_PUBLIC_DEBUG_MODE=true
 NEXT_PUBLIC_SHOW_GRID=false
 ```
 
-**Note**: The `.env.local` file is automatically loaded by Next.js and contains all necessary environment variables. No additional command-line parameters are needed.
+**Note**: The `.env.local` file is automatically loaded by Next.js. Language-specific data is loaded from the `portfolio-data/` directory based on the selected language.
 
 # Task Completion Protocol
 

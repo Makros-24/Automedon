@@ -10,15 +10,24 @@ Named after the legendary charioteer of Achilles, Automedon is your loyal, digit
 
 ## 🚀 Features
 
-- ⚡️ Interactive AI chatbot that speaks only from your data
+### ✅ Implemented
+- 🌐 **Multilingual support** with 4 languages (EN, FR, DE, AR) and RTL layout
+- 📱 **Responsive design** with modern glass morphism UI
+- 💼 **Portfolio showcase** with markdown project descriptions and detailed dialogs
+- 🎨 **Technology icons** with base64/URL support and smart fallbacks
+- ♿ **Accessibility** with screen reader support and ARIA labels
+- 🎭 **Theme switching** (dark/light mode)
+- 📊 **Skills categorization** with interactive technology cards
+
+### 🚧 In Progress / Planned
+- ⚡️ Interactive AI chatbot that speaks only from your data (UI ready)
 - 🧠 Copy-paste job description and check compatibility with your profile
 - 🧭 Answers about your experiences, skills, values, and team style
 - 💬 Suggests follow-up questions to guide recruiters
-- 🌐 Multilingual support for international opportunities
 - 🔐 Private data gating (e.g., reveal certain info only upon verified email)
 - 📊 Admin dashboard to preview and monitor AI answers
 - 🗓️ Leave a message or schedule a meeting
-- 🧬 Future: AI adapts responses to recruiter’s company context
+- 🧬 Future: AI adapts responses to recruiter's company context
 - 📈 Analytics dashboard to track recruiter interactions
 - 🧪 Debug mode to inspect chatbot response context
 
@@ -26,14 +35,28 @@ Named after the legendary charioteer of Achilles, Automedon is your loyal, digit
 
 ## 🛣️ Roadmap
 
-### Phase 1: MVP
+### Phase 0: Foundation ✅ COMPLETED
 - [x] Build React/Next.js portfolio layout
 - [x] Define schema type for CV and personal data
-- [ ] Multilingual support
+- [x] Multilingual support (EN, FR, DE, AR)
+- [x] RTL layout support for Arabic
+- [x] Enhanced project showcase with markdown
+- [x] Accessibility features and screen reader support
+- [x] Technology icon system with multiple formats
+- [x] Glass morphism UI design
 
-### Phase 2: Interaction Layer
-- [ ] Admin dashboard for response preview & logs
+### Phase 1: UI Development ✅ COMPLETED
+- [x] Portfolio sections (Hero, Work, About, Contact)
+- [x] Theme switching (dark/light mode)
+- [x] Responsive design
+- [x] Project details dialog
+- [x] Language switcher
+- [x] WIP dialog for AI assistant
+
+### Phase 2: Interaction Layer 🚧 IN PROGRESS
 - [ ] Add sandboxed chatbot using OpenAI API
+- [ ] Multilingual AI responses
+- [ ] Admin dashboard for response preview & logs
 - [ ] Restrict private data unless verified
 - [ ] Debug mode for inspecting AI behavior
 
@@ -52,13 +75,18 @@ Named after the legendary charioteer of Achilles, Automedon is your loyal, digit
 
 ## Tech Stack
 
-- **Frontend**: React (Next.js), Tailwind CSS
-- **Backend**: ? <!--Node.js, Express or NestJS-->
-- **AI**: ? <!--OpenAI API (GPT-4 with structured prompt injection)-->
-- **Storage**: JSON/YAML CV + later vector DB (e.g., Qdrant or Pinecone)
-- **Auth**: ? <!--Token/email-based data gating-->
-- **Analytics**: ? <!--TBD (PostHog, Plausible, custom)
-- **Deployment**: ? <!--Vercel / Docker / Fly.io-->
+- **Frontend**: React 19, Next.js 15 (App Router), TypeScript 5
+- **Styling**: Tailwind CSS 4 with RTL support
+- **UI Components**: Radix UI (40+ accessible primitives)
+- **Animations**: Framer Motion
+- **Icons**: Lucide React with custom base64/URL support
+- **Data**: JSON-based with multilingual support (4 languages)
+- **Backend**: Next.js API Routes
+- **AI**: Planned - OpenAI API (GPT-4 with structured prompt injection)
+- **Storage**: JSON portfolio data + later vector DB (Qdrant/Pinecone)
+- **Auth**: Planned - Token/email-based data gating
+- **Analytics**: Planned - TBD (PostHog, Plausible, custom)
+- **Deployment**: Vercel-ready
 
 ---
 
@@ -72,12 +100,15 @@ Whether you're offline, asleep, or just focused — **Automedon speaks your trut
 
 ## Current Phase
 
-- [x] Brainstorming  
-- [x] Feature Scoping  
-- [x] Schema Design  
-- [x] Initial Layout/Wireframe  
-- [x] UI development
-- [ ] Front Development
+- [x] Brainstorming
+- [x] Feature Scoping
+- [x] Schema Design
+- [x] Initial Layout/Wireframe
+- [x] UI Development
+- [x] Multilingual Support
+- [x] Enhanced Project Showcase
+- [x] Accessibility Implementation
+- [ ] AI Backend Integration 🔄 NEXT
 
 ---
 

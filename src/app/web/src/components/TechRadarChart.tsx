@@ -40,7 +40,18 @@ export function TechRadarChart() {
   const { ref: chartRef, isInView } = useInViewOnce({ threshold: 0.3, rootMargin: '0px 0px -10% 0px' });
 
   // Custom dot component with glass morphism effect
-  const CustomDot = (props: any) => {
+  interface CustomDotProps {
+    cx: number;
+    cy: number;
+    payload: {
+      name: string;
+      strength: number;
+      category: string;
+      fullName: string;
+    };
+  }
+
+  const CustomDot = (props: CustomDotProps) => {
     const { cx, cy, payload } = props;
     const strength = payload.strength / 100;
     
@@ -93,7 +104,7 @@ export function TechRadarChart() {
 
   return (
     <motion.div
-      ref={chartRef}
+      ref={chartRef as React.RefObject<HTMLDivElement>}
       className="group relative"
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
@@ -178,7 +189,7 @@ export function TechRadarChart() {
                   fill="url(#radarGradient)"
                   strokeWidth={2}
                   fillOpacity={0.15}
-                  dot={<CustomDot />}
+                  dot={CustomDot}
                   className="filter drop-shadow-sm"
                 />
                 

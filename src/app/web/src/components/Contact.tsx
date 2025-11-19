@@ -22,18 +22,19 @@ const itemVariants = {
 };
 
 // Helper function to check if it's business hours in Tunisia (GMT+1)
-const isBusinessHours = (): boolean => {
-  const now = new Date();
-  const tunisiaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Africa/Tunis' }));
-  const hours = tunisiaTime.getHours();
-  const day = tunisiaTime.getDay();
-
-  // Business hours: Monday-Friday, 9 AM - 6 PM Tunisia time
-  const isWeekday = day >= 1 && day <= 5;
-  const isWorkingHours = hours >= 9 && hours < 18;
-
-  return isWeekday && isWorkingHours;
-};
+// Currently unused, but kept for future availability indicator feature
+// const isBusinessHours = (): boolean => {
+//   const now = new Date();
+//   const tunisiaTime = new Date(now.toLocaleString('en-US', { timeZone: 'Africa/Tunis' }));
+//   const hours = tunisiaTime.getHours();
+//   const day = tunisiaTime.getDay();
+//
+//   // Business hours: Monday-Friday, 9 AM - 6 PM Tunisia time
+//   const isWeekday = day >= 1 && day <= 5;
+//   const isWorkingHours = hours >= 9 && hours < 18;
+//
+//   return isWeekday && isWorkingHours;
+// };
 
 // Helper function to detect if user is on mobile
 const isMobileDevice = (): boolean => {

@@ -50,11 +50,11 @@ export function useTranslation() {
     const keys = key.split('.');
     const currentTranslations = translations[language] || translations.en;
 
-    let result: any = currentTranslations;
+    let result: Record<string, unknown> | string = currentTranslations as unknown as Record<string, unknown>;
 
     for (const k of keys) {
       if (result && typeof result === 'object' && k in result) {
-        result = result[k as keyof typeof result];
+        result = result[k as keyof typeof result] as Record<string, unknown> | string;
       } else {
         // Return key if translation not found (fallback)
         console.warn(`Translation not found for key: ${key} in language: ${language}`);

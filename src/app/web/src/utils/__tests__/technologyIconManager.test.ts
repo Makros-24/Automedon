@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
-import { 
-  getTechnologyIcon, 
-  getTechnologyIconElement, 
+import {
+  getTechnologyIcon,
+  getTechnologyIconElement,
   validateTechnologyIcon,
   processSkillsWithIcons,
   processProjectTechnologies
@@ -9,8 +9,8 @@ import {
 
 // Mock React and icon components
 jest.mock('react', () => ({
-  createElement: jest.fn((component, props) => ({ 
-    type: component, 
+  createElement: jest.fn((component, props) => ({
+    type: component,
     props: props || {},
     __mockElement: true
   })),
@@ -74,16 +74,12 @@ describe('Technology Icon Manager', () => {
 
       const result = getTechnologyIconElement(iconData, techName);
       
-      expect(result).toEqual({
-        type: 'img',
-        props: {
-          src: iconData.base64,
-          alt: `${techName} icon`,
-          className: 'w-4 h-4',
-          loading: 'lazy'
-        },
-        __mockElement: true
-      });
+      // Check that it's an img element with correct props
+      expect(result.type).toBe('img');
+      expect(result.props.src).toBe(iconData.base64);
+      expect(result.props.alt).toBe(`${techName} icon`);
+      expect(result.props.className).toBe('w-4 h-4 transition-all duration-300 ease-out');
+      expect(result.props.loading).toBe('lazy');
     });
 
     it('should create img element for URL', () => {
@@ -94,42 +90,38 @@ describe('Technology Icon Manager', () => {
 
       const result = getTechnologyIconElement(iconData, techName);
       
-      expect(result).toEqual({
-        type: 'img',
-        props: {
-          src: iconData.url,
-          alt: `${techName} icon`,
-          className: 'w-4 h-4',
-          loading: 'lazy'
-        },
-        __mockElement: true
-      });
+      // Check that it's an img element with correct props
+      expect(result.type).toBe('img');
+      expect(result.props.src).toBe(iconData.url);
+      expect(result.props.alt).toBe(`${techName} icon`);
+      expect(result.props.className).toBe('w-4 h-4 transition-all duration-300 ease-out');
+      expect(result.props.loading).toBe('lazy');
     });
 
     it('should create Lucide icon element for string', () => {
-      const React = require('react');
       const iconData = 'Code';
       const techName = 'TypeScript';
 
       const result = getTechnologyIconElement(iconData, techName);
-      
-      expect(React.createElement).toHaveBeenCalledWith(
-        expect.any(Function), // Lucide icon component
-        { className: 'w-4 h-4' }
-      );
+
+      // Check that a Lucide icon component was used (result.type is the icon component function)
+      expect(typeof result.type).toBe('object'); // React 19 element
+      expect(result.props).toEqual({
+        className: 'w-4 h-4 text-gray-400 hover:text-foreground transition-colors duration-300 ease-out'
+      });
     });
 
     it('should handle fallback when no icon data is provided', () => {
-      const React = require('react');
       const iconData = '';
       const techName = 'Unknown Tech';
 
       const result = getTechnologyIconElement(iconData, techName);
-      
-      expect(React.createElement).toHaveBeenCalledWith(
-        expect.any(Function), // Default Code icon
-        { className: 'w-4 h-4' }
-      );
+
+      // Check that a Lucide icon component was used as fallback
+      expect(typeof result.type).toBe('object'); // React 19 element
+      expect(result.props).toEqual({
+        className: 'w-4 h-4 text-gray-400 hover:text-foreground transition-colors duration-300 ease-out'
+      });
     });
 
     it('should apply custom className when provided', () => {
@@ -140,8 +132,8 @@ describe('Technology Icon Manager', () => {
       const customClass = 'w-6 h-6 custom-icon';
 
       const result = getTechnologyIconElement(iconData, techName, customClass);
-      
-      expect(result.props.className).toBe(customClass);
+
+      expect(result.props.className).toBe(`${customClass} transition-all duration-300 ease-out`);
     });
   });
 

@@ -3,7 +3,7 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import { ChevronDown, Download, Eye, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
 import { usePersonalInfo } from '@/contexts/PortfolioDataContext';
-import { Loading, SkeletonText } from './ui/loading';
+import { Loading } from './ui/loading';
 import * as Dialog from '@radix-ui/react-dialog';
 
 export function Hero() {

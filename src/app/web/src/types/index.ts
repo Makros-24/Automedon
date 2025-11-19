@@ -194,9 +194,10 @@ export interface SectionProps extends BaseComponentProps {
   id?: string
 }
 
-// Test types
-export interface MockIntersectionObserver {
-  observe: jest.Mock
-  unobserve: jest.Mock
-  disconnect: jest.Mock
-}
+// Test types (commented out to avoid jest dependency in production build)
+// Only used in test files which import @testing-library/jest-dom
+// export interface MockIntersectionObserver {
+//   observe: jest.Mock
+//   unobserve: jest.Mock
+//   disconnect: jest.Mock
+// }

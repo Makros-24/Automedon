@@ -2,7 +2,7 @@ import { motion } from 'motion/react';
 import { useInViewOnce } from '../hooks/useInViewOnce';
 import { Brain, Clock, UserCheck, MessageSquare, Lightbulb, Target, Puzzle, HandHeart, Users } from 'lucide-react';
 import Slider from 'react-slick';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 const coreSkills = [
   {
@@ -218,7 +218,7 @@ export function CoreSkillsCarousel() {
 
   return (
     <motion.div
-      ref={carouselRef}
+      ref={carouselRef as React.RefObject<HTMLDivElement>}
       className="relative"
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}

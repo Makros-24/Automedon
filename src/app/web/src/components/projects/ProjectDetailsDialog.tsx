@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { ExternalLink, Github, Building2, Briefcase, X } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -58,11 +59,14 @@ export const ProjectDetailsDialog = ({
         <div className="overflow-y-auto max-h-[95vh] scrollbar-hide scroll-smooth">
           {/* Hero Image */}
           <div className="relative w-full h-[250px] sm:h-[320px] overflow-hidden bg-foreground/5 rounded-t-2xl">
-            <img
+            <Image
               src={imageSrc}
               alt={project.title}
+              width={800}
+              height={320}
               className="w-full h-full object-cover"
-              loading="eager"
+              priority
+              unoptimized={imageSrc.startsWith('http')}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
           </div>

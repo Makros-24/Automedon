@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, type Variants } from 'motion/react';
+import Image from 'next/image';
 import { ExternalLink, Github } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -43,11 +44,14 @@ export const ProjectCard = ({ project, variants }: ProjectCardProps) => {
         <div className="relative p-4 flex flex-col flex-1">
           {/* Project image */}
           <div className="relative overflow-hidden rounded-xl mb-4 aspect-video">
-            <img
+            <Image
               src={imageSrc}
               alt={`${project.title} project preview`}
+              width={600}
+              height={338}
               className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110"
               loading="lazy"
+              unoptimized={imageSrc.startsWith('http')}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
 

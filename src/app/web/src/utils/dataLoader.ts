@@ -44,7 +44,7 @@ export async function loadPortfolioData(language: Language = 'en'): Promise<Port
     let data: PortfolioData;
     try {
       data = await response.json();
-    } catch (parseError) {
+    } catch (_parseError) {
       throw new Error('Failed to parse portfolio data: Invalid JSON format');
     }
 
@@ -90,33 +90,35 @@ export function getImageSource(imageData: ImageData | string): string {
 /**
  * Validate portfolio data structure
  */
-export function validatePortfolioData(data: any): data is PortfolioData {
+export function validatePortfolioData(data: unknown): data is PortfolioData {
   if (!data || typeof data !== 'object') {
     return false;
   }
 
+  const obj = data as Record<string, unknown>;
+
   // Validate personal info
-  if (!validatePersonalInfo(data.personalInfo)) {
+  if (!validatePersonalInfo(obj.personalInfo)) {
     return false;
   }
 
   // Validate projects array
-  if (!Array.isArray(data.projects) || !data.projects.every(validateProject)) {
+  if (!Array.isArray(obj.projects) || !obj.projects.every(validateProject)) {
     return false;
   }
 
   // Validate skill categories array
-  if (!Array.isArray(data.skillCategories) || !data.skillCategories.every(validateSkillCategory)) {
+  if (!Array.isArray(obj.skillCategories) || !obj.skillCategories.every(validateSkillCategory)) {
     return false;
   }
 
   // Validate achievements array
-  if (!Array.isArray(data.achievements) || !data.achievements.every(validateAchievement)) {
+  if (!Array.isArray(obj.achievements) || !obj.achievements.every(validateAchievement)) {
     return false;
   }
 
   // Validate contact info
-  if (!validateContactInfo(data.contactInfo)) {
+  if (!validateContactInfo(obj.contactInfo)) {
     return false;
   }
 
@@ -126,82 +128,84 @@ export function validatePortfolioData(data: any): data is PortfolioData {
 /**
  * Validate personal info structure
  */
-function validatePersonalInfo(personalInfo: any): personalInfo is PersonalInfo {
-  return personalInfo &&
-         typeof personalInfo === 'object' &&
-         typeof personalInfo.name === 'string' &&
-         typeof personalInfo.title === 'string' &&
-         typeof personalInfo.description === 'string';
+function validatePersonalInfo(personalInfo: unknown): personalInfo is PersonalInfo {
+  if (!personalInfo || typeof personalInfo !== 'object') return false;
+  const obj = personalInfo as Record<string, unknown>;
+  return typeof obj.name === 'string' &&
+         typeof obj.title === 'string' &&
+         typeof obj.description === 'string';
 }
 
 /**
  * Validate project structure
  */
-function validateProject(project: any): project is Project {
-  return project &&
-         typeof project === 'object' &&
-         typeof project.id === 'number' &&
-         typeof project.title === 'string' &&
-         typeof project.company === 'string' &&
-         typeof project.role === 'string' &&
-         typeof project.description === 'string' &&
-         (validateImageData(project.image) || typeof project.image === 'string') &&
-         Array.isArray(project.technologies) &&
-         project.technologies.every((tech: any) => 
-           typeof tech === 'string' || 
-           (typeof tech === 'object' && typeof tech.name === 'string')
+function validateProject(project: unknown): project is Project {
+  if (!project || typeof project !== 'object') return false;
+  const obj = project as Record<string, unknown>;
+  return typeof obj.id === 'number' &&
+         typeof obj.title === 'string' &&
+         typeof obj.company === 'string' &&
+         typeof obj.role === 'string' &&
+         typeof obj.description === 'string' &&
+         (validateImageData(obj.image) || typeof obj.image === 'string') &&
+         Array.isArray(obj.technologies) &&
+         obj.technologies.every((tech: unknown) =>
+           typeof tech === 'string' ||
+           (typeof tech === 'object' && tech !== null && typeof (tech as Record<string, unknown>).name === 'string')
          ) &&
-         project.links &&
-         typeof project.links.live === 'string' &&
-         typeof project.links.github === 'string';
+         !!obj.links &&
+         typeof obj.links === 'object' &&
+         obj.links !== null &&
+         typeof (obj.links as Record<string, unknown>).live === 'string' &&
+         typeof (obj.links as Record<string, unknown>).github === 'string';
 }
 
 /**
  * Validate image data structure
  */
-function validateImageData(image: any): image is ImageData {
-  return image &&
-         typeof image === 'object' &&
-         (typeof image.base64 === 'string' || typeof image.url === 'string');
+function validateImageData(image: unknown): image is ImageData {
+  if (!image || typeof image !== 'object') return false;
+  const obj = image as Record<string, unknown>;
+  return (typeof obj.base64 === 'string' || typeof obj.url === 'string');
 }
 
 /**
  * Validate skill category structure
  */
-function validateSkillCategory(category: any): category is SkillCategory {
-  return category &&
-         typeof category === 'object' &&
-         typeof category.name === 'string' &&
-         (typeof category.icon === 'string' || typeof category.icon === 'function') &&
-         Array.isArray(category.skills) &&
-         category.skills.every((skill: any) => 
-           typeof skill === 'string' || 
-           (typeof skill === 'object' && typeof skill.name === 'string')
+function validateSkillCategory(category: unknown): category is SkillCategory {
+  if (!category || typeof category !== 'object') return false;
+  const obj = category as Record<string, unknown>;
+  return typeof obj.name === 'string' &&
+         (typeof obj.icon === 'string' || typeof obj.icon === 'function') &&
+         Array.isArray(obj.skills) &&
+         obj.skills.every((skill: unknown) =>
+           typeof skill === 'string' ||
+           (typeof skill === 'object' && skill !== null && typeof (skill as Record<string, unknown>).name === 'string')
          );
 }
 
 /**
  * Validate achievement structure
  */
-function validateAchievement(achievement: any): achievement is Achievement {
-  return achievement &&
-         typeof achievement === 'object' &&
-         (typeof achievement.icon === 'string' || achievement.icon) && // ReactNode or string
-         typeof achievement.number === 'string' &&
-         typeof achievement.title === 'string' &&
-         typeof achievement.description === 'string';
+function validateAchievement(achievement: unknown): achievement is Achievement {
+  if (!achievement || typeof achievement !== 'object') return false;
+  const obj = achievement as Record<string, unknown>;
+  return (typeof obj.icon === 'string' || obj.icon !== undefined) && // ReactNode or string
+         typeof obj.number === 'string' &&
+         typeof obj.title === 'string' &&
+         typeof obj.description === 'string';
 }
 
 /**
  * Validate contact info structure
  */
-function validateContactInfo(contactInfo: any): contactInfo is ContactInfo {
-  return contactInfo &&
-         typeof contactInfo === 'object' &&
-         typeof contactInfo.email === 'string' &&
-         typeof contactInfo.linkedin === 'string' &&
-         typeof contactInfo.github === 'string' &&
-         typeof contactInfo.twitter === 'string';
+function validateContactInfo(contactInfo: unknown): contactInfo is ContactInfo {
+  if (!contactInfo || typeof contactInfo !== 'object') return false;
+  const obj = contactInfo as Record<string, unknown>;
+  return typeof obj.email === 'string' &&
+         typeof obj.linkedin === 'string' &&
+         typeof obj.github === 'string' &&
+         typeof obj.twitter === 'string';
 }
 
 /**

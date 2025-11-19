@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion } from 'motion/react';
 import { Moon, Sun, Menu } from 'lucide-react';
+import Image from 'next/image';
 import { useTheme } from './ThemeProvider';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from './ui/sheet';
@@ -13,7 +14,6 @@ export function Header() {
   const [activeSection, setActiveSection] = useState('hero');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
-  const { scrollY } = useScroll();
   const { personalInfo } = usePersonalInfo();
 
   // Get avatar source with fallback
@@ -145,18 +145,14 @@ export function Header() {
                 }}
                 transition={{ duration: 0.3 }}
               >
-                <img
+                <Image
                   src={avatarSrc}
                   alt={avatarAlt}
+                  width={48}
+                  height={48}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  loading="eager"
-                  onError={(e) => {
-                    // Fallback to a stable LinkedIn profile image URL
-                    const target = e.currentTarget;
-                    if (!target.src.includes('shrink_400_400')) {
-                      target.src = "https://media.licdn.com/dms/image/v2/D4D03AQGgMTxGLlkEEw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1702848448399?e=1764806400&v=beta&t=5RvrhDBleeUQ1ZBMknfra5uoekMPReLZ5wJdkYGT_n0";
-                    }
-                  }}
+                  priority
+                  unoptimized={avatarSrc.startsWith('http')}
                 />
                 <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10 transition-opacity duration-300 group-hover:ring-white/20" />
                 

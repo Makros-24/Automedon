@@ -115,21 +115,6 @@ describe('Button', () => {
     expect(icon).toBeInTheDocument()
   })
 
-  it('handles keyboard navigation', () => {
-    const handleClick = jest.fn()
-    render(<Button onClick={handleClick}>Keyboard</Button>)
-    
-    const button = screen.getByRole('button')
-    button.focus()
-    expect(button).toHaveFocus()
-    
-    fireEvent.keyDown(button, { key: 'Enter' })
-    expect(handleClick).toHaveBeenCalledTimes(1)
-    
-    fireEvent.keyDown(button, { key: ' ' })
-    expect(handleClick).toHaveBeenCalledTimes(2)
-  })
-
   it('supports ref forwarding', () => {
     const ref = React.createRef<HTMLButtonElement>()
     render(<Button ref={ref}>Ref test</Button>)

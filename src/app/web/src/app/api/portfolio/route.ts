@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
     // Check if file exists
     try {
       await fs.access(fullPath);
-    } catch (error) {
+    } catch (_error) {
       return NextResponse.json(
         { error: `Portfolio data file not found: ${fullPath}` },
         { status: 404 }
@@ -56,7 +56,7 @@ export async function GET(request: NextRequest) {
     try {
       const fileContent = await fs.readFile(fullPath, 'utf8');
       portfolioData = JSON.parse(fileContent);
-    } catch (parseError) {
+    } catch (_parseError) {
       return NextResponse.json(
         { error: 'Failed to parse portfolio data: Invalid JSON format' },
         { status: 400 }
@@ -117,7 +117,7 @@ export async function GET(request: NextRequest) {
 /**
  * Handle preflight requests for CORS
  */
-export async function OPTIONS(request: NextRequest) {
+export async function OPTIONS(_request: NextRequest) {
   return NextResponse.json({}, {
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -130,7 +130,7 @@ export async function OPTIONS(request: NextRequest) {
 /**
  * Health check endpoint - returns basic info about the API
  */
-export async function HEAD(request: NextRequest) {
+export async function HEAD(_request: NextRequest) {
   return new NextResponse(null, {
     status: 200,
     headers: {

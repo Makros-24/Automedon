@@ -122,9 +122,9 @@ export function processAchievement(achievement: AchievementType): AchievementTyp
 export function processContactInfo(contactInfo: ContactInfoType): ContactInfoType {
   const processedMethods = { ...contactInfo.methods };
   for (const key in processedMethods) {
-    const method = processedMethods[key as keyof typeof processedMethods];
+    const method = processedMethods[key as keyof typeof processedMethods] as Record<string, unknown>;
     if (method && typeof method.icon === 'string') {
-      method.icon = getIconComponent(method.icon);
+      method.icon = getIconComponent(method.icon as string);
     }
   }
 

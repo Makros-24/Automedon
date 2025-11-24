@@ -1,0 +1,119 @@
+# =============================================================================
+# Docker Compose Configuration for Automedon Portfolio
+# =============================================================================
+# This file defines the services, networks, and volumes for running the
+# Automedon portfolio application using Docker Compose.
+#
+# Usage:
+#   Development: docker-compose up
+#   Production:  docker-compose -f docker-compose.yml up -d
+#   Stop:        docker-compose down
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # ---------------------------------------------------------------------------
+  # Portfolio Application Service
+  # ---------------------------------------------------------------------------
+  automedon-portfolio:
+    # Build configuration
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: production
+
+    # Container name
+    container_name: automedon-portfolio
+
+    # Image name
+    image: automedon-portfolio:latest
+
+    # Port mapping (host:container)
+    ports:
+      - "3000:3000"
+
+    # Environment variables
+    environment:
+      # Application environment
+      - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+
+      # Portfolio configuration
+      - PORTFOLIO_DATA_DIR=/app/portfolio-data
+
+      # Application URLs (customize for your deployment)
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+      # Language settings
+      - NEXT_PUBLIC_DEFAULT_LANGUAGE=en
+      - NEXT_PUBLIC_ENABLE_LANGUAGE_DETECTION=true
+
+      # Feature flags
+      - NEXT_PUBLIC_DEBUG_MODE=false
+      - NEXT_PUBLIC_SHOW_GRID=false
+
+      # Next.js telemetry
+      - NEXT_TELEMETRY_DISABLED=1
+
+    # Volume mounts
+    # volumes:
+      # OPTIONAL: Uncomment to override portfolio data with local files
+      # This allows you to update content without rebuilding the image
+      # - ./portfolio-data:/app/portfolio-data:ro
+
+      # OPTIONAL: Mount custom environment file
+      # - ./src/app/web/.env.production:/app/web/.env.production:ro
+
+    # Restart policy
+    restart: unless-stopped
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/portfolio?lang=en', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    # Resource limits (optional, adjust based on your needs)
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '1.0'
+    #       memory: 512M
+    #     reservations:
+    #       cpus: '0.5'
+    #       memory: 256M
+
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # Network configuration
+    networks:
+      - automedon-network
+
+# -----------------------------------------------------------------------------
+# Networks
+# -----------------------------------------------------------------------------
+networks:
+  automedon-network:
+    driver: bridge
+    name: automedon-network
+
+# -----------------------------------------------------------------------------
+# Volumes (if you need named volumes instead of bind mounts)
+# -----------------------------------------------------------------------------
+# volumes:
+#   portfolio-data:
+#     driver: local
+#     driver_opts:
+#       type: none
+#       o: bind
+#       device: ./portfolio-data

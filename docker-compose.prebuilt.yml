@@ -1,0 +1,131 @@
+# =============================================================================
+# Docker Compose Configuration for Pre-built Automedon Portfolio
+# =============================================================================
+# This compose file uses pre-built Next.js artifacts instead of building
+# inside Docker. This bypasses Tailwind CSS v4 + Docker compatibility issues.
+#
+# PREREQUISITE: Run the build script first!
+#   Linux/Mac:  ./build-for-docker.sh
+#   Windows:    build-for-docker.bat
+#
+# Usage:
+#   Build:  docker compose -f docker-compose.prebuilt.yml build
+#   Run:    docker compose -f docker-compose.prebuilt.yml up
+#   Stop:   docker compose -f docker-compose.prebuilt.yml down
+# =============================================================================
+
+version: '3.8'
+
+services:
+  # ---------------------------------------------------------------------------
+  # Portfolio Application Service (Pre-built)
+  # ---------------------------------------------------------------------------
+  automedon-portfolio:
+    # Build configuration using pre-built Dockerfile
+    build:
+      context: .
+      dockerfile: Dockerfile.prebuilt
+      args:
+        NODE_ENV: production
+
+    # Container name
+    container_name: automedon-portfolio-prebuilt
+
+    # Image name
+    image: automedon-portfolio:prebuilt
+
+    # Port mapping (host:container)
+    ports:
+      - "3000:3000"
+
+    # Environment variables
+    environment:
+      # Application environment
+      - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+
+      # Portfolio configuration
+      - PORTFOLIO_CONFIG_PATH=/app/portfolio-data
+
+      # Application URLs (customize for your deployment)
+      - NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+      # Language settings
+      - NEXT_PUBLIC_DEFAULT_LANGUAGE=en
+      - NEXT_PUBLIC_ENABLE_LANGUAGE_DETECTION=true
+
+      # Feature flags
+      - NEXT_PUBLIC_DEBUG_MODE=false
+      - NEXT_PUBLIC_SHOW_GRID=false
+
+      # Next.js telemetry
+      - NEXT_TELEMETRY_DISABLED=1
+
+    # Volume mounts (optional)
+    volumes:
+      # OPTIONAL: Uncomment to override portfolio data with local files
+      # This allows you to update content without rebuilding the image
+      - ./portfolio-data:/app/portfolio-data:ro
+
+      # OPTIONAL: Mount custom environment file
+      # - ./src/app/web/.env.production:/app/web/.env.production:ro
+
+    # Restart policy
+    restart: unless-stopped
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/portfolio?lang=en', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    # Resource limits (optional, adjust based on your needs)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+    # Network configuration
+    networks:
+      - automedon-network
+
+# -----------------------------------------------------------------------------
+# Networks
+# -----------------------------------------------------------------------------
+networks:
+  automedon-network:
+    driver: bridge
+    name: automedon-network
+
+# -----------------------------------------------------------------------------
+# Notes
+# -----------------------------------------------------------------------------
+# This configuration expects the Next.js application to be pre-built using
+# the build-for-docker script. The .next folder must exist before building
+# the Docker image.
+#
+# Workflow:
+#   1. Run build script: ./build-for-docker.sh (or .bat on Windows)
+#   2. Build image: docker compose -f docker-compose.prebuilt.yml build
+#   3. Run container: docker compose -f docker-compose.prebuilt.yml up
+#   4. Access at: http://localhost:3000
+#
+# To update the application:
+#   1. Make code changes
+#   2. Run build script again
+#   3. Rebuild image: docker compose -f docker-compose.prebuilt.yml build
+#   4. Restart: docker compose -f docker-compose.prebuilt.yml up -d

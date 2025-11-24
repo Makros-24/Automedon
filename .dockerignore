@@ -1,0 +1,167 @@
+# =============================================================================
+# Docker Build Context Exclusions (Pre-built Approach)
+# =============================================================================
+# This .dockerignore file is specifically for the pre-built Docker workflow.
+# It INCLUDES the .next folder (build artifacts) but excludes everything else
+# that isn't needed for running the production server.
+#
+# To use this file:
+#   1. Rename it to .dockerignore (backup the original first)
+#   2. Or use the build script which handles this automatically
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Dependencies (we'll install production deps in Docker)
+# -----------------------------------------------------------------------------
+**/node_modules
+**/npm-debug.log
+**/yarn-error.log
+**/yarn.lock
+**/pnpm-lock.yaml
+
+# -----------------------------------------------------------------------------
+# Build Output & Cache (EXCEPT .next - we need this!)
+# -----------------------------------------------------------------------------
+# **/.next  # COMMENTED OUT - We need .next for pre-built approach!
+**/out
+**/dist
+**/build
+**/.cache
+**/.turbo
+**/.vercel
+
+# -----------------------------------------------------------------------------
+# Development Files
+# -----------------------------------------------------------------------------
+**/.env.local
+**/.env.development
+**/.env.test
+**/.env*.local
+
+# -----------------------------------------------------------------------------
+# Git & Version Control
+# -----------------------------------------------------------------------------
+.git
+.gitignore
+.gitattributes
+.github
+
+# -----------------------------------------------------------------------------
+# IDE & Editor Files
+# -----------------------------------------------------------------------------
+.vscode
+.idea
+.claude
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# -----------------------------------------------------------------------------
+# Documentation & Markdown (keep DOCKER.md)
+# -----------------------------------------------------------------------------
+*.md
+!DOCKER.md
+LICENSE
+CHANGELOG.md
+
+# -----------------------------------------------------------------------------
+# Testing
+# -----------------------------------------------------------------------------
+**/__tests__
+**/*.test.ts
+**/*.test.tsx
+**/*.spec.ts
+**/*.spec.tsx
+**/coverage
+**/jest.config.js
+**/jest.config.ts
+**/.jest
+
+# -----------------------------------------------------------------------------
+# Linting & Formatting
+# -----------------------------------------------------------------------------
+.eslintrc
+.eslintrc.json
+.eslintrc.js
+.prettierrc
+.prettierignore
+.editorconfig
+
+# -----------------------------------------------------------------------------
+# CI/CD
+# -----------------------------------------------------------------------------
+.travis.yml
+.gitlab-ci.yml
+.circleci
+azure-pipelines.yml
+Jenkinsfile
+
+# -----------------------------------------------------------------------------
+# Docker Files (no need to copy into image)
+# -----------------------------------------------------------------------------
+Dockerfile
+Dockerfile.prebuilt
+.dockerignore
+.dockerignore.prebuilt
+docker-compose*.yml
+
+# -----------------------------------------------------------------------------
+# Build Scripts
+# -----------------------------------------------------------------------------
+build-for-docker.sh
+build-for-docker.bat
+.docker-build-ready
+
+# -----------------------------------------------------------------------------
+# Logs
+# -----------------------------------------------------------------------------
+**/logs
+**/*.log
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+**/lerna-debug.log*
+
+# -----------------------------------------------------------------------------
+# Temporary Files
+# -----------------------------------------------------------------------------
+**/tmp
+**/temp
+**/.tmp
+
+# -----------------------------------------------------------------------------
+# OS Files
+# -----------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# -----------------------------------------------------------------------------
+# Keep These Files (Override Previous Exclusions)
+# -----------------------------------------------------------------------------
+# Portfolio data is essential and should be included
+!portfolio-data
+!portfolio-data/*.json
+
+# Source code and configs are needed
+!src
+!package.json
+!package-lock.json
+!tsconfig.json
+!next.config.ts
+!next.config.js
+
+# CRITICAL: Keep the .next folder for pre-built approach!
+!src/app/web/.next
+!src/app/web/.next/**
+
+# Keep public assets
+!src/app/web/public
+!src/app/web/public/**

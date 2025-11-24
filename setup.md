@@ -436,6 +436,256 @@ npm run dev  # Uses --turbopack flag
 }
 ```
 
+## Docker Deployment Setup
+
+### Prerequisites for Docker
+- **Docker Desktop**: Version 20.10.0 or higher
+  - **Windows**: [Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/)
+  - **macOS**: [Docker Desktop for Mac](https://docs.docker.com/desktop/install/mac-install/)
+  - **Linux**: [Docker Engine](https://docs.docker.com/engine/install/)
+- **Docker Compose**: Included with Docker Desktop (v2.0+)
+
+### Verify Docker Installation
+```bash
+# Check Docker version
+docker --version
+# Expected: Docker version 20.10.0 or higher
+
+# Check Docker Compose version
+docker compose version
+# Expected: Docker Compose version v2.0.0 or higher
+
+# Test Docker installation
+docker run hello-world
+```
+
+### Docker Deployment (Pre-built Approach)
+
+This approach builds Next.js locally and copies the artifacts into a Docker container, avoiding Tailwind CSS v4 compatibility issues.
+
+#### Step 1: Build Next.js Application Locally
+```bash
+# Navigate to web app directory
+cd src/app/web
+
+# Install dependencies
+npm install
+
+# Build for production
+npm run build
+
+# Verify .next folder exists
+ls .next
+# Expected: Build artifacts including static pages and server bundles
+
+# Return to project root
+cd ../../..
+```
+
+#### Step 2: Build Docker Image
+```bash
+# Build the Docker image using pre-built artifacts
+docker compose -f docker-compose.prebuilt.yml build
+
+# Or build without cache (for clean build)
+docker compose -f docker-compose.prebuilt.yml build --no-cache
+```
+
+#### Step 3: Start Container
+```bash
+# Start in detached mode (background)
+docker compose -f docker-compose.prebuilt.yml up -d
+
+# Or start in foreground to see logs
+docker compose -f docker-compose.prebuilt.yml up
+```
+
+#### Step 4: Verify Deployment
+```bash
+# Check container status
+docker ps --filter "name=automedon"
+# Expected: Status showing "Up" and "healthy"
+
+# View container logs
+docker logs automedon-portfolio-prebuilt
+
+# Test API endpoint
+curl http://localhost:3000/api/portfolio?lang=en
+
+# Test health check
+curl http://localhost:3000/api/portfolio?lang=en
+```
+
+#### Step 5: Access Portfolio
+Open your browser and navigate to:
+- **Portfolio**: http://localhost:3000
+- **API (EN)**: http://localhost:3000/api/portfolio?lang=en
+- **API (FR)**: http://localhost:3000/api/portfolio?lang=fr
+- **API (DE)**: http://localhost:3000/api/portfolio?lang=de
+- **API (AR)**: http://localhost:3000/api/portfolio?lang=ar
+
+### Docker Management Commands
+
+#### Stop Container
+```bash
+docker compose -f docker-compose.prebuilt.yml down
+```
+
+#### Restart Container
+```bash
+docker compose -f docker-compose.prebuilt.yml restart
+```
+
+#### View Logs
+```bash
+# All logs
+docker logs automedon-portfolio-prebuilt
+
+# Follow logs (live)
+docker logs automedon-portfolio-prebuilt -f
+
+# Last 100 lines
+docker logs automedon-portfolio-prebuilt --tail 100
+```
+
+#### Execute Commands in Container
+```bash
+# Open shell in container
+docker exec -it automedon-portfolio-prebuilt sh
+
+# Check files in container
+docker exec automedon-portfolio-prebuilt ls -la /app/portfolio-data
+
+# Check environment variables
+docker exec automedon-portfolio-prebuilt printenv | grep PORTFOLIO
+```
+
+#### Update Deployment
+```bash
+# 1. Make code changes
+# 2. Rebuild Next.js
+cd src/app/web && npm run build && cd ../../..
+
+# 3. Rebuild Docker image
+docker compose -f docker-compose.prebuilt.yml build
+
+# 4. Recreate container
+docker compose -f docker-compose.prebuilt.yml up -d --force-recreate
+```
+
+### Docker Troubleshooting
+
+#### Container Not Starting
+```bash
+# Check logs for errors
+docker logs automedon-portfolio-prebuilt --tail 50
+
+# Check container status
+docker ps -a --filter "name=automedon"
+
+# Inspect container details
+docker inspect automedon-portfolio-prebuilt
+```
+
+#### Port Already in Use
+```bash
+# Find process using port 3000
+netstat -ano | findstr :3000  # Windows
+lsof -i :3000                 # Linux/Mac
+
+# Kill the process or change port in docker-compose.prebuilt.yml
+```
+
+#### Permission Errors
+If you see `EACCES` errors in logs:
+```bash
+# Rebuild image with --no-cache
+docker compose -f docker-compose.prebuilt.yml build --no-cache
+
+# Ensure next.config.js exists (not just .ts)
+ls src/app/web/next.config.js
+```
+
+#### Complete Reset
+```bash
+# Stop and remove everything
+docker compose -f docker-compose.prebuilt.yml down
+docker rmi automedon-portfolio:prebuilt
+
+# Clean build
+cd src/app/web
+rm -rf .next node_modules
+npm install
+npm run build
+cd ../../..
+
+# Rebuild from scratch
+docker compose -f docker-compose.prebuilt.yml build --no-cache
+docker compose -f docker-compose.prebuilt.yml up -d
+```
+
+### Docker Configuration Files
+
+#### Dockerfile.prebuilt
+Production-optimized Dockerfile with:
+- Non-root user (nextjs) for security
+- Proper home directory and permissions
+- npm cache configuration
+- Health check endpoint
+- Resource limits
+
+#### docker-compose.prebuilt.yml
+Docker Compose configuration with:
+- Port mapping (3000:3000)
+- Environment variables
+- Volume mounts for portfolio data
+- Health checks
+- Restart policy
+- Resource limits
+
+### Security Best Practices
+
+✅ **Implemented**:
+- Container runs as non-root user (`nextjs`)
+- Minimal base image (node:20-slim)
+- Production-only dependencies
+- Health checks enabled
+- No secrets in Dockerfile or docker-compose.yml
+
+⚠️ **Recommendations**:
+- Use `.env` file for sensitive environment variables (not committed to git)
+- Enable Docker content trust: `export DOCKER_CONTENT_TRUST=1`
+- Regularly update base images: `docker pull node:20-slim`
+- Scan images for vulnerabilities: `docker scan automedon-portfolio:prebuilt`
+
+### Environment Variables
+
+Configure via `docker-compose.prebuilt.yml` or `.env` file:
+
+```env
+# Application
+NODE_ENV=production
+PORT=3000
+HOSTNAME=0.0.0.0
+
+# Portfolio Data
+PORTFOLIO_CONFIG_PATH=/app/portfolio-data
+
+# URLs
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# Language Settings
+NEXT_PUBLIC_DEFAULT_LANGUAGE=en
+NEXT_PUBLIC_ENABLE_LANGUAGE_DETECTION=true
+
+# Features
+NEXT_PUBLIC_DEBUG_MODE=false
+NEXT_PUBLIC_SHOW_GRID=false
+
+# Next.js
+NEXT_TELEMETRY_DISABLED=1
+```
+
 ## Platform-Specific Setup
 
 ### Windows (WSL2 Recommended)

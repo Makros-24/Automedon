@@ -1,0 +1,112 @@
+{
+  "personalInfo": {
+    "name": "Your Full Name",
+    "title": "Your Professional Title",
+    "description": "A brief description of your professional background and expertise. This will be displayed in the hero section of your portfolio.",
+    "avatar": {
+      "base64": "data:image/svg+xml;base64,... (optional base64 encoded image)",
+      "url": "https://example.com/your-avatar.jpg"
+    },
+    "resumeUrl": "https://example.com/your-resume.pdf"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "A longer description about yourself, your passion, and what drives you professionally.",
+    "skillsTitle": "Technologies",
+    "achievementsTitle": "Key Achievements"
+  },
+  "work": {
+    "title": "Featured Work",
+    "description": "A brief introduction to your project showcase section."
+  },
+  "projects": [
+    {
+      "id": 1,
+      "title": "Project Name",
+      "company": "Company Name",
+      "role": "Your Role",
+      "description": "A short description of the project that appears on the card.",
+      "markdownDescription": "# Your Role - Project Name\n\n## Project Overview\nDetailed project description in markdown format. This will be displayed in the project details dialog.\n\n## Key Responsibilities & Achievements\n\n- **First Achievement**: Description of your achievement\n- **Second Achievement**: Description of another achievement\n- **Technical Implementation**: Details about technical aspects",
+      "image": {
+        "base64": "data:image/jpeg;base64,... (optional)",
+        "url": "https://images.unsplash.com/photo-example?w=600&h=400&fit=crop"
+      },
+      "technologies": [
+        {
+          "name": "Technology Name",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,... (optional, highest priority)",
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/example/example-original.svg"
+          }
+        },
+        "Simple Technology Name"
+      ],
+      "links": {
+        "live": "https://example.com/live-demo",
+        "github": "https://github.com/username/repo"
+      }
+    }
+  ],
+  "skillCategories": [
+    {
+      "name": "Category Name",
+      "icon": "LucideIconName",
+      "skills": [
+        {
+          "name": "Skill Name",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,... (optional, highest priority)",
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/skill/skill-original.svg"
+          }
+        },
+        "Simple Skill Name"
+      ]
+    }
+  ],
+  "achievements": [
+    {
+      "icon": "LucideIconName",
+      "number": "5+",
+      "title": "Achievement Title",
+      "description": "Brief description of the achievement"
+    }
+  ],
+  "contactInfo": {
+    "title": "Let's Connect",
+    "description": "A brief message inviting visitors to get in touch.",
+    "locationTitle": "Location",
+    "locationDescription": "Your availability description",
+    "cta": {
+      "title": "Call to Action Title",
+      "description": "Call to action description",
+      "button1": "Primary Button Text",
+      "button2": "Secondary Button Text"
+    },
+    "responseTime": "Response time: Usually within X hours",
+    "email": "your.email@example.com",
+    "linkedin": "linkedin.com/in/your-profile",
+    "github": "github.com/your-username",
+    "twitter": "twitter.com/your-handle",
+    "phone": "+1-234-567-8900",
+    "location": "City, Country",
+    "methods": {
+      "email": {
+        "description": "Send me an email"
+      },
+      "linkedin": {
+        "description": "Connect on LinkedIn"
+      },
+      "github": {
+        "description": "View my code"
+      },
+      "twitter": {
+        "description": "Follow me on X"
+      }
+    }
+  },
+  "footer": {
+    "copyrightName": "Your Name",
+    "copyrightYear": 2024,
+    "madeWithText": "Your custom footer text or tagline."
+  }
+}

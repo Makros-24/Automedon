@@ -1,0 +1,78 @@
+# =============================================================================
+# Dockerfile for Pre-built Next.js Application
+# =============================================================================
+# This Dockerfile is designed to work with pre-built Next.js artifacts.
+# It bypasses the Tailwind CSS v4 + Docker build compatibility issue by
+# using artifacts built in your local environment.
+#
+# PREREQUISITE: Run the build script first!
+#   Linux/Mac:  ./build-for-docker.sh
+#   Windows:    build-for-docker.bat
+#
+# Build: docker build -f Dockerfile.prebuilt -t automedon-portfolio .
+# Run:   docker run -p 3000:3000 automedon-portfolio
+# =============================================================================
+
+FROM node:20-slim AS runner
+
+# Set working directory
+WORKDIR /app/web
+
+# Set production environment variables
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORTFOLIO_CONFIG_PATH=/app/portfolio-data
+
+# Configure application URLs and settings
+ENV NEXT_PUBLIC_APP_URL=http://localhost:3000
+ENV NEXT_PUBLIC_DEFAULT_LANGUAGE=en
+ENV NEXT_PUBLIC_ENABLE_LANGUAGE_DETECTION=true
+ENV NEXT_PUBLIC_DEBUG_MODE=false
+ENV NEXT_PUBLIC_SHOW_GRID=false
+
+# Create a non-root user for security with proper home directory
+RUN groupadd --system --gid 1001 nodejs && \
+    useradd --system --uid 1001 --gid nodejs --create-home nextjs && \
+    mkdir -p /home/nextjs/.npm /app/web && \
+    chown -R nextjs:nodejs /home/nextjs /app
+
+# Copy portfolio data
+COPY --chown=nextjs:nodejs portfolio-data/ /app/portfolio-data/
+
+# Copy package files (needed for npm start)
+COPY --chown=nextjs:nodejs src/app/web/package.json ./
+COPY --chown=nextjs:nodejs src/app/web/package-lock.json* ./
+
+# Install ONLY production dependencies (no dev dependencies)
+# This is lightweight since we're not building
+RUN npm ci --only=production --ignore-scripts && \
+    npm cache clean --force
+
+# Copy pre-built Next.js artifacts
+COPY --chown=nextjs:nodejs src/app/web/.next ./.next
+
+# Copy public assets
+COPY --chown=nextjs:nodejs src/app/web/public ./public
+
+# Copy Next.js configuration (Next.js prefers .js over .ts if both exist)
+COPY --chown=nextjs:nodejs src/app/web/next.config.js ./next.config.js
+
+# Switch to non-root user
+USER nextjs
+
+# Set npm cache to writable location
+ENV npm_config_cache=/tmp/.npm
+
+# Expose the application port
+EXPOSE 3000
+
+# Configure the port Next.js will listen on
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+# Health check to ensure container is running properly
+HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:3000/api/portfolio?lang=en', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
+
+# Start the Next.js production server
+CMD ["npm", "start"]

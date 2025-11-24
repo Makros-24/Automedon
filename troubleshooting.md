@@ -320,6 +320,217 @@ export NODE_OPTIONS="--max-old-space-size=4096"
 npm run build
 ```
 
+## Docker Issues
+
+### Container Restart Loop / Permission Errors
+**Symptoms**: Container keeps restarting, `EACCES: permission denied, mkdir '/home/nextjs'` error in logs
+
+```bash
+# Check container status
+docker ps -a --filter "name=automedon"
+
+# View logs
+docker logs automedon-portfolio-prebuilt --tail 100
+```
+
+**Root Cause**: Next.js attempts to install TypeScript at runtime when loading `next.config.ts`, but the non-root `nextjs` user lacks write permissions to its home directory.
+
+**Solutions**:
+
+```dockerfile
+# ✅ Fix 1: Create home directory with proper permissions
+RUN groupadd --system --gid 1001 nodejs && \
+    useradd --system --uid 1001 --gid nodejs --create-home nextjs && \
+    mkdir -p /home/nextjs/.npm /app/web && \
+    chown -R nextjs:nodejs /home/nextjs /app
+
+# ✅ Fix 2: Set npm cache to writable location
+USER nextjs
+ENV npm_config_cache=/tmp/.npm
+
+# ✅ Fix 3: Use JavaScript config instead of TypeScript
+# Create next.config.js instead of next.config.ts to avoid
+# runtime TypeScript installation
+COPY --chown=nextjs:nodejs src/app/web/next.config.js ./next.config.js
+```
+
+**Prevention**: Always provide the `nextjs` user with:
+- A home directory (`--create-home` flag)
+- Proper ownership of required directories
+- A writable npm cache location
+
+### TypeScript Configuration Issues in Docker
+**Symptoms**: `Failed to install TypeScript` errors, container crashes during startup
+
+**Root Cause**: `next.config.ts` requires TypeScript to be available at runtime, but it's installed as a dev dependency which Docker excludes in production builds.
+
+**Solution**: Create a JavaScript version of the config:
+
+```javascript
+// next.config.js (NEW)
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
+  // ... rest of config
+};
+
+module.exports = nextConfig;
+```
+
+**Dockerfile changes**:
+```dockerfile
+# Copy JavaScript config (no TypeScript needed at runtime)
+COPY --chown=nextjs:nodejs src/app/web/next.config.js ./next.config.js
+```
+
+**Update .dockerignore**:
+```
+!next.config.js
+```
+
+### Build Artifacts Issues
+**Symptoms**: `TypeError: routesManifest.dataRoutes is not iterable`, container starts but crashes immediately
+
+**Root Cause**: Corrupted or incompatible `.next` build artifacts, often from interrupted builds or version mismatches.
+
+**Solution**:
+```bash
+# Stop container
+docker compose -f docker-compose.prebuilt.yml down
+
+# Clean and rebuild Next.js
+cd src/app/web
+rm -rf .next node_modules
+npm install
+npm run build
+cd ../../..
+
+# Rebuild Docker image
+docker compose -f docker-compose.prebuilt.yml build
+
+# Start container
+docker compose -f docker-compose.prebuilt.yml up -d
+```
+
+**Prevention**: Always rebuild Next.js locally before rebuilding Docker images when using the prebuilt approach.
+
+### Environment Variable Mismatch
+**Symptoms**: API returns `Portfolio data file not found`, even though files exist in container
+
+```bash
+# Check if files exist in container
+docker exec automedon-portfolio-prebuilt sh -c "ls -la /app/portfolio-data/"
+
+# Check environment variables
+docker exec automedon-portfolio-prebuilt sh -c "printenv | grep PORTFOLIO"
+```
+
+**Root Cause**: API code expects different environment variable name than what Docker is providing.
+
+**Solution**: Ensure consistency between Dockerfile, docker-compose.yml, and API code:
+
+```dockerfile
+# Dockerfile.prebuilt
+ENV PORTFOLIO_CONFIG_PATH=/app/portfolio-data
+```
+
+```yaml
+# docker-compose.prebuilt.yml
+environment:
+  - PORTFOLIO_CONFIG_PATH=/app/portfolio-data
+```
+
+```typescript
+// src/app/web/src/app/api/portfolio/route.ts
+const configPath = process.env.PORTFOLIO_CONFIG_PATH || './portfolio-data';
+```
+
+### Port Binding Issues
+**Symptoms**: Container runs but can't access on localhost:3000
+
+```bash
+# Check port mappings
+docker ps --format "table {{.Names}}\t{{.Ports}}"
+
+# Check if port is already in use
+netstat -ano | findstr :3000  # Windows
+lsof -i :3000                 # Linux/Mac
+```
+
+**Solutions**:
+```bash
+# Kill process using port
+taskkill /PID <PID> /F  # Windows
+kill -9 <PID>           # Linux/Mac
+
+# Or use different port in docker-compose.yml
+ports:
+  - "3001:3000"  # Map host port 3001 to container port 3000
+```
+
+### Health Check Failures
+**Symptoms**: Container shows as "unhealthy" in `docker ps` output
+
+```bash
+# View detailed health check logs
+docker inspect automedon-portfolio-prebuilt | grep -A 10 Health
+```
+
+**Common causes**:
+1. API endpoint not responding (check environment variables)
+2. Container not fully started (increase `start_period`)
+3. Network issues (check docker network configuration)
+
+**Solution**:
+```yaml
+# Adjust health check parameters in docker-compose.yml
+healthcheck:
+  test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/portfolio?lang=en', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+  interval: 30s
+  timeout: 10s
+  retries: 3
+  start_period: 40s  # Increase if needed
+```
+
+### Complete Docker Reset
+**When**: Nothing works, multiple errors, corrupted state
+
+```bash
+# 1. Stop and remove containers
+docker compose -f docker-compose.prebuilt.yml down
+
+# 2. Remove images
+docker rmi automedon-portfolio:prebuilt
+
+# 3. Clean build artifacts
+cd src/app/web
+rm -rf .next node_modules
+npm install
+npm run build
+cd ../../..
+
+# 4. Rebuild from scratch
+docker compose -f docker-compose.prebuilt.yml build --no-cache
+
+# 5. Start fresh
+docker compose -f docker-compose.prebuilt.yml up -d
+
+# 6. Monitor logs
+docker logs automedon-portfolio-prebuilt -f
+```
+
+### Docker Compose Version Warning
+**Symptoms**: Warning about obsolete `version` attribute
+
+```
+level=warning msg="docker-compose.yml: the attribute `version` is obsolete"
+```
+
+**Solution**: Remove the `version:` line from docker-compose files (it's optional in modern Docker Compose).
+
 #### Deployment Issues
 **Symptoms**: Application not starting in production, 500 errors
 

@@ -10,7 +10,7 @@ interface AchievementProps {
 export const Achievement = ({ achievement, variants }: AchievementProps) => {
   return (
     <motion.div
-      className="text-center group"
+      className="text-center group h-full"
       variants={variants}
       whileHover={{
         y: -3,
@@ -18,8 +18,8 @@ export const Achievement = ({ achievement, variants }: AchievementProps) => {
         transition: { duration: 0.2, ease: 'easeOut' },
       }}
     >
-      <div className="relative p-6 rounded-2xl glass glass-hover transition-all duration-300 group-hover:bg-white/5">
-        <div className="w-12 h-12 mx-auto mb-4 rounded-xl glass-light flex items-center justify-center">
+      <div className="relative h-full p-6 rounded-2xl glass glass-hover transition-all duration-300 group-hover:bg-white/5 flex flex-col items-center justify-start">
+        <div className="w-12 h-12 mx-auto mb-4 rounded-xl glass-light flex items-center justify-center flex-shrink-0">
           <div className="text-foreground/70">
             {achievement.icon}
           </div>
@@ -30,7 +30,7 @@ export const Achievement = ({ achievement, variants }: AchievementProps) => {
         <h3 className="text-lg font-semibold text-foreground mb-2">
           {achievement.title}
         </h3>
-        <p className="text-sm text-foreground/70">
+        <p className="text-sm text-foreground/70 flex-grow">
           {achievement.description}
         </p>
       </div>

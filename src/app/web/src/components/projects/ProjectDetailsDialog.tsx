@@ -76,7 +76,7 @@ export const ProjectDetailsDialog = ({
             {/* Header */}
             <header className="pt-6 pb-8 sm:pt-8 sm:pb-10">
               {/* Meta Information - Simplified */}
-              <div className="flex flex-wrap items-center gap-3 mb-6 text-sm text-foreground/60">
+              <div className="flex flex-wrap items-center gap-3 mb-4 text-sm text-foreground/60">
                 <span className="flex items-center gap-1.5">
                   <Building2 className="w-3.5 h-3.5" />
                   {project.company}
@@ -87,6 +87,25 @@ export const ProjectDetailsDialog = ({
                   {project.role}
                 </span>
               </div>
+
+              {/* Technologies - Card-style design with glass effect */}
+              <section>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {processedTechnologies.map((tech) => (
+                    <div
+                      key={tech.name}
+                      className="group inline-flex items-center gap-2 px-2.5 py-0.5 rounded-lg glass-light glass-hover transition-all duration-300"
+                    >
+                      <div className="flex-shrink-0 transition-all duration-300">
+                        {tech.iconElement}
+                      </div>
+                      <span className="text-sm text-foreground/70 group-hover:text-foreground transition-colors duration-300">
+                        {tech.name}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </section>
 
               {/* Project Title */}
               <h1 className="text-3xl sm:text-4xl font-bold text-foreground leading-tight">
@@ -102,28 +121,6 @@ export const ProjectDetailsDialog = ({
                   <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {project.markdownDescription || project.description}
                   </ReactMarkdown>
-                </div>
-              </section>
-
-              {/* Technologies - Card-style design with glass effect */}
-              <section>
-                <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-5">
-                  Technologies
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {processedTechnologies.map((tech) => (
-                    <div
-                      key={tech.name}
-                      className="group inline-flex items-center gap-2 px-3 py-1.5 rounded-lg glass-light glass-hover transition-all duration-300"
-                    >
-                      <div className="flex-shrink-0 opacity-50 group-hover:opacity-100 grayscale group-hover:grayscale-0 transition-all duration-300">
-                        {tech.iconElement}
-                      </div>
-                      <span className="text-sm text-foreground/70 group-hover:text-foreground transition-colors duration-300">
-                        {tech.name}
-                      </span>
-                    </div>
-                  ))}
                 </div>
               </section>
 

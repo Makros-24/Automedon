@@ -130,7 +130,7 @@ export const ProjectDetailsDialog = ({
                   <div className="flex flex-col sm:flex-row gap-3">
                     {project.links?.live && project.links.live !== '#' && (
                       <Button
-                        onClick={() => window.open(project.links.live, '_blank')}
+                        onClick={() => window.open(project.links?.live, '_blank')}
                         className="flex-1 bg-foreground text-background hover:bg-foreground/90 h-11 text-sm font-medium transition-all"
                       >
                         <ExternalLink className="w-4 h-4 mr-2" />
@@ -139,7 +139,7 @@ export const ProjectDetailsDialog = ({
                     )}
                     {project.links?.github && project.links.github !== '#' && (
                       <Button
-                        onClick={() => window.open(project.links.github, '_blank')}
+                        onClick={() => window.open(project.links?.github, '_blank')}
                         variant="outline"
                         className="flex-1 border border-foreground/20 hover:bg-foreground/5 h-11 text-sm font-medium transition-all"
                       >

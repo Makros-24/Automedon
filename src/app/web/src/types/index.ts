@@ -117,9 +117,9 @@ export interface Project {
   markdownDescription?: string // Optional rich markdown content for detailed view
   image: ImageData | string // Support both new and legacy format
   technologies: (string | TechnologyWithIcon)[] // Support both string and enhanced format
-  links: {
-    live: string
-    github: string
+  links?: {
+    live?: string
+    github?: string
   }
 }
 

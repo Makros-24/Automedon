@@ -128,25 +128,31 @@ export const ProjectDetailsDialog = ({
               </section>
 
               {/* Call-to-Action - Card-style with glass buttons */}
-              <section className="pt-4 border-t border-white/10 dark:border-white/5">
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button
-                    onClick={() => window.open(project.links.live, '_blank')}
-                    className="flex-1 bg-foreground text-background hover:bg-foreground/90 h-11 text-sm font-medium transition-all"
-                  >
-                    <ExternalLink className="w-4 h-4 mr-2" />
-                    View Live Demo
-                  </Button>
-                  <Button
-                    onClick={() => window.open(project.links.github, '_blank')}
-                    variant="outline"
-                    className="flex-1 border border-foreground/20 hover:bg-foreground/5 h-11 text-sm font-medium transition-all"
-                  >
-                    <Github className="w-4 h-4 mr-2" />
-                    Source Code
-                  </Button>
-                </div>
-              </section>
+              {((project.links?.live && project.links.live !== '#') || (project.links?.github && project.links.github !== '#')) && (
+                <section className="pt-4 border-t border-white/10 dark:border-white/5">
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    {project.links?.live && project.links.live !== '#' && (
+                      <Button
+                        onClick={() => window.open(project.links.live, '_blank')}
+                        className="flex-1 bg-foreground text-background hover:bg-foreground/90 h-11 text-sm font-medium transition-all"
+                      >
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        View Live Demo
+                      </Button>
+                    )}
+                    {project.links?.github && project.links.github !== '#' && (
+                      <Button
+                        onClick={() => window.open(project.links.github, '_blank')}
+                        variant="outline"
+                        className="flex-1 border border-foreground/20 hover:bg-foreground/5 h-11 text-sm font-medium transition-all"
+                      >
+                        <Github className="w-4 h-4 mr-2" />
+                        Source Code
+                      </Button>
+                    )}
+                  </div>
+                </section>
+              )}
             </div>
           </article>
         </div>

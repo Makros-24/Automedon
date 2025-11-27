@@ -142,6 +142,23 @@ function validatePersonalInfo(personalInfo: unknown): personalInfo is PersonalIn
 function validateProject(project: unknown): project is Project {
   if (!project || typeof project !== 'object') return false;
   const obj = project as Record<string, unknown>;
+
+  // Validate links if present
+  const hasValidLinks = !obj.links || (
+    typeof obj.links === 'object' &&
+    obj.links !== null &&
+    (
+      !('live' in obj.links) ||
+      typeof (obj.links as Record<string, unknown>).live === 'string' ||
+      (obj.links as Record<string, unknown>).live === undefined
+    ) &&
+    (
+      !('github' in obj.links) ||
+      typeof (obj.links as Record<string, unknown>).github === 'string' ||
+      (obj.links as Record<string, unknown>).github === undefined
+    )
+  );
+
   return typeof obj.id === 'number' &&
          typeof obj.title === 'string' &&
          typeof obj.company === 'string' &&
@@ -153,11 +170,7 @@ function validateProject(project: unknown): project is Project {
            typeof tech === 'string' ||
            (typeof tech === 'object' && tech !== null && typeof (tech as Record<string, unknown>).name === 'string')
          ) &&
-         !!obj.links &&
-         typeof obj.links === 'object' &&
-         obj.links !== null &&
-         typeof (obj.links as Record<string, unknown>).live === 'string' &&
-         typeof (obj.links as Record<string, unknown>).github === 'string';
+         hasValidLinks;
 }
 
 /**

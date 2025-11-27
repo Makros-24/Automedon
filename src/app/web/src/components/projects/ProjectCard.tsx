@@ -49,33 +49,39 @@ export const ProjectCard = ({ project, variants }: ProjectCardProps) => {
               alt={`${project.title} project preview`}
               width={600}
               height={338}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover/card:scale-110"
+              className="w-full h-full object-cover"
               loading="lazy"
               unoptimized={imageSrc.startsWith('http')}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
 
             {/* Overlay links */}
-            <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
-              <Button
-                size="sm"
-                variant="ghost"
-                className="bg-white/20 hover:bg-white/30 rounded-full w-10 h-10 p-0"
-                onClick={() => window.open(project.links.live, '_blank')}
-                aria-label={`View ${project.title} live`}
-              >
-                <ExternalLink className="w-4 h-4 text-white" />
-              </Button>
-              <Button
-                size="sm"
-                variant="ghost"
-                className="bg-white/20 hover:bg-white/30 rounded-full w-10 h-10 p-0"
-                onClick={() => window.open(project.links.github, '_blank')}
-                aria-label={`View ${project.title} on GitHub`}
-              >
-                <Github className="w-4 h-4 text-white" />
-              </Button>
-            </div>
+            {(project.links?.live && project.links.live !== '#') || (project.links?.github && project.links.github !== '#') ? (
+              <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover/card:opacity-100 transition-opacity duration-300">
+                {project.links?.live && project.links.live !== '#' && (
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="bg-white/20 hover:bg-white/30 rounded-full w-10 h-10 p-0"
+                    onClick={() => window.open(project.links.live, '_blank')}
+                    aria-label={`View ${project.title} live`}
+                  >
+                    <ExternalLink className="w-4 h-4 text-white" />
+                  </Button>
+                )}
+                {project.links?.github && project.links.github !== '#' && (
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    className="bg-white/20 hover:bg-white/30 rounded-full w-10 h-10 p-0"
+                    onClick={() => window.open(project.links.github, '_blank')}
+                    aria-label={`View ${project.title} on GitHub`}
+                  >
+                    <Github className="w-4 h-4 text-white" />
+                  </Button>
+                )}
+              </div>
+            ) : null}
           </div>
 
           {/* Project info */}

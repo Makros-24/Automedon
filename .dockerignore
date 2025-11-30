@@ -112,6 +112,8 @@ docker-compose*.yml
 # -----------------------------------------------------------------------------
 build-for-docker.sh
 build-for-docker.bat
+build-and-push.sh
+build-and-push.bat
 .docker-build-ready
 
 # -----------------------------------------------------------------------------

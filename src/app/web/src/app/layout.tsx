@@ -7,6 +7,11 @@ import { PortfolioDataProvider } from "@/contexts/PortfolioDataContext";
 export const metadata: Metadata = {
   title: "Portfolio | Mohamed IBEN EL ABED",
   description: "Senior Backend Developer & Technical Lead - Experienced in Java, Spring Boot, BPMN, and cloud infrastructure",
+  icons: {
+    icon: '/icon.svg',
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
+  },
 };
 
 /**

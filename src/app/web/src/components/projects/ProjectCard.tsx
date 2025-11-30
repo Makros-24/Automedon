@@ -63,7 +63,7 @@ export const ProjectCard = ({ project, variants }: ProjectCardProps) => {
                     size="sm"
                     variant="ghost"
                     className="bg-white/20 hover:bg-white/30 rounded-full w-10 h-10 p-0"
-                    onClick={() => window.open(project.links.live, '_blank')}
+                    onClick={() => window.open(project.links?.live, '_blank')}
                     aria-label={`View ${project.title} live`}
                   >
                     <ExternalLink className="w-4 h-4 text-white" />
@@ -74,7 +74,7 @@ export const ProjectCard = ({ project, variants }: ProjectCardProps) => {
                     size="sm"
                     variant="ghost"
                     className="bg-white/20 hover:bg-white/30 rounded-full w-10 h-10 p-0"
-                    onClick={() => window.open(project.links.github, '_blank')}
+                    onClick={() => window.open(project.links?.github, '_blank')}
                     aria-label={`View ${project.title} on GitHub`}
                   >
                     <Github className="w-4 h-4 text-white" />

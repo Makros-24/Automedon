@@ -1,0 +1,15 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background rounded square -->
+  <rect x="5" y="5" width="190" height="190" rx="30" fill="#000000"/>
+  
+  <!-- Modern MA design -->
+  <g transform="translate(100, 150) scale(0.85)">
+    <!-- M letter -->
+    <path d="M -35 -30 L -35 30 L -25 30 L -25 -10 L -5 30 L 5 30 L 25 -10 L 25 30 L 35 30 L 35 -30 L 20 -30 L 0 15 L -20 -30 Z" 
+          fill="#FFFFFF" 
+          stroke="none"/>
+    
+    <!-- Accent line for modern touch -->
+    <rect x="-30" y="35" width="60" height="3" fill="#FFFFFF" opacity="0.3" rx="1.5"/>
+  </g>
+</svg>

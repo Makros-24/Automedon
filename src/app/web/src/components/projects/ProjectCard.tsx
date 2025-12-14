@@ -111,7 +111,7 @@ export const ProjectCard = ({ project, variants }: ProjectCardProps) => {
                   {project.description}
                 </p>
                 {/* See More Button - directly under description */}
-                {(project.description.length > 150 || project.markdownDescription) && (
+                {(project.description.length > 150 || project.markdownFileName) && (
                   <button
                     onClick={() => setIsDialogOpen(true)}
                     className="text-xs text-blue-400 hover:text-blue-300 transition-colors duration-300 font-medium self-start mt-2"

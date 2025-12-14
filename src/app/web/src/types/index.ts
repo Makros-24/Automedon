@@ -16,14 +16,31 @@ export interface TechnologyWithIcon {
 // Internationalization (i18n) Types
 // ============================================================================
 
-// Supported languages
-export type Language = 'en' | 'fr' | 'de' | 'ar'
+/**
+ * Language/Locale code (dynamically discovered)
+ * Examples: 'en', 'fr', 'de', 'ar', 'es', 'it', etc.
+ */
+export type Language = string
+
+/**
+ * Metadata for a single locale
+ */
+export interface LocaleMetadata {
+  code: string           // Language code: 'en', 'fr', etc.
+  name: string           // English name: 'English', 'French'
+  nativeName: string     // Native name: 'English', 'Français'
+  flag: string           // Flag emoji: '🇬🇧', '🇫🇷'
+  isRTL: boolean         // Right-to-left layout support
+}
 
 // Language context type
 export interface LanguageContextType {
   language: Language
   setLanguage: (language: Language) => void
   isRTL: boolean
+  availableLocales: LocaleMetadata[]
+  defaultLocale: string
+  isLoading: boolean
 }
 
 // Utility type for localized content
@@ -114,7 +131,7 @@ export interface Project {
   company: string
   role: string
   description: string
-  markdownDescription?: string // Optional rich markdown content for detailed view
+  markdownFileName?: string // Optional markdown file reference for detailed content
   image: ImageData | string // Support both new and legacy format
   technologies: (string | TechnologyWithIcon)[] // Support both string and enhanced format
   links?: {

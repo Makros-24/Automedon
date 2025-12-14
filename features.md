@@ -7,11 +7,14 @@ This document outlines current features, planned implementations, and detailed s
 ### ✅ Implemented Features
 
 #### Internationalization & Localization
-- **Multilingual Support**: Full support for 4 languages (English, French, German, Arabic)
-- **RTL Layout**: Right-to-left layout support for Arabic with automatic direction switching
+- **Dynamic Locale Discovery**: Automatic detection of available locales by scanning filesystem on server startup
+- **Multilingual Support**: Full support for 4 languages (English, French, German, Arabic) with extensibility for unlimited locales
+- **Locale Metadata**: Rich metadata support including native names, flag emojis, and RTL configuration
+- **RTL Layout**: Right-to-left layout support for Arabic with automatic direction switching based on locale metadata
 - **Language Persistence**: URL-based language selection with localStorage fallback
-- **Language Switching**: Seamless language switching without page reload
+- **Language Switching**: Seamless language switching without page reload via dynamic locale API
 - **Localized Content**: All content translated including projects, skills, contact information
+- **Structured Data**: Locale-based directory organization (`portfolio-data/{locale}/portfolio.json`)
 
 #### Core Portfolio Components
 - **Hero Section**: Animated background with personal introduction and multilingual call-to-action
@@ -58,14 +61,32 @@ This document outlines current features, planned implementations, and detailed s
 
 ## Completed Features (Recent)
 
+### ✅ Dynamic Locale Discovery System (Completed)
+
+#### Dynamic Internationalization Architecture
+- **Automatic Locale Detection**: Server-side filesystem scanning on startup to discover available locales
+- **Zero Hardcoded Languages**: Complete elimination of hardcoded language lists throughout codebase
+- **Metadata-Driven**: Locale information includes code, name, nativeName, flag emoji, and isRTL configuration
+- **Structured Organization**: Locale-based directory structure (`portfolio-data/{locale}/portfolio.json`)
+- **Shared Resources**: Diagrams and common assets shared across all locales at root level
+- **API Endpoints**:
+  - `/api/locales` - Returns discovered locales with metadata
+  - `/api/portfolio?lang={code}` - Serves locale-specific portfolio data
+  - `/api/markdown/{filename}?lang={code}` - Serves locale-specific markdown files
+- **Performance**: Module-level caching with single scan on server startup
+- **Fallback System**: Generic defaults for unknown locales, English-only mode on errors
+- **Type System**: Migrated from TypeScript union types to dynamic runtime validation
+- **Extensibility**: Add new locale by creating directory + restart (no code changes)
+- **Migration Tool**: Automated script for restructuring existing data
+
 ### ✅ Phase 0: Multilingual Support (Completed)
 
 #### Internationalization System
-- **4 Languages**: English (EN), French (FR), German (AR), Arabic (AR)
+- **4 Languages**: English (EN), French (FR), German (DE), Arabic (AR)
 - **RTL Support**: Full right-to-left layout for Arabic
-- **Language Context**: React Context for global language state management
-- **Data Structure**: Separate JSON files per language in `portfolio-data/` directory
-- **API Integration**: Language-aware API endpoint (`/api/portfolio?lang=<code>`)
+- **Language Context**: React Context for global language state management with async locale fetching
+- **Data Structure**: Locale-based directories with `portfolio.json` and `projects-md/` subdirectories
+- **API Integration**: Dynamic language-aware API endpoints with runtime validation
 - **Persistence**: URL query parameter with localStorage fallback
 
 #### Enhanced Project Showcase

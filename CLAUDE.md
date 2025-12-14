@@ -60,8 +60,8 @@ npm run test:watch
 
 ## Development Conventions
 
-- **Data Source**: Portfolio data is organized by language in the `portfolio-data/` directory (en.json, fr.json, de.json, ar.json). The frontend fetches language-specific data through the `/api/portfolio?lang=<code>` API route.
-- **Internationalization**: Language selection managed through URL query parameters and localStorage persistence. Supports EN, FR, DE, AR with automatic RTL layout for Arabic.
+- **Data Source**: Portfolio data is organized in locale-based directories under `portfolio-data/{locale}/portfolio.json`. Locales are dynamically discovered on server startup by scanning available directories. The frontend fetches language-specific data through the `/api/portfolio?lang=<code>` API route.
+- **Internationalization**: Language selection managed through URL query parameters and localStorage persistence. Locales are automatically detected from the filesystem, with metadata support for native names, flags, and RTL configuration. Currently supports EN, FR, DE, AR with automatic RTL layout for Arabic.
 - **State Management**: Portfolio data and language preferences managed globally using React Context (`PortfolioDataContext`, `LanguageContext`) for efficient state distribution.
 - **API Endpoint**: The backend is implemented as a Next.js API route. The main endpoint is `/api/portfolio?lang=<code>`, serving language-specific portfolio data with validation and caching.
 - **Styling**: Tailwind CSS utility classes with RTL support. Custom variants managed using class-variance-authority (CVA). Glass morphism effects for modern design aesthetic.
@@ -90,7 +90,7 @@ For comprehensive project guidance, refer to these documentation files:
 - **Theme Components**: Components related to dark/light theme switching
 
 #### Features
-- **Multilingual Support**: Full internationalization with EN, FR, DE, AR languages and RTL support
+- **Dynamic Multilingual Support**: Fully extensible internationalization with automatic locale discovery - currently EN, FR, DE, AR with RTL support, expandable to unlimited languages
 - **Digital Twin**: AI chatbot representing the portfolio owner (UI implemented with WIP dialog, backend pending)
 - **Portfolio Showcase**: Featured work with detailed project dialogs, markdown support, and technology badges
 - **Skills Categories**: Detailed technology categorization with interactive cards and enhanced icons
@@ -102,7 +102,11 @@ For comprehensive project guidance, refer to these documentation files:
 - **SSR-Compatible**: Components that work with server-side rendering
 - **Theme Provider**: Context provider managing dark/light theme state
 - **Portfolio Data Context**: React Context (`PortfolioDataContext`) for global portfolio data state management
-- **Language Context**: React Context managing language selection and RTL layout switching
+- **Language Context**: React Context managing language selection and RTL layout switching with async locale fetching
+- **Locale Discovery**: Server-side filesystem scanning to automatically detect available locales
+- **Locale Metadata**: Structured locale information (code, name, nativeName, flag, isRTL)
+- **Dynamic Locale Validation**: Runtime validation of locale codes using `isValidLocale()` instead of compile-time union types
+- **Module-level Caching**: In-memory cache for locale discovery results (single scan on startup)
 - **Glass Morphism**: UI design technique using backdrop-blur and transparency
 - **Radix Primitives**: Unstyled, accessible component foundations
 - **Enhanced Icons**: Technology icon system supporting base64, URL, and Lucide fallback icons
@@ -110,6 +114,7 @@ For comprehensive project guidance, refer to these documentation files:
 - **Technology Icon Manager**: Utility system for processing and rendering technology icons with hover effects
 - **Dynamic Data Loading**: Server-side JSON data loading via API routes with environment variable configuration
 - **Portfolio API**: RESTful endpoint (`/api/portfolio`) for serving portfolio data with validation and caching
+- **Locales API**: RESTful endpoint (`/api/locales`) for providing discovered locale metadata to clients
 - **Icon Processing Pipeline**: Multi-step system for handling technology icons (base64 → URL → Lucide fallback)
 
 ## Recent Development Work
@@ -165,40 +170,79 @@ For comprehensive project guidance, refer to these documentation files:
   - Updated `.dockerignore` to include `next.config.js`
 - **Status**: ✅ Fully functional - Portfolio accessible at http://localhost:3000
 
+### Dynamic Locale Discovery System (Completed)
+- **Objective**: Eliminate hardcoded language lists and enable automatic locale detection based on filesystem structure
+- **Approach**: Server-side directory scanning with module-level caching
+- **Key Changes**:
+  - Restructured `portfolio-data/` from flat files to locale-based directories (`{locale}/portfolio.json`)
+  - Created `localeDiscovery.ts` utility for automatic locale detection with metadata support
+  - Implemented `/api/locales` endpoint for client-side locale information
+  - Updated type system from TypeScript union types (`'en' | 'fr'...`) to dynamic `string` type
+  - Refactored LanguageContext to fetch and cache locales from API
+  - Updated all API routes to use dynamic locale validation
+  - Migrated all existing data files to new structure with automated script
+- **Architecture**:
+  - Single filesystem scan on server startup (cached for performance)
+  - Locale metadata includes: code, name, nativeName, flag emoji, isRTL boolean
+  - Fallback system: Generic defaults for unknown locales, English-only mode on errors
+  - Support for optional `locale.json` metadata files per locale
+  - Diagrams shared at root level across all locales
+- **Files Created**:
+  - `src/app/web/src/utils/localeDiscovery.ts` - Core locale discovery service
+  - `src/app/web/src/app/api/locales/route.ts` - Locale metadata API endpoint
+  - `scripts/migrate-locale-structure.js` - Automated migration script
+- **Files Modified**:
+  - `src/app/web/src/app/api/portfolio/route.ts` - Dynamic locale validation
+  - `src/app/web/src/app/api/markdown/[filename]/route.ts` - Locale-aware markdown loading
+  - `src/app/web/src/types/index.ts` - Changed Language type to dynamic string
+  - `src/app/web/src/contexts/LanguageContext.tsx` - Async locale fetching
+  - `src/app/web/src/components/LanguageSwitcher.tsx` - Dynamic locale rendering
+  - `src/app/web/src/components/projects/ProjectDetailsDialog.tsx` - Language-aware markdown fetch
+- **Benefits**:
+  - Zero hardcoded language lists in codebase
+  - Adding new locale requires only creating directory + restart
+  - Future-proof for unlimited language expansion
+  - Maintains full backward compatibility with existing features
+- **Status**: ✅ Fully tested - All 4 locales (ar, de, en, fr) working correctly
+
 ### Key Files Created/Modified
-- `portfolio-data/en.json` - English portfolio data with project details and markdown
-- `portfolio-data/fr.json` - French translation of portfolio data
-- `portfolio-data/de.json` - German translation of portfolio data
-- `portfolio-data/ar.json` - Arabic translation with RTL support considerations
-- `src/app/web/src/app/api/portfolio/route.ts` - Server-side API with language parameter support
+- `portfolio-data/{locale}/portfolio.json` - Locale-specific portfolio data (en, fr, de, ar)
+- `portfolio-data/{locale}/projects-md/` - Locale-specific markdown files for project details
+- `portfolio-data/diagrams/` - Shared diagram assets across all locales
+- `src/app/web/src/utils/localeDiscovery.ts` - Dynamic locale detection utility
+- `src/app/web/src/app/api/locales/route.ts` - Locale metadata API endpoint
+- `src/app/web/src/app/api/portfolio/route.ts` - Server-side API with dynamic locale validation
+- `src/app/web/src/app/api/markdown/[filename]/route.ts` - Locale-aware markdown loading
 - `src/app/web/src/components/sections/ProjectDetailsDialog.tsx` - Project details modal with markdown
 - `src/app/web/src/components/ui/WIPDialog.tsx` - Work In Progress dialog component
-- `src/app/web/src/contexts/LanguageContext.tsx` - Language state management
+- `src/app/web/src/contexts/LanguageContext.tsx` - Dynamic language state management
+- `src/app/web/src/components/LanguageSwitcher.tsx` - Dynamic locale switching UI
 - `src/app/web/src/utils/dataLoader.ts` - Updated to support language-specific loading
 - `src/app/web/src/utils/technologyIconManager.ts` - Technology icon processing system
-- `src/app/web/src/types/index.ts` - Extended with multilingual and project types
+- `src/app/web/src/types/index.ts` - Extended with multilingual types and dynamic Language type
+- `scripts/migrate-locale-structure.js` - Automated data migration script
 
 ### Environment Configuration
 The application uses a `.env.local` file in the `src/app/web/` directory for configuration:
 
 ```env
 # Portfolio Configuration
-PORTFOLIO_DATA_DIR=./portfolio-data
+PORTFOLIO_CONFIG_PATH=./portfolio-data
 
 # Application Environment
 NODE_ENV=development
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 
-# Supported Languages (comma-separated)
-NEXT_PUBLIC_SUPPORTED_LANGUAGES=en,fr,de,ar
+# Language Settings
 NEXT_PUBLIC_DEFAULT_LANGUAGE=en
+NEXT_PUBLIC_ENABLE_LANGUAGE_DETECTION=true
 
 # Development Options
 NEXT_PUBLIC_DEBUG_MODE=true
 NEXT_PUBLIC_SHOW_GRID=false
 ```
 
-**Note**: The `.env.local` file is automatically loaded by Next.js. Language-specific data is loaded from the `portfolio-data/` directory based on the selected language.
+**Note**: The `.env.local` file is automatically loaded by Next.js. Locales are automatically discovered from the `portfolio-data/{locale}/` directories on server startup. No hardcoded language lists required.
 
 # Task Completion Protocol
 

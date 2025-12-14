@@ -2,11 +2,21 @@ import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
 import { validatePortfolioData } from '@/utils/dataLoader';
+import {
+  discoverLocales,
+  getCachedLocales,
+  getDefaultLocale,
+  isValidLocale,
+} from '@/utils/localeDiscovery';
 
-// Supported languages
-type Language = 'en' | 'fr' | 'de' | 'ar';
-const SUPPORTED_LANGUAGES: Language[] = ['en', 'fr', 'de', 'ar'];
-const DEFAULT_LANGUAGE: Language = 'en';
+// Initialize locale discovery on module load
+let localesInitialized = false;
+async function ensureLocalesInitialized() {
+  if (!localesInitialized) {
+    await discoverLocales();
+    localesInitialized = true;
+  }
+}
 
 /**
  * API route for portfolio data with multi-language support
@@ -17,14 +27,17 @@ const DEFAULT_LANGUAGE: Language = 'en';
  */
 export async function GET(request: NextRequest) {
   try {
+    // Ensure locales are discovered
+    await ensureLocalesInitialized();
+
     // Extract language from query parameter
     const { searchParams } = new URL(request.url);
-    const requestedLang = searchParams.get('lang') as Language | null;
+    const requestedLang = searchParams.get('lang');
 
-    // Validate and set language (default to English if invalid)
-    const language: Language = requestedLang && SUPPORTED_LANGUAGES.includes(requestedLang)
+    // Validate and set language (default to discovered default if invalid)
+    const language = requestedLang && isValidLocale(requestedLang)
       ? requestedLang
-      : DEFAULT_LANGUAGE;
+      : getDefaultLocale();
 
     // Get the portfolio config path from environment variables
     // This now points to the portfolio-data directory
@@ -33,12 +46,12 @@ export async function GET(request: NextRequest) {
     // Resolve the file path relative to the project root
     let fullPath: string;
     if (path.isAbsolute(configPath)) {
-      fullPath = path.join(configPath, `${language}.json`);
+      fullPath = path.join(configPath, language, 'portfolio.json');
     } else {
       // If relative path, resolve from project root
       // process.cwd() points to the web app directory, so go up 3 levels to project root
       const projectRoot = path.resolve(process.cwd(), '../../..');
-      fullPath = path.resolve(projectRoot, configPath, `${language}.json`);
+      fullPath = path.resolve(projectRoot, configPath, language, 'portfolio.json');
     }
 
     // Check if file exists
@@ -71,12 +84,16 @@ export async function GET(request: NextRequest) {
       );
     }
 
+    // Get available locales for response header
+    const availableLocales = getCachedLocales().map(l => l.code).join(', ');
+
     // Return the portfolio data with appropriate headers
     return NextResponse.json(portfolioData, {
       headers: {
         'Content-Type': 'application/json',
         'Content-Language': language,
         'X-Portfolio-Language': language,
+        'X-Available-Locales': availableLocales,
         // Prevent caching in development, allow caching in production
         'Cache-Control': process.env.NODE_ENV === 'development'
           ? 'no-cache, no-store, must-revalidate'

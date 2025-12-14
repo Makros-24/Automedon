@@ -222,13 +222,32 @@ interface ImageData {
 
 ### Portfolio Data API
 ```typescript
-// Current implementation
-GET /api/portfolio?lang=<code>
+// Locale discovery endpoint
+GET /api/locales
+Response: {
+  locales: LocaleMetadata[];  // All discovered locales
+  defaultLocale: string;      // Default locale code
+}
+Cache: 1 hour in production, no-cache in development
+
+// Portfolio data endpoint with dynamic locale validation
+GET /api/portfolio?lang={code}
 {
-  lang: 'en' | 'fr' | 'de' | 'ar' // Language code
+  lang: string // Dynamic language code (validated at runtime)
+}
+Response: PortfolioData // Language-specific portfolio data
+Headers: {
+  'X-Available-Locales': string; // Comma-separated locale codes
 }
 
-Response: PortfolioData // Language-specific portfolio data
+// Markdown content endpoint with locale support
+GET /api/markdown/{filename}?lang={code}
+{
+  filename: string; // Markdown filename (validated for path traversal)
+  lang: string;     // Locale code (optional, defaults to 'en')
+}
+Response: Markdown content as text/markdown
+Path: /portfolio-data/{locale}/projects-md/{filename}
 ```
 
 ### Future AI Chat API
@@ -437,13 +456,69 @@ type TechnologyWithIcon = {
 
 ## Internationalization Architecture
 
+### Locale Discovery Architecture
+
+#### Dynamic Locale Detection System
+The application uses server-side filesystem scanning to automatically discover available locales:
+
+```typescript
+interface LocaleMetadata {
+  code: string;           // 'en', 'fr', 'de', 'ar', etc.
+  name: string;           // 'English', 'French'
+  nativeName: string;     // 'English', 'Français'
+  flag: string;           // '🇬🇧', '🇫🇷'
+  isRTL: boolean;         // false, true for Arabic
+}
+
+// Core locale discovery functions
+async function discoverLocales(): Promise<LocaleMetadata[]>
+function getCachedLocales(): LocaleMetadata[]
+function getDefaultLocale(): string
+function isValidLocale(locale: string): boolean
+function getLocaleMetadata(locale: string): LocaleMetadata | null
+```
+
+#### Discovery Process
+1. **Startup Scan**: Server scans `portfolio-data/` directory on first request
+2. **Directory Validation**: Each subdirectory checked for `portfolio.json` existence
+3. **Metadata Loading**: Optional `locale.json` read for custom metadata (name, flag, isRTL)
+4. **Default Fallbacks**: Known locales (en, fr, de, ar, es, it, pt, zh, ja) have built-in defaults
+5. **Generic Fallback**: Unknown locales get generic metadata (`{ name: 'Unknown', flag: '🌐' }`)
+6. **Module-level Cache**: Results cached in memory for performance (no repeated scans)
+
+#### Performance Characteristics
+- **One-time Cost**: ~10-50ms filesystem scan on server startup
+- **Runtime Cost**: Zero (uses cached locale list)
+- **Memory Impact**: ~1-2KB for locale metadata cache
+- **Scalability**: Supports unlimited locales without code changes
+
+#### API Integration
+```typescript
+// Locale metadata endpoint
+GET /api/locales
+Response: {
+  locales: LocaleMetadata[],
+  defaultLocale: string
+}
+
+// Portfolio data with dynamic validation
+GET /api/portfolio?lang={code}
+// Validates locale using isValidLocale() instead of hardcoded checks
+
+// Markdown with locale parameter
+GET /api/markdown/{filename}?lang={code}
+// Serves locale-specific markdown from {locale}/projects-md/
+```
+
 ### Language Management
 ```typescript
 interface LanguageContextValue {
-  language: string; // Current language code
+  language: string; // Current language code (dynamic)
   setLanguage: (lang: string) => void;
-  isRTL: boolean; // Right-to-left layout flag
-  supportedLanguages: string[]; // Available languages
+  isRTL: boolean; // Right-to-left layout flag (from metadata)
+  availableLocales: LocaleMetadata[]; // Dynamically discovered
+  defaultLocale: string; // Discovered default locale
+  isLoading: boolean; // Async locale fetching state
 }
 ```
 
@@ -456,10 +531,25 @@ interface LanguageContextValue {
 ### Language File Structure
 ```
 portfolio-data/
-├── en.json    # English (default)
-├── fr.json    # French
-├── de.json    # German
-└── ar.json    # Arabic (RTL)
+├── diagrams/              # Shared across all locales
+│   └── *.svg
+├── en/
+│   ├── portfolio.json     # English portfolio data
+│   ├── locale.json        # Optional locale metadata
+│   └── projects-md/
+│       └── *.md
+├── fr/
+│   ├── portfolio.json     # French portfolio data
+│   ├── locale.json
+│   └── projects-md/
+├── de/
+│   ├── portfolio.json     # German portfolio data
+│   ├── locale.json
+│   └── projects-md/
+└── ar/
+    ├── portfolio.json     # Arabic portfolio data (RTL)
+    ├── locale.json
+    └── projects-md/
 ```
 
 ### Language Persistence

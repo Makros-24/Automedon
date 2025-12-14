@@ -267,7 +267,7 @@ export function clearPortfolioDataCache(language?: Language): void {
  */
 export function getOptimizedImageUrl(imageData: ImageData | string, width?: number, height?: number): string {
   const src = getImageSource(imageData);
-  
+
   // If it's a base64 string, return as-is
   if (src.startsWith('data:')) {
     return src;

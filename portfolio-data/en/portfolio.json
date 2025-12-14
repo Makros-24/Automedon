@@ -1,0 +1,677 @@
+{
+  "personalInfo": {
+    "name": "Mohamed IBEN EL ABED",
+    "title": "Senior Backend Developer & Technical Lead",
+    "description": "Java & Spring Boot specialist with 5+ years crafting well-thought architectures and technical designs for banking and insurance systems. Expert in Domain-Driven Design and Hexagonal Architecture, with strong documentation and diagramming skills. DevOps proficient.",
+    "avatar": {
+      "url": "https://lh3.googleusercontent.com/d/1JxR6_v1q40TSt5FzgJdKvEeONXoe2Mk1"
+    },
+    "resumeUrl": "https://drive.google.com/file/d/1GlttHmMtXq8A2D1LwwdqaCg-NElsiXKS/view?usp=drive_link"
+  },
+  "about": {
+    "title": "About Me",
+    "description": "Backend developer with 5+ years of experience building mission-critical financial systems for banking and insurance clients across Tunisia, Côte d'Ivoire, and West Africa. I specialize in Java and Spring Boot, applying Domain-Driven Design and Hexagonal Architecture to deliver scalable, maintainable solutions.\n\nI focus on measurable impact—reducing deployment times by 80%, achieving 80% code coverage, and scaling teams while maintaining quality. Passionate about clean architecture and iterative evolution that adapts to changing business needs.\n\nWhen not coding, I explore emerging technologies in my home lab, hold certifications in AWS Cloud and AI applications, and enjoy football and calisthenics.",
+    "skillsTitle": "Technologies",
+    "achievementsTitle": "Key Achievements"
+  },
+  "work": {
+    "title": "Featured Work",
+    "description": "A curated showcase of enterprise-scale projects where architecture, scalability, and business impact converge. From digital banking transformation to DevOps revolution, each project represents real-world problem-solving at scale."
+  },
+  "projects": [
+    {
+      "id": 1,
+      "title": "Bankerise Corporate Banking Platform",
+      "company": "Proxym Group",
+      "role": "Senior Backend Developer & Technical Lead",
+      "description": "Led the evolution of a comprehensive corporate banking platform serving enterprise clients with multi-currency accounts, complex payment workflows, loans, and reporting. Achieved 80% reduction in time-to-market while scaling the team and maintaining exceptional code quality.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1AFqRxn2BtHNQ2yQm5Sz3uBtng-TfNq90"
+      },
+      "technologies": [
+        {
+          "name": "Java 17",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Keycloak",
+          "icon": {
+            "url": "https://www.keycloak.org/resources/images/logo.svg"
+          }
+        },
+        {
+          "name": "Liquibase",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/liquibase/liquibase-original.svg"
+          }
+        },
+        {
+          "name": "GitLab CI/CD",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
+          }
+        },
+        {
+          "name": "Domain-Driven Design",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNkY0MkMxIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5EREQ8L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
+          "name": "Hexagonal Architecture",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBvbHlnb24gcG9pbnRzPSIxMiwyIDIwLDYgMjAsMTggMTIsMjIgNCwxOCA0LDYiIGZpbGw9IiNFRjQ0NDQiLz4KPHBvbHlnb24gcG9pbnRzPSIxMiw3IDE2LDkgMTYsMTUgMTIsMTcgOCwxNSA4LDkiIGZpbGw9IiNGRkYiLz4KPC9zdmc+"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      },
+      "markdownFileName": "1-proxym-group-bankerise-corporate-banking-platform-en.md"
+    },
+    {
+      "id": 2,
+      "title": "BNA Retail Digital Banking",
+      "company": "Proxym Group",
+      "role": "Product Integration Specialist",
+      "description": "Integrated a digital booster solution into the Bankerise platform for BNA's retail banking transformation. Led core banking system integrations via SOAP and REST APIs, implemented CI/CD pipelines, and developed complex client onboarding processes.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1dxSiXL55Z3ZHNt0lydoLyiEKwy1GvRob"
+      },
+      "technologies": [
+        {
+          "name": "Java 17",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "GitLab CI/CD",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
+          }
+        },
+        {
+          "name": "REST APIs",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNjFEQUZCIi8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkFQSTwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "BPMN",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMzM4NEY2Ii8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkJQTU48L3RleHQ+Cjwvc3ZnPg=="
+          }
+        }
+      ],
+      "links": {
+        "live": "https://bnah24.bna.tn/"
+      },
+      "markdownFileName": "2-proxym-group-bna-retail-digital-banking-en.md"
+    },
+    {
+      "id": 3,
+      "title": "BICICI Agent Banking Platform",
+      "company": "Proxym Group",
+      "role": "Technical Lead",
+      "description": "Led development of an agent banking platform for BICICI (Côte d'Ivoire) serving 250+ bank agents. Implemented BPMN-driven workflows for account opening, built dynamic forms with Formio, and managed multi-environment deployments across SIT, UAT, and production.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1VfZAgsp25SyrMgv2FghKFdnJO8m7JEBs"
+      },
+      "technologies": [
+        {
+          "name": "Java 11",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "Flowable BPMN",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMTBDOTdGIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkZMT1c8L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
+          "name": "Formio",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNDI5RkY0Ii8+Cjx0ZXh0IHg9IjQiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5GTzwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "Redis",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg"
+          }
+        },
+        {
+          "name": "Elasticsearch",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg"
+          }
+        },
+        {
+          "name": "AWS",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      },
+      "markdownFileName": "3-proxym-group-bicici-agent-banking-platform-en.md"
+    },
+    {
+      "id": 4,
+      "title": "Insurise® Digital Insurance Platform",
+      "company": "Proxym Group",
+      "role": "Backend Developer",
+      "description": "Developed an omnichannel digital insurance solution serving 20,000+ users with 1,000-2,000 daily active users. Delivered platform to 3 major insurance clients covering cars, homes, professional liability, and travel insurance with real-time quotes, payments, and claims management.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1k3u470MWuVmRHhGeLoZhjl1h-HcEu_9a"
+      },
+      "technologies": [
+        {
+          "name": "Java 8",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "MongoDB",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+          }
+        },
+        {
+          "name": "Redis",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg"
+          }
+        },
+        {
+          "name": "Elasticsearch",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg"
+          }
+        },
+        {
+          "name": "REST APIs",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNjFEQUZCIi8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkFQSTwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Kubernetes",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      },
+      "markdownFileName": "4-proxym-group-insurise-digital-insurance-platform-en.md"
+    },
+    {
+      "id": 5,
+      "title": "CHIFCO DevOps Transformation",
+      "company": "CHIFCO",
+      "role": "DevOps Engineer",
+      "description": "Led DevOps cultural transformation reducing deployment time by 3 days and downtime from 1-2 days to 5-10 minutes. Implemented automated CI/CD pipelines with Jenkins and GitLab CI, containerized applications with Docker, and automated infrastructure with Ansible.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1ZZwBXlqiyYjaskr5OCGFeTx5u0_gnpT6"
+      },
+      "technologies": [
+        {
+          "name": "Jenkins",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Ansible",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ansible/ansible-original.svg"
+          }
+        },
+        {
+          "name": "GitLab CI/CD",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
+          }
+        },
+        {
+          "name": "Linux",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
+          }
+        },
+        {
+          "name": "Bash",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg"
+          }
+        },
+        {
+          "name": "Groovy",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/groovy/groovy-original.svg"
+          }
+        },
+        {
+          "name": "Git",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      },
+      "markdownFileName": "5-chifco-chifco-devops-transformation-en.md"
+    }
+  ],
+  "skillCategories": [
+    {
+      "name": "Backend Development",
+      "icon": "Server",
+      "skills": [
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "REST APIs",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNjFEQUZCIi8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkFQSTwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "Microservices",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMiIgeT0iMiIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iIzNDNzdGMCIvPgo8cmVjdCB4PSIxMCIgeT0iMiIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iIzEwQzk3RiIvPgo8cmVjdCB4PSIxOCIgeT0iMiIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iI0VGNDQ0NCIvPgo8cmVjdCB4PSI2IiB5PSIxMCIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iI0Y1OUUwQiIvPgo8cmVjdCB4PSIxNCIgeT0iMTAiIHdpZHRoPSI2IiBoZWlnaHQ9IjYiIGZpbGw9IiM2RjQyQzEiLz4KPHJlY3QgeD0iMTAiIHk9IjE2IiB3aWR0aD0iNiIgaGVpZ2h0PSI2IiBmaWxsPSIjM0M3N0YwIi8+Cjwvc3ZnPg=="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Process Automation",
+      "icon": "Workflow",
+      "skills": [
+        {
+          "name": "BPMN",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMzM4NEY2Ii8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkJQTU48L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
+          "name": "Flowable BPM",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMTBDOTdGIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkZMT1c8L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
+          "name": "Formio",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNDI5RkY0Ii8+Cjx0ZXh0IHg9IjQiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5GTzwvdGV4dD4KPC9zdmc+"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Database & Caching",
+      "icon": "Database",
+      "skills": [
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "MongoDB",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+          }
+        },
+        {
+          "name": "MySQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+          }
+        },
+        {
+          "name": "Oracle",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/oracle/oracle-original.svg"
+          }
+        },
+        {
+          "name": "Redis",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg"
+          }
+        },
+        {
+          "name": "Elasticsearch",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg"
+          }
+        }
+      ]
+    },
+    {
+      "name": "DevOps & CI/CD",
+      "icon": "Settings",
+      "skills": [
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Kubernetes",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg"
+          }
+        },
+        {
+          "name": "Jenkins",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg"
+          }
+        },
+        {
+          "name": "GitLab",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
+          }
+        },
+        {
+          "name": "Ansible",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ansible/ansible-original.svg"
+          }
+        },
+        {
+          "name": "CI/CD",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNiIgY3k9IjEyIiByPSIzIiBmaWxsPSIjMTBDOTdGIi8+CjxjaXJjbGUgY3g9IjE4IiBjeT0iMTIiIHI9IjMiIGZpbGw9IiMzQzc3RjAiLz4KPGxpbmUgeDE9IjkiIHkxPSIxMiIgeDI9IjE1IiB5Mj0iMTIiIHN0cm9rZT0iIzMzODRGNiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0xNSA5TDE4IDEyTDE1IDE1IiBzdHJva2U9IiMzMzg0RjYiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4="
+          }
+        },
+        {
+          "name": "Liquibase",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMkY4MUY3Ii8+Cjx0ZXh0IHg9IjUiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5MQjwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "Git",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authentication & Security",
+      "icon": "Shield",
+      "skills": [
+        {
+          "name": "Keycloak",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNEQ0RDRGIi8+Cjx0ZXh0IHg9IjUiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5LQzwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "OAuth2/OIDC",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiNGRkY1NTIiLz4KPHRleHQgeD0iNCIgeT0iMTYiIGZpbGw9IiMzMzMiIGZvbnQtc2l6ZT0iOSIgZm9udC1mYW1pbHk9InNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+T0F1dGg8L3RleHQ+Cjwvc3ZnPg=="
+          }
+        }
+      ]
+    },
+    {
+      "name": "Architecture & Design",
+      "icon": "Layers",
+      "skills": [
+        {
+          "name": "Domain-Driven Design",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNkY0MkMxIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5EREQ8L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
+          "name": "Hexagonal Architecture",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBvbHlnb24gcG9pbnRzPSIxMiwyIDIwLDYgMjAsMTggMTIsMjIgNCwxOCA0LDYiIGZpbGw9IiNFRjQ0NDQiLz4KPHBvbHlnb24gcG9pbnRzPSIxMiw3IDE2LDkgMTYsMTUgMTIsMTcgOCwxNSA4LDkiIGZpbGw9IiNGRkYiLz4KPC9zdmc+"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Frontend Technologies",
+      "icon": "Monitor",
+      "skills": [
+        {
+          "name": "React",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+          }
+        },
+        {
+          "name": "Angular",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg"
+          }
+        },
+        {
+          "name": "JavaScript",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+          }
+        },
+        {
+          "name": "HTML5",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cloud & Infrastructure",
+      "icon": "Cloud",
+      "skills": [
+        {
+          "name": "AWS",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg"
+          }
+        },
+        {
+          "name": "Linux",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
+          }
+        },
+        {
+          "name": "Bash",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg"
+          }
+        }
+      ]
+    }
+  ],
+  "achievements": [
+    {
+      "icon": "Briefcase",
+      "number": "5+",
+      "title": "Years Experience",
+      "description": "Specialized in Backend Development and Software Architecture"
+    },
+    {
+      "icon": "Rocket",
+      "number": "5",
+      "title": "Major Projects",
+      "description": "Delivered Banking, Insurance, and DevOps Solutions"
+    },
+    {
+      "icon": "Trophy",
+      "number": "80%",
+      "title": "Time Reduction",
+      "description": "From 8-12 months to 2-3 months time-to-market"
+    },
+    {
+      "icon": "Users",
+      "number": "20K+",
+      "title": "Users Served",
+      "description": "Across insurance and banking platforms"
+    },
+    {
+      "icon": "Code",
+      "number": "80%",
+      "title": "Code Coverage",
+      "description": "Quality-first development with complex test scenarios"
+    },
+    {
+      "icon": "Award",
+      "number": "3",
+      "title": "Certifications",
+      "description": "AWS Cloud, NVIDIA LLM, Anthropic Claude Code"
+    }
+  ],
+  "contactInfo": {
+    "title": "Let's Connect",
+    "description": "I'm always interested in discussing new opportunities, innovative projects, and connecting with fellow technology enthusiasts.",
+    "locationTitle": "Location",
+    "locationDescription": "Available for remote work and travel",
+    "cta": {
+      "title": "Ready to Start?",
+      "description": "Let's discuss how I can help architect solutions for your next big project.",
+      "button1": "Start a Conversation",
+      "button2": "Schedule a Call"
+    },
+    "responseTime": "Response time: Usually within 24 hours",
+    "email": "mohamed.el.abed.24@gmail.com",
+    "linkedin": "www.linkedin.com/in/mohamed-iben-el-abed",
+    "github": "github.com/Makros-24",
+    "twitter": "",
+    "phone": "+216-50-622-368",
+    "location": "Sousse, Tunisia",
+    "methods": {
+      "email": {
+        "description": "Send me an email"
+      },
+      "linkedin": {
+        "description": "Connect on LinkedIn"
+      },
+      "github": {
+        "description": "View my code"
+      },
+      "twitter": {
+        "description": "Follow me on X"
+      }
+    }
+  },
+  "footer": {
+    "copyrightName": "Mohamed IBEN EL ABED",
+    "copyrightYear": 2024,
+    "madeWithText": "Crafted with passion for technology and innovation."
+  }
+}

@@ -1,0 +1,552 @@
+{
+  "personalInfo": {
+    "name": "Mohamed IBEN EL ABED",
+    "title": "Développeur Backend Senior & Lead Technique",
+    "description": "Développeur Backend expérimenté avec une formation en réseaux, excellent en JAVA et BPMN. Parcours éprouvé dans les secteurs bancaire et assurantiel, livrant des solutions optimisées pour les contextes retail et corporate avec plus de 5 ans d'expérience.",
+    "avatar": {
+      "url": "https://lh3.googleusercontent.com/d/1JxR6_v1q40TSt5FzgJdKvEeONXoe2Mk1"
+    },
+    "resumeUrl": "https://drive.google.com/file/d/1GlttHmMtXq8A2D1LwwdqaCg-NElsiXKS/view?usp=drive_link"
+  },
+  "about": {
+    "title": "À Propos de Moi",
+    "description": "Passionné par la création de solutions innovantes qui comblent le fossé entre les exigences techniques complexes et les expériences utilisateur élégantes. Je me spécialise dans l'architecture de systèmes évolutifs qui favorisent le succès commercial.",
+    "skillsTitle": "Technologies",
+    "achievementsTitle": "Réalisations Clés"
+  },
+  "work": {
+    "title": "Projets Phares",
+    "description": "Une sélection de projets qui démontrent mon expertise en architecture de solutions, développement full-stack et infrastructure cloud."
+  },
+  "projects": [
+    {
+      "id": 1,
+      "title": "Plateforme Bancaire Corporate Bankerise",
+      "company": "Proxym Group",
+      "role": "Développeur Backend Senior & Lead Technique",
+      "description": "Maintenance et évolution d'une solution bancaire corporate complète servant des clients entreprises, construite avec les principes de Domain-Driven Design et d'Architecture Hexagonale.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1AFqRxn2BtHNQ2yQm5Sz3uBtng-TfNq90"
+      },
+      "technologies": [
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Keycloak",
+          "icon": {
+            "url": "https://www.keycloak.org/resources/images/logo.svg"
+          }
+        },
+        {
+          "name": "Liquibase",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/liquibase/liquibase-original.svg"
+          }
+        },
+        {
+          "name": "Domain-Driven Design",
+          "icon": {
+            "url": "https://example.com/ddd-icon.svg"
+          }
+        },
+        {
+          "name": "Architecture Hexagonale",
+          "icon": {
+            "url": "https://www.svgrepo.com/show/44395/hexagon.svg"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      },
+      "markdownFileName": "1-proxym-group-plateforme-bancaire-corporate-bankerise-fr.md"
+    },
+    {
+      "id": 2,
+      "title": "Banque Numérique Retail BNA",
+      "company": "Proxym Group",
+      "role": "Spécialiste Intégration Produit",
+      "description": "Contribution au développement d'une application Digital Retail pour BNA, exploitant la plateforme bancaire Bankerise de Proxym. Leadership de la transformation numérique dans le secteur bancaire avec des solutions innovantes.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1dxSiXL55Z3ZHNt0lydoLyiEKwy1GvRob"
+      },
+      "technologies": [
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "API REST",
+          "icon": {
+            "url": "https://www.svgrepo.com/svg/447473/rest-api"
+          }
+        },
+        {
+          "name": "CI/CD",
+          "icon": {
+            "url": "https://www.svgrepo.com/svg/445634/cicd"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      },
+      "markdownFileName": "2-proxym-group-banque-numrique-retail-bna-fr.md"
+    },
+    {
+      "id": 3,
+      "title": "Application Web Bancaire BICICI",
+      "company": "Proxym Group",
+      "role": "Lead Technique",
+      "description": "Direction du développement d'une application web pour la Banque Internationale pour le Commerce et l'Industrie de Côte d'Ivoire afin d'améliorer les services pour les agents bancaires.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1VfZAgsp25SyrMgv2FghKFdnJO8m7JEBs"
+      },
+      "technologies": [
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "Flowable BPMN",
+          "icon": {
+            "url": "https://www.svgrepo.com/show/395899/process.svg"
+          }
+        },
+        {
+          "name": "Formio",
+          "icon": {
+            "url": "https://example.com/formio-icon.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      },
+      "markdownFileName": "3-proxym-group-application-web-bancaire-bicici-fr.md"
+    },
+    {
+      "id": 4,
+      "title": "Plateforme d'Assurance Numérique Insurise®",
+      "company": "Proxym Group",
+      "role": "Développeur Backend",
+      "description": "Développement d'une solution d'assurance numérique omnicanale innovante pour améliorer l'expérience client, servant plus de 20 000 utilisateurs.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1k3u470MWuVmRHhGeLoZhjl1h-HcEu_9a"
+      },
+      "technologies": [
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "MongoDB",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+          }
+        },
+        {
+          "name": "API REST",
+          "icon": {
+            "url": "https://www.svgrepo.com/svg/447473/rest-api"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      },
+      "markdownFileName": "4-proxym-group-plateforme-dassurance-numrique-insurise-fr.md"
+    },
+    {
+      "id": 5,
+      "title": "Transformation DevOps CHIFCO",
+      "company": "CHIFCO",
+      "role": "Ingénieur DevOps",
+      "description": "Direction transformation culturelle DevOps réduisant temps déploiement de 3 jours et temps d'arrêt de 1-2 jours à 5-10 minutes. Implémentation pipelines CI/CD automatisés avec Jenkins et GitLab CI, conteneurisation applications avec Docker et automatisation infrastructure avec Ansible.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1ZZwBXlqiyYjaskr5OCGFeTx5u0_gnpT6"
+      },
+      "technologies": [
+        {
+          "name": "Jenkins",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Ansible",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ansible/ansible-original.svg"
+          }
+        },
+        {
+          "name": "GitLab CI/CD",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
+          }
+        },
+        {
+          "name": "Linux",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
+          }
+        },
+        {
+          "name": "Bash",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg"
+          }
+        },
+        {
+          "name": "Groovy",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/groovy/groovy-original.svg"
+          }
+        },
+        {
+          "name": "Git",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "live": "#",
+        "github": "#"
+      },
+      "markdownFileName": "5-chifco-transformation-devops-chifco-fr.md"
+    }
+  ],
+  "skillCategories": [
+    {
+      "name": "Développement Backend",
+      "icon": "Server",
+      "skills": [
+        {
+          "name": "Java",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
+          }
+        },
+        {
+          "name": "Spring Boot",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "API REST",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNjFEQUZCIi8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkFQSTwvdGV4dD4KPC9zdmc+"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Automatisation des Processus",
+      "icon": "Workflow",
+      "skills": [
+        {
+          "name": "BPMN",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMzM4NEY2Ii8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkJQTU48L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
+          "name": "Flowable BPM",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMTBDOTdGIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkZMT1c8L3RleHQ+Cjwvc3ZnPg=="
+          }
+        }
+      ]
+    },
+    {
+      "name": "DevOps & Outils",
+      "icon": "Settings",
+      "skills": [
+        {
+          "name": "CI/CD",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNiIgY3k9IjEyIiByPSIzIiBmaWxsPSIjMTBDOTdGIi8+CjxjaXJjbGUgY3g9IjE4IiBjeT0iMTIiIHI9IjMiIGZpbGw9IiMzQzc3RjAiLz4KPGxpbmUgeDE9IjkiIHkxPSIxMiIgeDI9IjE1IiB5Mj0iMTIiIHN0cm9rZT0iIzMzODRGNiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0xNSA5TDE4IDEyTDE1IDE1IiBzdHJva2U9IiMzMzg0RjYiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4="
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Jenkins",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jenkins/jenkins-original.svg"
+          }
+        },
+        {
+          "name": "GitLab",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
+          }
+        },
+        {
+          "name": "Liquibase",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMkY4MUY3Ii8+Cjx0ZXh0IHg9IjUiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5MQjwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "Git",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authentification & Sécurité",
+      "icon": "Shield",
+      "skills": [
+        {
+          "name": "Keycloak",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNEQ0RDRGIi8+Cjx0ZXh0IHg9IjUiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5LQzwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "OAuth2/OIDC",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiNGRkY1NTIiLz4KPHN0YXIgY3g9IjEyIiBjeT0iMTIiIHI9IjQiIGZpbGw9IiMzMzMiLz4KPC9zdmc+"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Base de Données & Architecture",
+      "icon": "Database",
+      "skills": [
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+          }
+        },
+        {
+          "name": "MongoDB",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+          }
+        },
+        {
+          "name": "MySQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+          }
+        },
+        {
+          "name": "Domain-Driven Design",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNkY0MkMxIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5ERDs8L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
+          "name": "Architecture Hexagonale",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBvbHlnb24gcG9pbnRzPSIxMiwyIDIwLDYgMjAsMTggMTIsMjIgNCwxOCA0LDYiIGZpbGw9IiNFRjQ0NDQiLz4KPHN0YXIgY3g9IjEyIiBjeT0iMTIiIHI9IjMiIGZpbGw9IiNGRkYiLz4KPC9zdmc+"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Technologies Frontend",
+      "icon": "Monitor",
+      "skills": [
+        {
+          "name": "React",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+          }
+        },
+        {
+          "name": "Angular",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg"
+          }
+        },
+        {
+          "name": "Formio",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNDI5RkY0Ii8+Cjx0ZXh0IHg9IjQiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5GTzwvdGV4dD4KPC9zdmc+"
+          }
+        }
+      ]
+    }
+  ],
+  "achievements": [
+    {
+      "icon": "Users",
+      "number": "5+",
+      "title": "Années d'Expérience",
+      "description": "Spécialisé en Développement Backend et architecture logicielle"
+    },
+    {
+      "icon": "Built",
+      "number": "6+",
+      "title": "Projets Livrés",
+      "description": "Solutions bancaires et d'assurance livrées avec succès"
+    },
+    {
+      "icon": "Trophy",
+      "number": "80%",
+      "title": "Réduction du Temps",
+      "description": "De 8-12 mois à 2-3 mois de mise sur le marché"
+    },
+    {
+      "icon": "Users",
+      "number": "20K+",
+      "title": "Utilisateurs Servis",
+      "description": "Sur les plateformes d'assurance et bancaires"
+    },
+    {
+      "icon": "Code",
+      "number": "80%",
+      "title": "Couverture de Code",
+      "description": "Développement axé sur la qualité avec des scénarios de test complexes"
+    },
+    {
+      "icon": "Award",
+      "number": "3",
+      "title": "Certifications",
+      "description": "AWS Cloud, NVIDIA LLM, Anthropic Claude Code"
+    }
+  ],
+  "contactInfo": {
+    "title": "Connectons-nous",
+    "description": "Je suis toujours intéressé à discuter de nouvelles opportunités, de projets innovants et à me connecter avec d'autres passionnés de technologie.",
+    "locationTitle": "Localisation",
+    "locationDescription": "Disponible pour le travail à distance et les déplacements",
+    "cta": {
+      "title": "Prêt à Commencer ?",
+      "description": "Discutons de la manière dont je peux aider à architecturer des solutions pour votre prochain grand projet.",
+      "button1": "Démarrer une Conversation",
+      "button2": "Planifier un Appel"
+    },
+    "responseTime": "Temps de réponse : Généralement sous 24 heures",
+    "email": "mohamed.el.abed.24@gmail.com",
+    "linkedin": "www.linkedin.com/in/mohamed-iben-el-abed",
+    "github": "github.com/Makros-24",
+    "twitter": "",
+    "phone": "+216-50-622-368",
+    "location": "Sousse, Tunisie",
+    "methods": {
+      "email": {
+        "description": "Envoyez-moi un email"
+      },
+      "linkedin": {
+        "description": "Connectez-vous sur LinkedIn"
+      },
+      "github": {
+        "description": "Voir mon code"
+      },
+      "twitter": {
+        "description": "Suivez-moi sur X"
+      }
+    }
+  },
+  "footer": {
+    "copyrightName": "Mohamed IBEN EL ABED",
+    "copyrightYear": 2024,
+    "madeWithText": "Conçu avec passion pour la technologie et l'innovation."
+  }
+}

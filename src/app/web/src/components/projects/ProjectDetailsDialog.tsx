@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ExternalLink, Github, Building2, Briefcase, X } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -13,6 +14,7 @@ import {
 } from '@/components/ui/dialog';
 import { processProjectTechnologies } from '@/utils/technologyIconManager';
 import { getOptimizedImageUrl } from '@/utils/dataLoader';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { type Project } from '@/types';
 
 interface ProjectDetailsDialogProps {
@@ -26,6 +28,14 @@ export const ProjectDetailsDialog = ({
   open,
   onOpenChange,
 }: ProjectDetailsDialogProps) => {
+  // Get current language for markdown loading
+  const { language } = useLanguage();
+
+  // State for markdown content
+  const [markdownContent, setMarkdownContent] = useState<string | null>(null);
+  const [isLoadingMarkdown, setIsLoadingMarkdown] = useState(false);
+  const [markdownError, setMarkdownError] = useState(false);
+
   // Process technologies with enhanced icons
   const processedTechnologies = React.useMemo(
     () => processProjectTechnologies(project.technologies, 'w-4 h-4'),
@@ -34,6 +44,45 @@ export const ProjectDetailsDialog = ({
 
   // Get optimized image source
   const imageSrc = getOptimizedImageUrl(project.image, 1400, 600);
+
+  // Fetch markdown content when dialog opens or language changes
+  useEffect(() => {
+    // Reset state when dialog closes or no markdown file
+    if (!open || !project.markdownFileName) {
+      setMarkdownContent(null);
+      setMarkdownError(false);
+      return;
+    }
+
+    const fetchMarkdown = async () => {
+      setIsLoadingMarkdown(true);
+      setMarkdownError(false);
+
+      try {
+        const response = await fetch(
+          `/api/markdown/${project.markdownFileName}?lang=${language}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`Failed to load markdown: ${response.status}`);
+        }
+
+        const content = await response.text();
+        setMarkdownContent(content);
+      } catch (error) {
+        console.error('Markdown fetch error:', error);
+        setMarkdownError(true);
+        setMarkdownContent(null);
+      } finally {
+        setIsLoadingMarkdown(false);
+      }
+    };
+
+    fetchMarkdown();
+  }, [open, project.markdownFileName, language]);
+
+  // Determine what content to display
+  const displayContent = markdownContent || project.description;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -117,11 +166,23 @@ export const ProjectDetailsDialog = ({
             <div className="pb-8 space-y-8 sm:space-y-10">
               {/* Project Overview */}
               <section>
-                <div className="prose prose-slate max-w-none dark:prose-invert prose-headings:font-semibold prose-a:text-blue-600 dark:prose-a:text-blue-400">
-                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                    {project.markdownDescription || project.description}
-                  </ReactMarkdown>
-                </div>
+                {isLoadingMarkdown ? (
+                  <div className="flex items-center justify-center py-12">
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="w-8 h-8 border-2 border-foreground/20 border-t-foreground rounded-full animate-spin" />
+                      <p className="text-sm text-foreground/60">Loading project details...</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="prose prose-slate max-w-none dark:prose-invert prose-headings:font-semibold prose-a:text-blue-600 dark:prose-a:text-blue-400">
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeRaw]}
+                    >
+                      {displayContent}
+                    </ReactMarkdown>
+                  </div>
+                )}
               </section>
 
               {/* Call-to-Action - Card-style with glass buttons */}

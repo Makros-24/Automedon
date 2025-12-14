@@ -116,7 +116,7 @@ async function readLocaleMetadata(
     } else {
       console.warn(`Invalid locale.json format for ${localeCode}, using defaults`);
     }
-  } catch (error) {
+  } catch (_error) {
     // File doesn't exist or is invalid, use defaults
   }
 

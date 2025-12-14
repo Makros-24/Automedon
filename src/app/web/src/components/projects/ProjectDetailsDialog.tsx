@@ -34,7 +34,7 @@ export const ProjectDetailsDialog = ({
   // State for markdown content
   const [markdownContent, setMarkdownContent] = useState<string | null>(null);
   const [isLoadingMarkdown, setIsLoadingMarkdown] = useState(false);
-  const [markdownError, setMarkdownError] = useState(false);
+  const [_markdownError, setMarkdownError] = useState(false);
 
   // Process technologies with enhanced icons
   const processedTechnologies = React.useMemo(

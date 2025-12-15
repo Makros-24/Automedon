@@ -4,6 +4,7 @@ import { ExternalLink, Github, Building2, Briefcase, X } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import rehypeSanitize from 'rehype-sanitize';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -177,7 +178,7 @@ export const ProjectDetailsDialog = ({
                   <div className="prose prose-slate max-w-none dark:prose-invert prose-headings:font-semibold prose-a:text-blue-600 dark:prose-a:text-blue-400">
                     <ReactMarkdown
                       remarkPlugins={[remarkGfm]}
-                      rehypePlugins={[rehypeRaw]}
+                      rehypePlugins={[rehypeRaw, rehypeSanitize]}
                     >
                       {displayContent}
                     </ReactMarkdown>

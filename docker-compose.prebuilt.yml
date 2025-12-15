@@ -35,8 +35,9 @@ services:
     image: automedon-portfolio:prebuilt
 
     # Port mapping (host:container)
+    # SECURITY: Bind to localhost only - forces all traffic through reverse proxy
     ports:
-      - "3000:3000"
+      - "127.0.0.1:3000:3000"
 
     # Environment variables
     environment:

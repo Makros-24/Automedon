@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { promises as fs } from 'fs';
 import path from 'path';
+import {
+  sanitizeFilename,
+  securePath,
+  secureErrorResponse,
+} from '@/utils/security';
 
 /**
  * API route for serving diagram files (SVG)
@@ -22,35 +27,51 @@ export async function GET(
   try {
     const { filename } = await params;
 
-    // Validate filename (prevent path traversal attacks)
-    // Only allow alphanumeric, hyphens, dots, and .svg extension
-    if (!filename || !/^[\w\-\.]+\.svg$/.test(filename)) {
+    // Sanitize and validate filename (prevent path traversal attacks)
+    const validFilename = sanitizeFilename(filename, 'svg');
+
+    if (!validFilename) {
       return NextResponse.json(
-        { error: 'Invalid filename format' },
+        secureErrorResponse(400, 'Invalid filename'),
         { status: 400 }
       );
     }
 
-    // Construct file path
-    // Use PORTFOLIO_CONFIG_PATH env variable for Docker compatibility
+    // Construct file path using secure path construction
     const configPath = process.env.PORTFOLIO_CONFIG_PATH || './portfolio-data';
-    let diagramPath: string;
+    let basePath: string;
 
     if (path.isAbsolute(configPath)) {
       // Absolute path (Docker container)
-      diagramPath = path.join(configPath, 'projects-md', 'diagrams', filename);
+      basePath = configPath;
     } else {
       // Relative path (local development)
       const projectRoot = path.resolve(process.cwd(), '../../..');
-      diagramPath = path.resolve(projectRoot, configPath, 'projects-md', 'diagrams', filename);
+      basePath = path.resolve(projectRoot, configPath);
+    }
+
+    // Use secure path construction to prevent path traversal
+    // Diagrams are stored in the 'diagrams' directory at root of portfolio-data
+    const diagramPath = securePath(basePath, 'diagrams', validFilename);
+
+    if (!diagramPath) {
+      return NextResponse.json(
+        secureErrorResponse(400, 'Invalid file path'),
+        { status: 400 }
+      );
     }
 
     // Check if file exists
     try {
       await fs.access(diagramPath);
     } catch {
+      console.error('[Security] Diagram file access failed:', {
+        file: validFilename,
+        timestamp: new Date().toISOString(),
+      });
+
       return NextResponse.json(
-        { error: 'Diagram file not found', filename },
+        secureErrorResponse(404, 'Resource not found'),
         { status: 404 }
       );
     }
@@ -83,26 +104,15 @@ export async function GET(
     });
 
   } catch (error) {
-    console.error('Diagram API Error:', error);
+    // Log error server-side only (without exposing paths)
+    console.error('[Security] Diagram API Error:', {
+      error: error instanceof Error ? error.message.replace(/[C-Z]:\\.*?[\\/]/g, '[PATH]/') : 'Unknown error',
+      timestamp: new Date().toISOString(),
+    });
 
-    // Return appropriate error response
-    if (error instanceof Error) {
-      if (error.message.includes('ENOENT')) {
-        return NextResponse.json(
-          { error: 'Diagram file not found' },
-          { status: 404 }
-        );
-      }
-      if (error.message.includes('EACCES')) {
-        return NextResponse.json(
-          { error: 'Permission denied accessing diagram file' },
-          { status: 403 }
-        );
-      }
-    }
-
+    // Return generic error response (don't expose internal details)
     return NextResponse.json(
-      { error: 'Internal server error while loading diagram' },
+      secureErrorResponse(500, 'Internal server error'),
       { status: 500 }
     );
   }

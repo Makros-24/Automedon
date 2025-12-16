@@ -6,6 +6,12 @@ import {
   getDefaultLocale,
   isValidLocale,
 } from '@/utils/localeDiscovery';
+import {
+  sanitizeFilename,
+  sanitizeLocaleCode,
+  securePath,
+  secureErrorResponse,
+} from '@/utils/security';
 
 // Initialize locale discovery on module load
 let localesInitialized = false;
@@ -43,40 +49,65 @@ export async function GET(
     const { searchParams } = new URL(request.url);
     const requestedLang = searchParams.get('lang');
 
-    // Validate and set language (default to discovered default if invalid)
-    const locale = requestedLang && isValidLocale(requestedLang)
-      ? requestedLang
-      : getDefaultLocale();
+    // Sanitize and validate locale code
+    const sanitizedLang = requestedLang ? sanitizeLocaleCode(requestedLang) : null;
 
-    // Validate filename (prevent path traversal attacks)
-    // Only allow alphanumeric, hyphens, and .md extension
-    if (!filename || !/^[\w-]+\.md$/.test(filename)) {
+    if (requestedLang && !sanitizedLang) {
       return NextResponse.json(
-        { error: 'Invalid filename format' },
+        secureErrorResponse(400, 'Invalid language parameter'),
         { status: 400 }
       );
     }
 
-    // Construct file path with locale support
-    // Use PORTFOLIO_CONFIG_PATH env variable for Docker compatibility
+    const locale = sanitizedLang && isValidLocale(sanitizedLang)
+      ? sanitizedLang
+      : getDefaultLocale();
+
+    // Sanitize and validate filename (prevent path traversal attacks)
+    const validFilename = sanitizeFilename(filename, 'md');
+
+    if (!validFilename) {
+      return NextResponse.json(
+        secureErrorResponse(400, 'Invalid filename'),
+        { status: 400 }
+      );
+    }
+
+    // Construct file path with locale support using secure path construction
     const configPath = process.env.PORTFOLIO_CONFIG_PATH || './portfolio-data';
-    let markdownPath: string;
+    let basePath: string;
 
     if (path.isAbsolute(configPath)) {
       // Absolute path (Docker container)
-      markdownPath = path.join(configPath, locale, 'projects-md', filename);
+      basePath = configPath;
     } else {
       // Relative path (local development)
       const projectRoot = path.resolve(process.cwd(), '../../..');
-      markdownPath = path.resolve(projectRoot, configPath, locale, 'projects-md', filename);
+      basePath = path.resolve(projectRoot, configPath);
+    }
+
+    // Use secure path construction to prevent path traversal
+    const markdownPath = securePath(basePath, locale, 'projects-md', validFilename);
+
+    if (!markdownPath) {
+      return NextResponse.json(
+        secureErrorResponse(400, 'Invalid file path'),
+        { status: 400 }
+      );
     }
 
     // Check if file exists
     try {
       await fs.access(markdownPath);
     } catch {
+      console.error('[Security] Markdown file access failed:', {
+        file: validFilename,
+        locale: locale,
+        timestamp: new Date().toISOString(),
+      });
+
       return NextResponse.json(
-        { error: 'Markdown file not found', filename },
+        secureErrorResponse(404, 'Resource not found'),
         { status: 404 }
       );
     }
@@ -109,26 +140,15 @@ export async function GET(
     });
 
   } catch (error) {
-    console.error('Markdown API Error:', error);
+    // Log error server-side only (without exposing paths)
+    console.error('[Security] Markdown API Error:', {
+      error: error instanceof Error ? error.message.replace(/[C-Z]:\\.*?[\\/]/g, '[PATH]/') : 'Unknown error',
+      timestamp: new Date().toISOString(),
+    });
 
-    // Return appropriate error response
-    if (error instanceof Error) {
-      if (error.message.includes('ENOENT')) {
-        return NextResponse.json(
-          { error: 'Markdown file not found' },
-          { status: 404 }
-        );
-      }
-      if (error.message.includes('EACCES')) {
-        return NextResponse.json(
-          { error: 'Permission denied accessing markdown file' },
-          { status: 403 }
-        );
-      }
-    }
-
+    // Return generic error response (don't expose internal details)
     return NextResponse.json(
-      { error: 'Internal server error while loading markdown' },
+      secureErrorResponse(500, 'Internal server error'),
       { status: 500 }
     );
   }

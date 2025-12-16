@@ -8,6 +8,11 @@ import {
   getDefaultLocale,
   isValidLocale,
 } from '@/utils/localeDiscovery';
+import {
+  sanitizeLocaleCode,
+  securePath,
+  secureErrorResponse,
+} from '@/utils/security';
 
 // Initialize locale discovery on module load
 let localesInitialized = false;
@@ -34,32 +39,57 @@ export async function GET(request: NextRequest) {
     const { searchParams } = new URL(request.url);
     const requestedLang = searchParams.get('lang');
 
-    // Validate and set language (default to discovered default if invalid)
-    const language = requestedLang && isValidLocale(requestedLang)
-      ? requestedLang
+    // Sanitize and validate locale code
+    const sanitizedLang = requestedLang ? sanitizeLocaleCode(requestedLang) : null;
+
+    if (requestedLang && !sanitizedLang) {
+      return NextResponse.json(
+        secureErrorResponse(400, 'Invalid language parameter'),
+        { status: 400 }
+      );
+    }
+
+    const language = sanitizedLang && isValidLocale(sanitizedLang)
+      ? sanitizedLang
       : getDefaultLocale();
 
     // Get the portfolio config path from environment variables
     // This now points to the portfolio-data directory
     const configPath = process.env.PORTFOLIO_CONFIG_PATH || './portfolio-data';
 
-    // Resolve the file path relative to the project root
-    let fullPath: string;
+    // Resolve base path
+    let basePath: string;
     if (path.isAbsolute(configPath)) {
-      fullPath = path.join(configPath, language, 'portfolio.json');
+      // Absolute path (Docker container)
+      basePath = configPath;
     } else {
-      // If relative path, resolve from project root
-      // process.cwd() points to the web app directory, so go up 3 levels to project root
+      // Relative path (local development)
       const projectRoot = path.resolve(process.cwd(), '../../..');
-      fullPath = path.resolve(projectRoot, configPath, language, 'portfolio.json');
+      basePath = path.resolve(projectRoot, configPath);
+    }
+
+    // Use secure path construction to prevent path traversal
+    const fullPath = securePath(basePath, language, 'portfolio.json');
+
+    if (!fullPath) {
+      return NextResponse.json(
+        secureErrorResponse(400, 'Invalid file path'),
+        { status: 400 }
+      );
     }
 
     // Check if file exists
     try {
       await fs.access(fullPath);
-    } catch (_error) {
+    } catch {
+      console.error('[Security] Portfolio file access failed:', {
+        file: 'portfolio.json',
+        locale: language,
+        timestamp: new Date().toISOString(),
+      });
+
       return NextResponse.json(
-        { error: `Portfolio data file not found: ${fullPath}` },
+        secureErrorResponse(404, 'Resource not found'),
         { status: 404 }
       );
     }
@@ -106,26 +136,15 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('API Error - Portfolio data loading failed:', error);
-    
-    // Return appropriate error response
-    if (error instanceof Error) {
-      if (error.message.includes('ENOENT')) {
-        return NextResponse.json(
-          { error: 'Portfolio data file not found' },
-          { status: 404 }
-        );
-      }
-      if (error.message.includes('EACCES')) {
-        return NextResponse.json(
-          { error: 'Permission denied accessing portfolio data file' },
-          { status: 403 }
-        );
-      }
-    }
+    // Log error server-side only (without exposing paths)
+    console.error('[Security] Portfolio API Error:', {
+      error: error instanceof Error ? error.message.replace(/[C-Z]:\\.*?[\\/]/g, '[PATH]/') : 'Unknown error',
+      timestamp: new Date().toISOString(),
+    });
 
+    // Return generic error response (don't expose internal details)
     return NextResponse.json(
-      { error: 'Internal server error while loading portfolio data' },
+      secureErrorResponse(500, 'Internal server error'),
       { status: 500 }
     );
   }

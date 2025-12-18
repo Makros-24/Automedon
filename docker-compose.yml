@@ -1,0 +1,124 @@
+# =============================================================================
+# Easy Deployment Docker Compose for Automedon Portfolio
+# =============================================================================
+# This compose file pulls the latest pre-built image from Docker Hub for
+# quick and easy deployment without local build requirements.
+#
+# Quick Start:
+#   1. Copy .env.example to .env and customize settings (optional)
+#   2. Run: docker compose up -d
+#   3. Access: http://localhost:3000
+#
+# Customization:
+#   - Use .env file for configuration (see .env.example)
+#   - Mount custom portfolio data with PORTFOLIO_DATA_PATH
+#   - Adjust resource limits in deploy section
+# =============================================================================
+
+services:
+  automedon-portfolio:
+    # Pre-built image from Docker Hub
+    image: ${DOCKER_IMAGE:-makros24/automedon:latest}
+    container_name: ${CONTAINER_NAME:-automedon-portfolio}
+    restart: ${RESTART_POLICY:-unless-stopped}
+
+    # Port mapping (host:container)
+    ports:
+      - "${PORT:-3000}:3000"
+
+    # Environment variables (configurable via .env file)
+    environment:
+      # Application environment
+      - NODE_ENV=${NODE_ENV:-production}
+      - HOSTNAME=${HOSTNAME:-0.0.0.0}
+      - PORT=${PORT_INTERNAL:-3000}
+
+      # Portfolio configuration
+      - PORTFOLIO_CONFIG_PATH=/app/portfolio-data
+
+      # Application URLs
+      - NEXT_PUBLIC_APP_URL=${APP_URL:-http://localhost:3000}
+
+      # Language settings
+      - NEXT_PUBLIC_DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE:-en}
+      - NEXT_PUBLIC_ENABLE_LANGUAGE_DETECTION=${ENABLE_LANG_DETECTION:-true}
+
+      # Feature flags
+      - NEXT_PUBLIC_DEBUG_MODE=${DEBUG_MODE:-false}
+      - NEXT_PUBLIC_SHOW_GRID=${SHOW_GRID:-false}
+
+      # Next.js telemetry
+      - NEXT_TELEMETRY_DISABLED=1
+
+    # Configurable volumes
+    volumes:
+      # Portfolio data - mount your custom portfolio data here
+      # Default: Uses portfolio-data directory from current location
+      - ${PORTFOLIO_DATA_PATH:-./portfolio-data}:/app/portfolio-data:ro
+
+      # Optional: Custom Next.js configuration (uncomment to use)
+      # - ./custom-next.config.js:/app/next.config.js:ro
+
+      # Optional: Logs directory (uncomment to persist logs)
+      # - ${LOGS_PATH:-./logs}:/app/logs
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/api/portfolio?lang=en', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: ${HEALTHCHECK_INTERVAL:-30s}
+      timeout: ${HEALTHCHECK_TIMEOUT:-10s}
+      retries: ${HEALTHCHECK_RETRIES:-3}
+      start_period: ${HEALTHCHECK_START_PERIOD:-40s}
+
+    # Resource limits (adjust based on your server capacity)
+    deploy:
+      resources:
+        limits:
+          cpus: '${CPU_LIMIT:-1.0}'
+          memory: ${MEMORY_LIMIT:-512M}
+        reservations:
+          cpus: '${CPU_RESERVATION:-0.5}'
+          memory: ${MEMORY_RESERVATION:-256M}
+
+    # Logging configuration
+    logging:
+      driver: ${LOG_DRIVER:-json-file}
+      options:
+        max-size: ${LOG_MAX_SIZE:-10m}
+        max-file: "${LOG_MAX_FILE:-3}"
+
+    # Network configuration (optional - uncomment for custom networks)
+    # networks:
+    #   - automedon-network
+
+# Optional: Custom networks (uncomment if needed)
+# networks:
+#   automedon-network:
+#     driver: bridge
+#     name: ${NETWORK_NAME:-automedon-network}
+
+# =============================================================================
+# Usage Examples
+# =============================================================================
+#
+# Basic deployment (uses defaults):
+#   docker compose up -d
+#
+# Stop deployment:
+#   docker compose down
+#
+# View logs:
+#   docker compose logs -f
+#
+# Restart with new environment:
+#   docker compose down
+#   docker compose up -d
+#
+# Update to latest image:
+#   docker compose pull
+#   docker compose up -d
+#
+# Custom portfolio data:
+#   PORTFOLIO_DATA_PATH=/path/to/data docker compose up -d
+#
+# =============================================================================

@@ -128,3 +128,6 @@ temp/
 
 # Local Playwright
 .playwright-mcp/
+
+# Local data files (personal information)
+local-data/

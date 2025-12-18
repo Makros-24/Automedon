@@ -71,15 +71,17 @@ npm run test:watch
 ## Project Documentation
 
 ### Context Files
-For comprehensive project guidance, refer to these documentation files:
+For comprehensive project guidance, refer to these documentation files in the `docs/` directory:
 
-- **@architecture.md**: System architecture, design patterns, and technical decisions
-- **@git.md**: Version control guidelines, branching strategy, and commit conventions (uses conventional commits)
-- **@best-practices.md**: Coding standards, development patterns, and quality guidelines
-- **@setup.md**: Environment configuration and development setup instructions
-- **@features.md**: Current and planned feature specifications with implementation details
-- **@dependencies.md**: Package management, version control, and maintenance strategies
-- **@troubleshooting.md**: Common issues, debugging strategies, and emergency procedures
+- **@docs/architecture.md**: System architecture, design patterns, and technical decisions
+- **@docs/git.md**: Version control guidelines, branching strategy, and commit conventions (uses conventional commits)
+- **@docs/best-practices.md**: Coding standards, development patterns, and quality guidelines
+- **@docs/setup.md**: Environment configuration and development setup instructions
+- **@docs/features.md**: Current and planned feature specifications with implementation details
+- **@docs/dependencies.md**: Package management, version control, and maintenance strategies
+- **@docs/troubleshooting.md**: Common issues, debugging strategies, and emergency procedures
+- **@docs/docker/DOCKER.md**: Docker deployment guide with detailed configuration
+- **@docs/README.md**: Complete documentation index
 
 ### Project-Specific Terminology
 
@@ -164,11 +166,25 @@ For comprehensive project guidance, refer to these documentation files:
   - Corrected environment variable naming (`PORTFOLIO_CONFIG_PATH` instead of `PORTFOLIO_DATA_DIR`)
   - Configured writable npm cache location for container runtime
 - **Files Created/Modified**:
-  - `Dockerfile.prebuilt` - Production-optimized Docker image with security best practices
-  - `docker-compose.prebuilt.yml` - Docker Compose configuration for easy deployment
+  - `build-scripts/docker/Dockerfile.prebuilt` - Production-optimized Docker image
+  - `build-scripts/docker/docker-compose.prebuilt.yml` - Pre-built deployment configuration
+  - `docker-compose.yml` - Easy deployment with latest Docker Hub image
+  - `.env.example` - Environment configuration template
+  - `build-scripts/shell/build-and-push.sh` - Automated build and publish script (Linux/Mac)
+  - `build-scripts/shell/build-and-push.bat` - Automated build and publish script (Windows)
   - `next.config.js` - JavaScript configuration to avoid runtime TypeScript dependencies
   - Updated `.dockerignore` to include `next.config.js`
 - **Status**: ✅ Fully functional - Portfolio accessible at http://localhost:3000
+
+### Repository Reorganization (Completed)
+- **Objective**: Organize repository structure for better GitHub presentation
+- **Changes**:
+  - Created `build-scripts/` directory for Docker and shell scripts
+  - Moved documentation to `docs/` with organized subdirectories
+  - Created easy-deployment `docker-compose.yml` with configurable volumes
+  - Removed legacy build scripts and redundant files
+  - Updated all file references and paths in scripts
+- **Benefits**: Cleaner root directory, better documentation discovery, organized build automation
 
 ### Dynamic Locale Discovery System (Completed)
 - **Objective**: Eliminate hardcoded language lists and enable automatic locale detection based on filesystem structure
@@ -251,14 +267,14 @@ When you finish a task, always prompt me with the following question:
 **"Do you want me to update The Project Context Files?"**
 
 ## Project Context Files to Update:
-- @architecture.md 
-- @best-practices.md 
-- @CLAUDE.md 
-- @dependencies.md 
-- @features.md 
-- @git.md 
-- @setup.md 
-- @troubleshooting.md 
+- @docs/architecture.md
+- @docs/best-practices.md
+- @CLAUDE.md (keep at root)
+- @docs/dependencies.md
+- @docs/features.md
+- @docs/git.md
+- @docs/setup.md
+- @docs/troubleshooting.md 
 
 ---
 

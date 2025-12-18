@@ -8,6 +8,94 @@ Named after the legendary charioteer of Achilles, Automedon is your loyal, digit
 
 ---
 
+## 🚀 Quick Start
+
+### Docker Deployment (Recommended)
+
+The fastest way to get started is using Docker with the pre-built image from Docker Hub:
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/yourusername/Automedon.git
+cd Automedon
+
+# 2. (Optional) Customize configuration
+cp .env.example .env
+# Edit .env with your settings
+
+# 3. Start the application
+docker compose up -d
+
+# 4. Access at http://localhost:3000
+```
+
+### Local Development
+
+```bash
+# Navigate to web application
+cd src/app/web
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Access at http://localhost:3000
+```
+
+### Build & Deploy
+
+```bash
+# For Docker Hub deployment
+./build-scripts/shell/build-and-push.sh  # Linux/Mac
+build-scripts\shell\build-and-push.bat   # Windows
+```
+
+For detailed setup instructions, see the [Setup Guide](docs/setup.md).
+
+---
+
+## 📚 Documentation
+
+Comprehensive documentation is available in the [`/docs`](docs/) directory:
+
+- [Setup Guide](docs/setup.md) - Development environment setup
+- [Docker Deployment](docs/docker/DOCKER.md) - Docker deployment guide
+- [Architecture](docs/architecture.md) - System architecture & design patterns
+- [Best Practices](docs/best-practices.md) - Coding standards & guidelines
+- [Features](docs/features.md) - Current & planned features
+- [Troubleshooting](docs/troubleshooting.md) - Common issues & solutions
+
+See the full [Documentation Index](docs/README.md) for all available guides.
+
+---
+
+## 📁 Project Structure
+
+```
+Automedon/
+├── build-scripts/              # Build automation scripts
+│   ├── docker/                 # Docker files and compose configs
+│   └── shell/                  # Shell scripts for building and publishing
+├── docs/                       # Comprehensive documentation
+│   ├── docker/                 # Docker-specific documentation
+│   └── examples/               # Example configurations
+├── portfolio-data/             # Portfolio content (localized)
+│   ├── ar/, de/, en/, fr/     # Language-specific data
+│   └── diagrams/               # Shared visual assets
+├── src/app/web/                # Next.js application
+│   ├── src/app/                # App Router pages and API routes
+│   ├── src/components/         # React components (40+)
+│   ├── src/contexts/           # React Context providers
+│   └── src/utils/              # Utility functions
+├── docker-compose.yml          # Easy deployment (latest image)
+├── .env.example                # Environment configuration template
+└── README.md                   # This file
+```
+
+---
+
 ## 🚀 Features
 
 ### ✅ Implemented

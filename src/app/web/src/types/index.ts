@@ -95,6 +95,7 @@ export interface PersonalInfo {
   description: string
   avatar?: ImageData | string // Support both base64/URL format and legacy string URL
   resumeUrl?: string
+  superMeUserId?: string // SuperMe user ID for embedded profile
 }
 
 // Contact information

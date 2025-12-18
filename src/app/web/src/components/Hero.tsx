@@ -1,13 +1,10 @@
-import { useState } from 'react';
 import { motion, useScroll, useTransform } from 'motion/react';
 import { ChevronDown, Download, Eye, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
 import { usePersonalInfo } from '@/contexts/PortfolioDataContext';
 import { Loading } from './ui/loading';
-import * as Dialog from '@radix-ui/react-dialog';
 
 export function Hero() {
-  const [isWipDialogOpen, setIsWipDialogOpen] = useState(false);
   const { personalInfo, loading, error } = usePersonalInfo();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 300], [0, -50]);
@@ -26,10 +23,6 @@ export function Hero() {
     } else {
       alert('Resume not available for download');
     }
-  };
-
-  const handleAskAI = () => {
-    setIsWipDialogOpen(true);
   };
 
   // Handle loading state
@@ -159,18 +152,20 @@ export function Hero() {
               </span>
             </Button>
 
-            {/* Tertiary CTA */}
-            <Button
-              onClick={handleAskAI}
-              variant="ghost"
-              size="lg"
-              className="group relative bg-gradient-to-r from-amber-500/10 to-orange-500/10 hover:from-amber-500/20 hover:to-orange-500/20 border border-amber-500/20 hover:border-amber-500/30 backdrop-blur-sm rounded-full px-8 py-3 transition-all duration-300 w-full md:w-auto"
-            >
-              <span className="flex items-center gap-2 text-amber-600 dark:text-amber-400">
-                <Sparkles className="w-4 h-4" />
-                Ask AI About Me
-              </span>
-            </Button>
+            {/* SuperMe Button */}
+            {personalInfo.superMeUserId && (
+              <Button
+                onClick={() => window.open(`https://www.superme.ai/${personalInfo.superMeUserId}`, '_blank')}
+                variant="ghost"
+                size="lg"
+                className="group relative bg-gradient-to-r from-amber-500/10 to-orange-500/10 hover:from-amber-500/20 hover:to-orange-500/20 border border-amber-500/20 hover:border-amber-500/30 backdrop-blur-sm rounded-full px-8 py-3 transition-all duration-300 w-full md:w-auto hover:scale-105 active:scale-95"
+              >
+                <span className="flex items-center gap-2 text-amber-600 dark:text-amber-400">
+                  <Sparkles className="w-4 h-4" />
+                  Ask AI About Me
+                </span>
+              </Button>
+            )}
           </motion.div>
         </motion.div>
       </div>
@@ -195,32 +190,6 @@ export function Hero() {
           </motion.div>
         </div>
       </motion.div>
-
-      {/* Work In Progress Dialog */}
-      <Dialog.Root open={isWipDialogOpen} onOpenChange={setIsWipDialogOpen}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0" />
-          <Dialog.Content className="fixed left-[50%] top-[50%] z-50 w-full max-w-lg translate-x-[-50%] translate-y-[-50%] p-6 rounded-2xl glass duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]">
-            <div className="flex flex-col space-y-4">
-              <Dialog.Title className="text-2xl font-semibold tracking-tight text-foreground flex items-center gap-2">
-                <Sparkles className="w-6 h-6 text-amber-500" />
-                AI Assistant
-              </Dialog.Title>
-              <Dialog.Description className="text-base text-foreground/70 leading-relaxed">
-                This feature is currently under development. The AI-powered assistant will soon be available to answer questions about my background, skills, and experience.
-              </Dialog.Description>
-              <div className="flex justify-end pt-4">
-                <Button
-                  onClick={() => setIsWipDialogOpen(false)}
-                  className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 rounded-full px-6 py-2 shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-300"
-                >
-                  Got it
-                </Button>
-              </div>
-            </div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
     </motion.section>
   );
 }

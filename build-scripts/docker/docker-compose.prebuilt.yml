@@ -5,13 +5,13 @@
 # inside Docker. This bypasses Tailwind CSS v4 + Docker compatibility issues.
 #
 # PREREQUISITE: Run the build script first!
-#   Linux/Mac:  ./build-for-docker.sh
-#   Windows:    build-for-docker.bat
+#   Linux/Mac:  ./build-scripts/shell/build-and-push.sh
+#   Windows:    build-scripts\shell\build-and-push.bat
 #
-# Usage:
-#   Build:  docker compose -f docker-compose.prebuilt.yml build
-#   Run:    docker compose -f docker-compose.prebuilt.yml up
-#   Stop:   docker compose -f docker-compose.prebuilt.yml down
+# Usage (from project root):
+#   Build:  docker compose -f build-scripts/docker/docker-compose.prebuilt.yml build
+#   Run:    docker compose -f build-scripts/docker/docker-compose.prebuilt.yml up
+#   Stop:   docker compose -f build-scripts/docker/docker-compose.prebuilt.yml down
 # =============================================================================
 
 version: '3.8'
@@ -23,8 +23,8 @@ services:
   automedon-portfolio:
     # Build configuration using pre-built Dockerfile
     build:
-      context: .
-      dockerfile: Dockerfile.prebuilt
+      context: ../..
+      dockerfile: build-scripts/docker/Dockerfile.prebuilt
       args:
         NODE_ENV: production
 
@@ -116,17 +116,17 @@ networks:
 # Notes
 # -----------------------------------------------------------------------------
 # This configuration expects the Next.js application to be pre-built using
-# the build-for-docker script. The .next folder must exist before building
+# the build-and-push script. The .next folder must exist before building
 # the Docker image.
 #
-# Workflow:
-#   1. Run build script: ./build-for-docker.sh (or .bat on Windows)
-#   2. Build image: docker compose -f docker-compose.prebuilt.yml build
-#   3. Run container: docker compose -f docker-compose.prebuilt.yml up
+# Workflow (run from project root):
+#   1. Run build script: ./build-scripts/shell/build-and-push.sh
+#   2. Build image: docker compose -f build-scripts/docker/docker-compose.prebuilt.yml build
+#   3. Run container: docker compose -f build-scripts/docker/docker-compose.prebuilt.yml up
 #   4. Access at: http://localhost:3000
 #
 # To update the application:
 #   1. Make code changes
 #   2. Run build script again
-#   3. Rebuild image: docker compose -f docker-compose.prebuilt.yml build
-#   4. Restart: docker compose -f docker-compose.prebuilt.yml up -d
+#   3. Rebuild image: docker compose -f build-scripts/docker/docker-compose.prebuilt.yml build
+#   4. Restart: docker compose -f build-scripts/docker/docker-compose.prebuilt.yml up -d

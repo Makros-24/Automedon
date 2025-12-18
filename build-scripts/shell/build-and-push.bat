@@ -18,8 +18,15 @@ setlocal enabledelayedexpansion
 
 REM Configuration
 set "DOCKER_REPO=makros24/automedon"
-set "DOCKERFILE=Dockerfile.prebuilt"
+set "DOCKERFILE=build-scripts\docker\Dockerfile.prebuilt"
 set "BUILD_MARKER=.docker-build-ready"
+
+REM Get script directory and change to project root
+set "SCRIPT_DIR=%~dp0"
+cd "%SCRIPT_DIR%\..\.." || (
+    echo [ERROR] Failed to change to project root directory
+    exit /b 1
+)
 
 echo ================================================================
 echo   Automedon Portfolio - Build and Push to Docker Hub
@@ -49,12 +56,12 @@ if errorlevel 1 (
 
 REM Check if Dockerfile.prebuilt exists
 if not exist "%DOCKERFILE%" (
-    echo [ERROR] %DOCKERFILE% not found
+    echo [ERROR] Dockerfile.prebuilt not found in build-scripts\docker\
     exit /b 1
 )
 
 echo [OK] Docker is installed and running
-echo [OK] %DOCKERFILE% found
+echo [OK] Dockerfile.prebuilt found
 echo.
 
 REM =============================================================================
@@ -85,16 +92,35 @@ REM Rebuild if needed
 if "%REBUILD_NEEDED%"=="true" (
     echo [*] Building Next.js application...
 
-    if exist "build-for-docker.bat" (
-        call build-for-docker.bat
-        if errorlevel 1 (
-            echo [ERROR] Next.js build failed
-            exit /b 1
-        )
-    ) else (
-        echo [ERROR] build-for-docker.bat not found
+    REM Build Next.js application inline
+    if not exist "src\app\web" (
+        echo [ERROR] src\app\web directory not found
         exit /b 1
     )
+
+    cd src\app\web
+
+    echo [*] Installing dependencies...
+    call npm install
+    if errorlevel 1 (
+        echo [ERROR] npm install failed
+        exit /b 1
+    )
+
+    echo [*] Running Next.js build...
+    call npm run build
+    if errorlevel 1 (
+        echo [ERROR] Next.js build failed
+        exit /b 1
+    )
+
+    REM Return to project root
+    cd ..\..\..
+
+    REM Create build marker
+    type nul > .docker-build-ready
+
+    echo [OK] Next.js build completed successfully
 )
 
 echo.
@@ -221,8 +247,8 @@ echo   docker pull %DOCKER_REPO%:latest
 echo   docker run -p 3000:3000 %DOCKER_REPO%:latest
 echo.
 echo Or use docker-compose:
-echo   docker compose -f docker-compose.production.yml pull
-echo   docker compose -f docker-compose.production.yml up -d
+echo   docker compose pull
+echo   docker compose up -d
 echo.
 echo Docker Hub Repository:
 echo   https://hub.docker.com/r/%DOCKER_REPO%

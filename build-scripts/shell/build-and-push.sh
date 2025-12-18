@@ -26,8 +26,10 @@ NC='\033[0m' # No Color
 
 # Configuration
 DOCKER_REPO="makros24/automedon"
-DOCKERFILE="Dockerfile.prebuilt"
-BUILD_MARKER=".docker-build-ready"
+DOCKERFILE="../docker/Dockerfile.prebuilt"
+BUILD_MARKER="../../.docker-build-ready"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 echo -e "${BLUE}╔════════════════════════════════════════════════════════════════╗${NC}"
 echo -e "${BLUE}║  Automedon Portfolio - Build and Push to Docker Hub          ║${NC}"
@@ -53,14 +55,17 @@ if ! docker info &> /dev/null; then
     exit 1
 fi
 
+# Change to project root
+cd "$PROJECT_ROOT"
+
 # Check if Dockerfile.prebuilt exists
-if [ ! -f "$DOCKERFILE" ]; then
-    echo -e "${RED}❌ Error: $DOCKERFILE not found${NC}"
+if [ ! -f "build-scripts/docker/Dockerfile.prebuilt" ]; then
+    echo -e "${RED}❌ Error: Dockerfile.prebuilt not found in build-scripts/docker/${NC}"
     exit 1
 fi
 
 echo -e "${GREEN}✓ Docker is installed and running${NC}"
-echo -e "${GREEN}✓ $DOCKERFILE found${NC}"
+echo -e "${GREEN}✓ Dockerfile.prebuilt found${NC}"
 echo ""
 
 # =============================================================================
@@ -91,19 +96,35 @@ if [ "$REBUILD_NEEDED" = true ]; then
     if [[ $REPLY =~ ^[Yy]$ ]]; then
         echo -e "${BLUE}Building Next.js application...${NC}"
 
-        # Determine which build script to use
-        if [ -f "build-for-docker.sh" ]; then
-            chmod +x build-for-docker.sh
-            ./build-for-docker.sh
-        else
-            echo -e "${RED}❌ Error: build-for-docker.sh not found${NC}"
+        # Build Next.js application inline
+        cd src/app/web || {
+            echo -e "${RED}❌ Error: src/app/web directory not found${NC}"
+            exit 1
+        }
+
+        echo -e "${BLUE}Installing dependencies...${NC}"
+        npm install
+
+        if [ $? -ne 0 ]; then
+            echo -e "${RED}❌ npm install failed${NC}"
             exit 1
         fi
+
+        echo -e "${BLUE}Running Next.js build...${NC}"
+        npm run build
 
         if [ $? -ne 0 ]; then
             echo -e "${RED}❌ Next.js build failed${NC}"
             exit 1
         fi
+
+        # Return to project root
+        cd "$PROJECT_ROOT"
+
+        # Create build marker
+        touch .docker-build-ready
+
+        echo -e "${GREEN}✓ Next.js build completed successfully${NC}"
     else
         echo -e "${YELLOW}⚠️  Skipping rebuild - using existing .next folder${NC}"
         echo -e "${YELLOW}⚠️  Make sure your .next folder is up to date!${NC}"
@@ -182,8 +203,8 @@ echo -e "${YELLOW}🔨 Building Docker image...${NC}"
 echo -e "${BLUE}This may take a few minutes...${NC}"
 echo ""
 
-# Build the Docker image
-docker build -f "$DOCKERFILE" -t "$VERSION_TAG" -t "$LATEST_TAG" .
+# Build the Docker image (from project root)
+docker build -f "build-scripts/docker/Dockerfile.prebuilt" -t "$VERSION_TAG" -t "$LATEST_TAG" .
 
 if [ $? -ne 0 ]; then
     echo ""
@@ -238,8 +259,8 @@ echo -e "  docker pull ${DOCKER_REPO}:latest"
 echo -e "  docker run -p 3000:3000 ${DOCKER_REPO}:latest"
 echo ""
 echo -e "${YELLOW}Or use docker-compose:${NC}"
-echo -e "  docker compose -f docker-compose.production.yml pull"
-echo -e "  docker compose -f docker-compose.production.yml up -d"
+echo -e "  docker compose pull"
+echo -e "  docker compose up -d"
 echo ""
 echo -e "${BLUE}🔗 Docker Hub Repository:${NC}"
 echo -e "  https://hub.docker.com/r/${DOCKER_REPO}"

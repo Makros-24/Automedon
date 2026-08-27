@@ -116,7 +116,7 @@ export const ProjectDetailsDialog = ({
               height={320}
               className="w-full h-full object-cover"
               priority
-              unoptimized={imageSrc.startsWith('http')}
+              unoptimized={imageSrc.startsWith('data:')}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/10 to-transparent" />
           </div>

@@ -152,7 +152,7 @@ export function Header() {
                   height={48}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   priority
-                  unoptimized={avatarSrc.startsWith('http')}
+                  unoptimized={avatarSrc.startsWith('data:')}
                 />
                 <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10 transition-opacity duration-300 group-hover:ring-white/20" />
                 

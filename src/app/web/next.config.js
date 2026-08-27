@@ -9,6 +9,20 @@ const nextConfig = {
   // Optimize images
   images: {
     formats: ['image/avif', 'image/webp'],
+
+    // Remote hosts Next.js is allowed to fetch and optimize.
+    // Routing portfolio images through the optimizer (rather than letting the
+    // browser hit them directly) serves them from our own origin, which avoids
+    // Chrome's Opaque Response Blocking - Google Drive answers inconsistently
+    // with a non-image Content-Type and ORB then drops the response.
+    remotePatterns: [
+      { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
+      { protocol: 'https', hostname: '**.googleusercontent.com' },
+      { protocol: 'https', hostname: 'drive.google.com' },
+      { protocol: 'https', hostname: 'media.licdn.com' },
+      // Open Graph preview images for open-source repos (personal projects)
+      { protocol: 'https', hostname: 'opengraph.githubassets.com' },
+    ],
   },
 
   // Turbopack configuration (now stable)

@@ -51,7 +51,9 @@ export const ProjectCard = ({ project, variants }: ProjectCardProps) => {
               height={338}
               className="w-full h-full object-cover"
               loading="lazy"
-              unoptimized={imageSrc.startsWith('http')}
+              // Only inline data: URLs skip the optimizer; remote images go
+              // through it so they are served same-origin (see next.config.js).
+              unoptimized={imageSrc.startsWith('data:')}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300" />
 

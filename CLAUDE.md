@@ -57,6 +57,7 @@ npm run test:watch
 - **Next.js App Router**: Uses App Router (not Pages Router) - components go in `src/app/`
 - **Import Paths**: Uses `@/` alias pointing to `src/` directory
 - **Configuration**: All build tools (TypeScript, ESLint, Jest, PostCSS, Tailwind) are configured and ready
+- **Page Debugging**: Use Chrome for debugging pages in the browser. Run the dev server (`npm run dev`) and inspect the running page in Chrome - screenshots, console logs, network activity, and DOM interaction - to verify UI changes, diagnose layout/RTL issues, and confirm runtime behavior. Use the `claude-in-chrome` skill to drive the browser.
 
 ## Development Conventions
 

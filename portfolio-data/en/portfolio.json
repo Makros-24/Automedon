@@ -445,6 +445,54 @@
       "markdownFileName": "5-chifco-chifco-devops-transformation-en.md"
     }
   ],
+  "sideProjects": [
+    {
+      "id": 101,
+      "title": "Automedon",
+      "company": "Open Source",
+      "role": "Creator & Maintainer",
+      "description": "An AI-powered digital twin portfolio - the site you are reading right now. Instead of scrolling a static page, visitors chat with an assistant grounded strictly in my CV and project history. Built on Next.js 15 and React 19, it ships in four languages with full RTL support and discovers its own locales from the filesystem, so adding a language is a directory, not a code change.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1anaitBe_qz8wAGo7anO7gDQAkugpf1Qb"
+      },
+      "technologies": [
+        {
+          "name": "Next.js",
+          "icon": {
+            "url": "https://cdn.simpleicons.org/nextdotjs/888888"
+          }
+        },
+        {
+          "name": "React",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+          }
+        },
+        {
+          "name": "TypeScript",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+          }
+        },
+        {
+          "name": "Tailwind CSS",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "github": "https://github.com/Makros-24/Automedon"
+      },
+      "markdownFileName": "101-automedon-ai-digital-twin-portfolio-en.md"
+    }
+  ],
   "skillCategories": [
     {
       "name": "Backend Development",

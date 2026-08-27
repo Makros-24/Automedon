@@ -168,9 +168,21 @@ export interface AboutData {
   achievementsTitle: string;
 }
 
+// Metadata for a single tab in the Projects section
+export interface ProjectTabMeta {
+  label: string;
+  description: string;
+}
+
 export interface WorkData {
   title: string;
   description: string;
+  // Optional per-tab metadata. When absent, the section renders as a single
+  // untabbed grid using `description` as the paragraph.
+  tabs?: {
+    client: ProjectTabMeta;
+    personal: ProjectTabMeta;
+  };
 }
 
 // Complete portfolio data structure
@@ -179,6 +191,7 @@ export interface PortfolioData {
   about: AboutData;
   work: WorkData;
   projects: Project[]
+  sideProjects?: Project[] // Personal / open-source projects
   skillCategories: SkillCategory[]
   achievements: Achievement[]
   contactInfo: ContactInfo

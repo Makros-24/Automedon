@@ -84,7 +84,7 @@ export function Header() {
   }, []);
 
   const navItems = [
-    { name: 'Work', href: '#work', id: 'work' },
+    { name: 'Projects', href: '#work', id: 'work' },
     { name: 'About', href: '#about', id: 'about' },
     { name: 'Contact', href: '#contact', id: 'contact' },
   ];

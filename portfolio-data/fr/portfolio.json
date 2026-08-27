@@ -446,6 +446,54 @@
       "markdownFileName": "5-chifco-transformation-devops-chifco-fr.md"
     }
   ],
+  "sideProjects": [
+    {
+      "id": 101,
+      "title": "Automedon",
+      "company": "Open Source",
+      "role": "Créateur & Mainteneur",
+      "description": "Un portfolio jumeau numérique propulsé par l'IA - le site que vous consultez en ce moment. Plutôt que de parcourir une page statique, les visiteurs échangent avec un assistant strictement fondé sur mon CV et mon historique de projets. Construit sur Next.js 15 et React 19, il est disponible en quatre langues avec un support RTL complet et découvre ses propres locales depuis le système de fichiers : ajouter une langue revient à créer un dossier, pas à modifier le code.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1anaitBe_qz8wAGo7anO7gDQAkugpf1Qb"
+      },
+      "technologies": [
+        {
+          "name": "Next.js",
+          "icon": {
+            "url": "https://cdn.simpleicons.org/nextdotjs/888888"
+          }
+        },
+        {
+          "name": "React",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+          }
+        },
+        {
+          "name": "TypeScript",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+          }
+        },
+        {
+          "name": "Tailwind CSS",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "github": "https://github.com/Makros-24/Automedon"
+      },
+      "markdownFileName": "101-automedon-portfolio-jumeau-numerique-ia-fr.md"
+    }
+  ],
   "skillCategories": [
     {
       "name": "Développement Backend",

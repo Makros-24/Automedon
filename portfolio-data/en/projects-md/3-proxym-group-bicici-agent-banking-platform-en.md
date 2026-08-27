@@ -1,6 +1,6 @@
 ## Technical Requirements
 
-Agent banking platform for BICICI enabling banking agents to perform account opening and customer management. Core challenges: orchestrating 15+ step account opening process with KYC verification and core banking integration, dynamic form configuration for business users without deployments, and hierarchical role-based access (super agents, agents, supervisors).
+Agent banking platform for BICICI enabling 250+ bank agents to perform account opening and customer management. Core challenges: orchestrating 15+ step account opening process with KYC verification and core banking integration, dynamic form configuration for business users without deployments, and hierarchical role-based access (super agents, agents, supervisors).
 
 <!-- DIAGRAM_PLACEHOLDER: BICICI Agent Platform Architecture - BPMN workflow engine, Formio form builder, agent portal, mobile integration, core banking connectivity -->
 

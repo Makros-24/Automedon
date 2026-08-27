@@ -1,8 +1,8 @@
 ## Project Overview
 
-I worked on **Digital Corporate Banking**, a multi-tenant platform enabling African financial institutions to offer fully digital corporate banking services. Over my 2-year tenure as **Senior Backend Developer and Technical Lead**, I took ownership of architecture decisions after our original architect departed, serving as the de-facto architect while maintaining my versatility across the full technical stack—keeping the project on track through agile adaptation to evolving challenges.
+I worked on **Digital Corporate Banking**, a multi-tenant platform enabling African financial institutions to offer fully digital corporate banking services. As **Backend Technical Lead** since December 2023, I took ownership of architecture decisions after our original architect departed, serving as the de-facto architect while maintaining my versatility across the full technical stack—keeping the project on track through agile adaptation to evolving challenges.
 
-The platform serves multiple financial institutions across West Africa, including commercial banks and central banking authorities. The product's core value proposition is **configurability without code changes**—each bank client can define their own approval hierarchies, transaction rules, and operational workflows through configuration rather than custom development.
+The platform serves 7 financial institutions across West Africa on a shared codebase, including commercial banks and central banking authorities. The product's core value proposition is **configurability without code changes**—each bank client can define their own approval hierarchies, transaction rules, and operational workflows through configuration rather than custom development.
 
 <p align="center">
   <img src="/portfolio-data/diagrams/Hexagonal-architecture.drawio.svg" alt="Corporate Banking System Architecture - Hexagonal architecture layers, aggregate boundaries, Sopra integration adapters, CQRS event flow" />

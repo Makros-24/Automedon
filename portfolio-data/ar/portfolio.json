@@ -1,8 +1,8 @@
 {
   "personalInfo": {
     "name": "محمد ابن العابد",
-    "title": "مطور backend أول ومسؤول تقني",
-    "description": "مطور Backend ذو خبرة واسعة في الشبكات، متميز في JAVA و BPMN. سجل حافل في القطاعين المصرفي والتأميني، تقديم حلول محسّنة للسياقات التجارية والخاصة بالشركات مع أكثر من 5 سنوات من الخبرة.",
+    "title": "مهندس Backend أول",
+    "description": "مهندس Backend أول يتمتع بخبرة 6 سنوات في بناء المنصات المالية الخاضعة للتنظيم في قطاعي المصارف والتأمين. أتولى مسؤولية هندسة منتج مصرفي للشركات متعدد المستأجرين تعمل فيه 7 مؤسسات مالية على قاعدة كود واحدة، مبني باستخدام Java وSpring Boot والتصميم الموجه بالمجال والهندسة السداسية. خبرة إنتاجية مع MongoDB وElasticsearch وKafka وAWS وKubernetes.",
     "avatar": {
       "url": "https://lh3.googleusercontent.com/d/1JxR6_v1q40TSt5FzgJdKvEeONXoe2Mk1"
     },
@@ -11,27 +11,37 @@
   },
   "about": {
     "title": "نبذة عني",
-    "description": "شغوف بإنشاء حلول مبتكرة تسد الفجوة بين المتطلبات التقنية المعقدة وتجارب المستخدم الأنيقة. أنا متخصص في تصميم أنظمة قابلة للتوسع تدفع النجاح التجاري.",
+    "description": "مهندس backend يتمتع بخبرة 6 سنوات في بناء أنظمة مالية بالغة الأهمية لعملاء في قطاعي المصارف والتأمين عبر تونس وساحل العاج وغرب أفريقيا. أتخصص في Java وSpring Boot، مطبقًا التصميم الموجه بالمجال والهندسة السداسية لتقديم حلول قابلة للتوسع وسهلة الصيانة.\n\nأركز على الأثر القابل للقياس — هندسة منصة متعددة المستأجرين تشغّل 7 مؤسسات مالية على قاعدة كود مشتركة، والحفاظ على تغطية اختبارات بنسبة 80%، وإطلاق إصدار إلى إصدارين للإنتاج في كل دورة عمل مدتها 3 أسابيع مع دورات نشر تقل عن 10 دقائق. شغوف بالهندسة النظيفة والتطور التدريجي الذي يتكيف مع احتياجات العمل المتغيرة.\n\nخارج نطاق البرمجة، أستكشف التقنيات الناشئة في مختبري المنزلي، وأحمل شهادات في AWS Cloud وتطبيقات الذكاء الاصطناعي، وأستمتع بكرة القدم والتمارين الحركية.",
     "skillsTitle": "التقنيات",
     "achievementsTitle": "الإنجازات الرئيسية"
   },
   "work": {
-    "title": "المشاريع المميزة",
-    "description": "مجموعة مختارة من المشاريع التي تعرض خبرتي في هندسة الحلول وتطوير Full-Stack والبنية التحتية السحابية."
+    "title": "المشاريع",
+    "description": "مجموعة مختارة من المشاريع التي تعرض خبرتي في هندسة الحلول وتطوير Full-Stack والبنية التحتية السحابية.",
+    "tabs": {
+      "client": {
+        "label": "مشاريع العملاء",
+        "description": "مجموعة مختارة من المشاريع التي تعرض خبرتي في هندسة الحلول وتطوير Full-Stack والبنية التحتية السحابية."
+      },
+      "personal": {
+        "label": "مشاريع شخصية",
+        "description": "أدوات مفتوحة المصدر ومشاريع جانبية أختار فيها التقنيات بنفسي وأتحمل كل قرار وأنجزها من البداية إلى النهاية."
+      }
+    }
   },
   "projects": [
     {
       "id": 1,
       "title": "منصة Bankerise المصرفية للشركات",
       "company": "Proxym Group",
-      "role": "مطور Backend أول ومسؤول تقني",
-      "description": "صيانة وتطوير حل مصرفي شامل للشركات يخدم عملاء المؤسسات، تم بناؤه وفقًا لمبادئ Domain-Driven Design و Hexagonal Architecture.",
+      "role": "مسؤول تقني Backend",
+      "description": "أتولى مسؤولية هندسة منصة مصرفية للشركات متعددة المستأجرين مبنية على التصميم الموجه بالمجال والهندسة السداسية، مما يتيح لـ 7 مؤسسات مالية العمل على قاعدة كود مشتركة بإعدادات معزولة. صممت محركًا يعمل بالقواعد يحوّل التخصيص لكل عميل من تغييرات في الكود إلى تحديثات في الإعدادات، ودمجت Keycloak OAuth2/OIDC مع أنظمة الخدمات المصرفية الأساسية Sopra Banking وTemenos T24، وحافظت على تغطية كود بنسبة 80% باستخدام ArchUnit وTestcontainers مع توجيه 3 مطورين مبتدئين ضمن فريق من 7 أشخاص.",
       "image": {
         "url": "https://lh3.googleusercontent.com/d/1AFqRxn2BtHNQ2yQm5Sz3uBtng-TfNq90"
       },
       "technologies": [
         {
-          "name": "Java",
+          "name": "Java 17",
           "icon": {
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
           }
@@ -43,15 +53,27 @@
           }
         },
         {
+          "name": "Oracle",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/oracle/oracle-original.svg"
+          }
+        },
+        {
           "name": "PostgreSQL",
           "icon": {
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
           }
         },
         {
-          "name": "Docker",
+          "name": "Elasticsearch",
           "icon": {
-            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg"
+          }
+        },
+        {
+          "name": "Redis",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg"
           }
         },
         {
@@ -61,21 +83,69 @@
           }
         },
         {
+          "name": "Flowable BPMN",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMTBDOTdGIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkZMT1c8L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
           "name": "Liquibase",
           "icon": {
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/liquibase/liquibase-original.svg"
           }
         },
         {
-          "name": "Domain-Driven Design",
+          "name": "React",
           "icon": {
-            "url": "https://example.com/ddd-icon.svg"
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
           }
         },
         {
-          "name": "البنية السداسية",
+          "name": "TypeScript",
           "icon": {
-            "url": "https://www.svgrepo.com/show/44395/hexagon.svg"
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Kubernetes",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg"
+          }
+        },
+        {
+          "name": "GitLab CI/CD",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
+          }
+        },
+        {
+          "name": "ArgoCD",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/argocd/argocd-original.svg"
+          }
+        },
+        {
+          "name": "Terraform",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg"
+          }
+        },
+        {
+          "name": "Domain-Driven Design",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNkY0MkMxIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5EREQ8L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
+          "name": "Hexagonal Architecture",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBvbHlnb24gcG9pbnRzPSIxMiwyIDIwLDYgMjAsMTggMTIsMjIgNCwxOCA0LDYiIGZpbGw9IiNFRjQ0NDQiLz4KPHBvbHlnb24gcG9pbnRzPSIxMiw3IDE2LDkgMTYsMTUgMTIsMTcgOCwxNSA4LDkiIGZpbGw9IiNGRkYiLz4KPC9zdmc+"
           }
         }
       ],
@@ -89,14 +159,14 @@
       "id": 2,
       "title": "الخدمات المصرفية الرقمية BNA للأفراد",
       "company": "Proxym Group",
-      "role": "أخصائي تكامل المنتجات",
-      "description": "المساهمة في تطوير تطبيق رقمي للأفراد لـ BNA، باستخدام منصة Bankerise المصرفية من Proxym. قيادة التحول الرقمي في القطاع المصرفي بحلول مبتكرة.",
+      "role": "مطور Backend أول",
+      "description": "دمجت 3 مزودين لأنظمة الخدمات المصرفية الأساسية (CBS وCMS وCSA) عبر واجهات REST، مما مكّن بنك BNA من إطلاق خدماته المصرفية الرقمية للأفراد على منصة Bankerise من Proxym. حوّلت متطلبات الخدمات المصرفية للأفراد إلى مواصفات تقنية تغطي التسجيل والتحقق من الهوية وإدارة الحسابات، وسلّمت مسار تسجيل وانضمام عملاء قابلًا للتهيئة يستوعب مختلف منتجات الأفراد والمتطلبات التنظيمية.",
       "image": {
         "url": "https://lh3.googleusercontent.com/d/1dxSiXL55Z3ZHNt0lydoLyiEKwy1GvRob"
       },
       "technologies": [
         {
-          "name": "Java",
+          "name": "Java 17",
           "icon": {
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
           }
@@ -110,13 +180,19 @@
         {
           "name": "REST APIs",
           "icon": {
-            "url": "https://www.svgrepo.com/svg/447473/rest-api"
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNjFEQUZCIi8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkFQSTwvdGV4dD4KPC9zdmc+"
           }
         },
         {
-          "name": "CI/CD",
+          "name": "BPMN",
           "icon": {
-            "url": "https://www.svgrepo.com/svg/445634/cicd"
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMzM4NEY2Ii8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkJQTU48L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
+          "name": "PostgreSQL",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
           }
         },
         {
@@ -126,9 +202,15 @@
           }
         },
         {
-          "name": "PostgreSQL",
+          "name": "Kubernetes",
           "icon": {
-            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg"
+          }
+        },
+        {
+          "name": "GitLab CI/CD",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/gitlab/gitlab-original.svg"
           }
         }
       ],
@@ -143,13 +225,13 @@
       "title": "تطبيق الويب المصرفي BICICI",
       "company": "Proxym Group",
       "role": "مسؤول تقني",
-      "description": "قيادة تطوير تطبيق ويب للبنك الدولي للتجارة والصناعة في ساحل العاج لتحسين الخدمات لوكلاء البنوك.",
+      "description": "قدت التوافق التقني مع أصحاب المصلحة في بنك BICICI (ساحل العاج)، محوّلًا عملية فتح حساب متوافقة مع متطلبات التحقق من الهوية تتجاوز 15 خطوة إلى هندسة قابلة للتنفيذ تخدم أكثر من 250 وكيلًا مصرفيًا. أرسيت عمليات منظمة لمراجعة الكود والتحقق من الجودة عبر دورة التسليم، محققًا أكثر من 8 إصدارات نظيفة متتالية، ونسّقت النشر الشامل عبر بيئات SIT وUAT والإنتاج على AWS وKubernetes.",
       "image": {
         "url": "https://lh3.googleusercontent.com/d/1VfZAgsp25SyrMgv2FghKFdnJO8m7JEBs"
       },
       "technologies": [
         {
-          "name": "Java",
+          "name": "Java 11",
           "icon": {
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
           }
@@ -163,13 +245,25 @@
         {
           "name": "Flowable BPMN",
           "icon": {
-            "url": "https://www.svgrepo.com/show/395899/process.svg"
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMTBDOTdGIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkZMT1c8L3RleHQ+Cjwvc3ZnPg=="
+          }
+        },
+        {
+          "name": "BPMN",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMzM4NEY2Ii8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkJQTU48L3RleHQ+Cjwvc3ZnPg=="
           }
         },
         {
           "name": "Formio",
           "icon": {
-            "url": "https://example.com/formio-icon.svg"
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNDI5RkY0Ii8+Cjx0ZXh0IHg9IjQiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5GTzwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "JavaScript",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
           }
         },
         {
@@ -179,9 +273,33 @@
           }
         },
         {
+          "name": "Redis",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg"
+          }
+        },
+        {
+          "name": "Elasticsearch",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg"
+          }
+        },
+        {
           "name": "Docker",
           "icon": {
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Kubernetes",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg"
+          }
+        },
+        {
+          "name": "AWS",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg"
           }
         }
       ],
@@ -196,13 +314,13 @@
       "title": "منصة Insurise® للتأمين الرقمي",
       "company": "Proxym Group",
       "role": "مطور Backend",
-      "description": "تطوير حل تأمين رقمي متعدد القنوات يخدم أكثر من 20,000 مستخدم مع 1,000-2,000 مستخدم نشط يوميًا. تسليم المنصة لثلاثة عملاء تأمين رئيسيين تغطي تأمين السيارات والمنازل والمسؤولية المهنية والسفر مع عروض أسعار فورية ومدفوعات وإدارة مطالبات.",
+      "description": "شاركت في تصميم هندسة الخدمات المصغرة (المطالبات والاشتراكات وإدارة المحافظ) لمنصة تأمين رقمية متعددة القنوات تغطي تأمين السيارات والمنازل والسفر عبر قنوات الويب والهاتف المحمول، مما أتاح النشر المستقل لثلاث وحدات أساسية. سلّمت المنصة إلى 3 عملاء تأمين كبار، بما يخدم أكثر من 20,000 مستخدم مسجل مع 1,000 إلى 2,000 مستخدم نشط يوميًا.",
       "image": {
         "url": "https://lh3.googleusercontent.com/d/1k3u470MWuVmRHhGeLoZhjl1h-HcEu_9a"
       },
       "technologies": [
         {
-          "name": "Java",
+          "name": "Java 8",
           "icon": {
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg"
           }
@@ -211,6 +329,12 @@
           "name": "Spring Boot",
           "icon": {
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original.svg"
+          }
+        },
+        {
+          "name": "Kafka",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg"
           }
         },
         {
@@ -226,15 +350,27 @@
           }
         },
         {
+          "name": "Microservices",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMiIgeT0iMiIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iIzNDNzdGMCIvPgo8cmVjdCB4PSIxMCIgeT0iMiIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iIzEwQzk3RiIvPgo8cmVjdCB4PSIxOCIgeT0iMiIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iI0VGNDQ0NCIvPgo8cmVjdCB4PSI2IiB5PSIxMCIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iI0Y1OUUwQiIvPgo8cmVjdCB4PSIxNCIgeT0iMTAiIHdpZHRoPSI2IiBoZWlnaHQ9IjYiIGZpbGw9IiM2RjQyQzEiLz4KPHJlY3QgeD0iMTAiIHk9IjE2IiB3aWR0aD0iNiIgaGVpZ2h0PSI2IiBmaWxsPSIjM0M3N0YwIi8+Cjwvc3ZnPg=="
+          }
+        },
+        {
           "name": "REST APIs",
           "icon": {
-            "url": "https://www.svgrepo.com/svg/447473/rest-api"
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNjFEQUZCIi8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkFQSTwvdGV4dD4KPC9zdmc+"
           }
         },
         {
           "name": "Docker",
           "icon": {
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Kubernetes",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg"
           }
         }
       ],
@@ -249,7 +385,7 @@
       "title": "تحول CHIFCO في DevOps",
       "company": "CHIFCO",
       "role": "مهندس DevOps",
-      "description": "قيادة التحول الثقافي في DevOps مما قلل وقت النشر بمقدار 3 أيام ووقت التوقف من 1-2 يوم إلى 5-10 دقائق. تنفيذ خطوط CI/CD آلية مع Jenkins وGitLab CI، وحاويات التطبيقات مع Docker، وأتمتة البنية التحتية مع Ansible.",
+      "description": "صممت مسارات CI/CD مؤتمتة حلّت محل عمليات نشر يدوية بالكامل لتطبيقات متكاملة، مما قلّص زمن الإصدار بمقدار 3 أيام وخفّض التوقف من يوم إلى يومين إلى أقل من 10 دقائق. عملت على حوسبة التطبيقات في حاويات باستخدام Docker وأتمتة تجهيز البنية التحتية باستخدام Ansible عبر دورة التسليم.",
       "image": {
         "url": "https://lh3.googleusercontent.com/d/1k3u470MWuVmRHhGeLoZhjl1h-HcEu_9a"
       },
@@ -269,7 +405,7 @@
         {
           "name": "Ansible",
           "icon": {
-            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ansible/ansible-original.svg"
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ansible/ansible-original.svg"
           }
         },
         {
@@ -279,15 +415,27 @@
           }
         },
         {
-          "name": "Bash",
+          "name": "Linux",
           "icon": {
-            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg"
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
           }
         },
         {
-          "name": "Linux",
+          "name": "Bash",
           "icon": {
-            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg"
+          }
+        },
+        {
+          "name": "Groovy",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/groovy/groovy-original.svg"
+          }
+        },
+        {
+          "name": "Git",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"
           }
         }
       ],
@@ -316,9 +464,33 @@
           }
         },
         {
+          "name": "Kafka",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/apachekafka/apachekafka-original.svg"
+          }
+        },
+        {
+          "name": "GoLang",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original-wordmark.svg"
+          }
+        },
+        {
+          "name": "Python",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+          }
+        },
+        {
           "name": "REST APIs",
           "icon": {
             "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNjFEQUZCIi8+Cjx0ZXh0IHg9IjIiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkFQSTwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "Microservices",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMiIgeT0iMiIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iIzNDNzdGMCIvPgo8cmVjdCB4PSIxMCIgeT0iMiIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iIzEwQzk3RiIvPgo8cmVjdCB4PSIxOCIgeT0iMiIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iI0VGNDQ0NCIvPgo8cmVjdCB4PSI2IiB5PSIxMCIgd2lkdGg9IjYiIGhlaWdodD0iNiIgZmlsbD0iI0Y1OUUwQiIvPgo8cmVjdCB4PSIxNCIgeT0iMTAiIHdpZHRoPSI2IiBoZWlnaHQ9IjYiIGZpbGw9IiM2RjQyQzEiLz4KPHJlY3QgeD0iMTAiIHk9IjE2IiB3aWR0aD0iNiIgaGVpZ2h0PSI2IiBmaWxsPSIjM0M3N0YwIi8+Cjwvc3ZnPg=="
           }
         }
       ]
@@ -338,23 +510,71 @@
           "icon": {
             "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMTBDOTdGIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPkZMT1c8L3RleHQ+Cjwvc3ZnPg=="
           }
+        },
+        {
+          "name": "N8n",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjRUE0QjcxIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjkiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC13ZWlnaHQ9ImJvbGQiPk44TjwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "Formio",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNDI5RkY0Ii8+Cjx0ZXh0IHg9IjQiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5GTzwvdGV4dD4KPC9zdmc+"
+          }
         }
       ]
     },
     {
-      "name": "DevOps والأدوات",
-      "icon": "Settings",
+      "name": "قواعد البيانات والتخزين المؤقت",
+      "icon": "Database",
       "skills": [
         {
-          "name": "CI/CD",
+          "name": "PostgreSQL",
           "icon": {
-            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNiIgY3k9IjEyIiByPSIzIiBmaWxsPSIjMTBDOTdGIi8+CjxjaXJjbGUgY3g9IjE4IiBjeT0iMTIiIHI9IjMiIGZpbGw9IiMzQzc3RjAiLz4KPGxpbmUgeDE9IjkiIHkxPSIxMiIgeDI9IjE1IiB5Mj0iMTIiIHN0cm9rZT0iIzMzODRGNiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0xNSA5TDE4IDEyTDE1IDE1IiBzdHJva2U9IiMzMzg0RjYiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4="
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
           }
         },
+        {
+          "name": "Oracle",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/oracle/oracle-original.svg"
+          }
+        },
+        {
+          "name": "MongoDB",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
+          }
+        },
+        {
+          "name": "Redis",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg"
+          }
+        },
+        {
+          "name": "Elasticsearch",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg"
+          }
+        }
+      ]
+    },
+    {
+      "name": "DevOps والنشر المستمر",
+      "icon": "Settings",
+      "skills": [
         {
           "name": "Docker",
           "icon": {
             "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        },
+        {
+          "name": "Kubernetes",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-plain.svg"
           }
         },
         {
@@ -370,9 +590,33 @@
           }
         },
         {
+          "name": "ArgoCD",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/argocd/argocd-original.svg"
+          }
+        },
+        {
+          "name": "Terraform",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/terraform/terraform-original.svg"
+          }
+        },
+        {
+          "name": "Ansible",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/ansible/ansible-original.svg"
+          }
+        },
+        {
+          "name": "CI/CD",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iNiIgY3k9IjEyIiByPSIzIiBmaWxsPSIjMTBDOTdGIi8+CjxjaXJjbGUgY3g9IjE4IiBjeT0iMTIiIHI9IjMiIGZpbGw9IiMzQzc3RjAiLz4KPGxpbmUgeDE9IjkiIHkxPSIxMiIgeDI9IjE1IiB5Mj0iMTIiIHN0cm9rZT0iIzMzODRGNiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxwYXRoIGQ9Ik0xNSA5TDE4IDEyTDE1IDE1IiBzdHJva2U9IiMzMzg0RjYiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0ibm9uZSIvPgo8L3N2Zz4="
+          }
+        },
+        {
           "name": "Liquibase",
           "icon": {
-            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMkY4MUY3Ii8+Cjx0ZXh0IHg9IjUiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5MQjwvdGV4dD4KPC9zdmc+"
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/liquibase/liquibase-original.svg"
           }
         },
         {
@@ -390,49 +634,37 @@
         {
           "name": "Keycloak",
           "icon": {
-            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNEQ0RDRGIi8+Cjx0ZXh0IHg9IjUiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5LQzwvdGV4dD4KPC9zdmc+"
+            "url": "https://www.keycloak.org/resources/images/logo.svg"
           }
         },
         {
           "name": "OAuth2/OIDC",
           "icon": {
-            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiNGRkY1NTIiLz4KPHN0YXIgY3g9IjEyIiBjeT0iMTIiIHI9IjQiIGZpbGw9IiMzMzMiLz4KPC9zdmc+"
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiNGRkY1NTIiLz4KPHRleHQgeD0iNCIgeT0iMTYiIGZpbGw9IiMzMzMiIGZvbnQtc2l6ZT0iOSIgZm9udC1mYW1pbHk9InNlcmlmIiBmb250LXdlaWdodD0iYm9sZCI+T0F1dGg8L3RleHQ+Cjwvc3ZnPg=="
           }
         }
       ]
     },
     {
-      "name": "قاعدة البيانات والهندسة",
-      "icon": "Database",
+      "name": "الهندسة المعمارية والتصميم",
+      "icon": "Layers",
       "skills": [
-        {
-          "name": "PostgreSQL",
-          "icon": {
-            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg"
-          }
-        },
-        {
-          "name": "MongoDB",
-          "icon": {
-            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg"
-          }
-        },
-        {
-          "name": "MySQL",
-          "icon": {
-            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
-          }
-        },
         {
           "name": "Domain-Driven Design",
           "icon": {
-            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNkY0MkMxIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5ERDs8L3RleHQ+Cjwvc3ZnPg=="
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNkY0MkMxIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5EREQ8L3RleHQ+Cjwvc3ZnPg=="
           }
         },
         {
-          "name": "البنية السداسية",
+          "name": "Hexagonal Architecture",
           "icon": {
-            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBvbHlnb24gcG9pbnRzPSIxMiwyIDIwLDYgMjAsMTggMTIsMjIgNCwxOCA0LDYiIGZpbGw9IiNFRjQ0NDQiLz4KPHN0YXIgY3g9IjEyIiBjeT0iMTIiIHI9IjMiIGZpbGw9IiNGRkYiLz4KPC9zdmc+"
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBvbHlnb24gcG9pbnRzPSIxMiwyIDIwLDYgMjAsMTggMTIsMjIgNCwxOCA0LDYiIGZpbGw9IiNFRjQ0NDQiLz4KPHBvbHlnb24gcG9pbnRzPSIxMiw3IDE2LDkgMTYsMTUgMTIsMTcgOCwxNSA4LDkiIGZpbGw9IiNGRkYiLz4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "TDD",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMjVBMTYyIi8+Cjx0ZXh0IHg9IjMiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5UREQ8L3RleHQ+Cjwvc3ZnPg=="
           }
         }
       ]
@@ -448,15 +680,63 @@
           }
         },
         {
-          "name": "Angular",
+          "name": "TypeScript",
           "icon": {
-            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg"
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
           }
         },
         {
-          "name": "Formio",
+          "name": "JavaScript",
           "icon": {
-            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjNDI5RkY0Ii8+Cjx0ZXh0IHg9IjQiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5GTzwvdGV4dD4KPC9zdmc+"
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+          }
+        },
+        {
+          "name": "HTML5",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
+          }
+        }
+      ]
+    },
+    {
+      "name": "السحابة والبنية التحتية",
+      "icon": "Cloud",
+      "skills": [
+        {
+          "name": "AWS",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg"
+          }
+        },
+        {
+          "name": "Linux",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg"
+          }
+        },
+        {
+          "name": "Bash",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg"
+          }
+        }
+      ]
+    },
+    {
+      "name": "أدوات الذكاء الاصطناعي",
+      "icon": "Sparkles",
+      "skills": [
+        {
+          "name": "Claude Code",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjRDk3NzU3Ii8+Cjx0ZXh0IHg9IjUiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5DQzwvdGV4dD4KPC9zdmc+"
+          }
+        },
+        {
+          "name": "GitHub Copilot",
+          "icon": {
+            "base64": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjMjQyOTJGIi8+Cjx0ZXh0IHg9IjUiIHk9IjE2IiBmaWxsPSIjRkZGIiBmb250LXNpemU9IjEwIiBmb250LWZhbWlseT0ic2VyaWYiIGZvbnQtd2VpZ2h0PSJib2xkIj5DUDwvdGV4dD4KPC9zdmc+"
           }
         }
       ]
@@ -464,40 +744,40 @@
   ],
   "achievements": [
     {
-      "icon": "Users",
-      "number": "5+",
+      "icon": "Briefcase",
+      "number": "6",
       "title": "سنوات من الخبرة",
-      "description": "متخصص في تطوير Backend وهندسة البرمجيات"
+      "description": "بناء منصات مالية خاضعة للتنظيم في قطاعي المصارف والتأمين"
     },
     {
-      "icon": "Built",
-      "number": "6+",
-      "title": "المشاريع المنجزة",
-      "description": "حلول مصرفية وتأمينية منجزة بنجاح"
+      "icon": "Rocket",
+      "number": "5",
+      "title": "مشاريع رئيسية",
+      "description": "حلول مصرفية وتأمينية وحلول DevOps تم تسليمها"
     },
     {
-      "icon": "Trophy",
-      "number": "80%",
-      "title": "تقليل الوقت",
-      "description": "من 8-12 شهرًا إلى 2-3 أشهر حتى الإطلاق"
+      "icon": "Building2",
+      "number": "7",
+      "title": "مؤسسات مالية",
+      "description": "تعمل على قاعدة كود واحدة متعددة المستأجرين"
     },
     {
       "icon": "Users",
       "number": "20K+",
-      "title": "المستخدمين المخدومين",
+      "title": "المستخدمون المخدومون",
       "description": "عبر منصات التأمين والخدمات المصرفية"
     },
     {
       "icon": "Code",
       "number": "80%",
       "title": "تغطية الكود",
-      "description": "تطوير يركز على الجودة مع سيناريوهات اختبار معقدة"
+      "description": "تطوير يضع الجودة أولًا مع سيناريوهات اختبار معقدة"
     },
     {
       "icon": "Award",
       "number": "3",
       "title": "الشهادات",
-      "description": "AWS Cloud, NVIDIA LLM, Anthropic Claude Code"
+      "description": "AWS Cloud، NVIDIA LLM، Anthropic Claude Code"
     }
   ],
   "contactInfo": {
@@ -535,7 +815,7 @@
   },
   "footer": {
     "copyrightName": "محمد ابن العابد",
-    "copyrightYear": 2024,
+    "copyrightYear": 2026,
     "madeWithText": "صُنع بشغف من أجل التكنولوجيا والابتكار."
   }
 }

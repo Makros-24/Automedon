@@ -492,6 +492,48 @@
         "github": "https://github.com/Makros-24/Automedon"
       },
       "markdownFileName": "101-automedon-portfolio-tawam-raqmi-ar.md"
+    },
+    {
+      "id": 102,
+      "title": "whitelisted-ngrok",
+      "company": "مفتوح المصدر",
+      "role": "المؤسس والمشرف",
+      "description": "أداة سطر أوامر مكتوبة بلغة Go تضيف قائمة عناوين IP مسموح بها إلى ngrok، لتجعل جهازاً محلياً متاحاً عبر الإنترنت دون فتحه للجميع. يُفحص كل اتصال وارد قبل تمرير أي بايت: العناوين المسموح بها تحصل على وسيط ثنائي الاتجاه شفاف، وما عداها يُغلق فوراً. يدعم أنفاق TCP وHTTP، ويمكنه إرسال رابط النفق عبر البريد الإلكتروني فور إنشائه.",
+      "image": {
+        "url": "https://opengraph.githubassets.com/1/Makros-24/whitelisted-ngrok"
+      },
+      "technologies": [
+        {
+          "name": "Go",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
+          }
+        },
+        {
+          "name": "ngrok",
+          "icon": {
+            "url": "https://cdn.simpleicons.org/ngrok/888888"
+          }
+        },
+        {
+          "name": "Cobra",
+          "icon": "Terminal"
+        },
+        {
+          "name": "YAML",
+          "icon": {
+            "url": "https://cdn.simpleicons.org/yaml/888888"
+          }
+        },
+        {
+          "name": "SMTP",
+          "icon": "Mail"
+        }
+      ],
+      "links": {
+        "github": "https://github.com/Makros-24/whitelisted-ngrok"
+      },
+      "markdownFileName": "102-whitelisted-ngrok-ar.md"
     }
   ],
   "skillCategories": [

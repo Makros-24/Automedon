@@ -20,6 +20,13 @@ import {
   GitBranch, 
   Wrench, 
   Box,
+  Briefcase,
+  Building2,
+  Rocket,
+  Shield,
+  Sparkles,
+  Trophy,
+  Workflow,
   Mail,
   Github,
   Linkedin,
@@ -40,13 +47,20 @@ const iconMap: Record<string, LucideIcon> = {
   'Database': Database,
   'Smartphone': Smartphone,
   'Settings': Settings,
-  
+  'Shield': Shield,
+  'Workflow': Workflow,
+  'Sparkles': Sparkles,
+
   // Achievements
   'Users': Users,
   'Globe': Globe,
   'Award': Award,
   'Code': Code,
-  
+  'Briefcase': Briefcase,
+  'Building2': Building2,
+  'Rocket': Rocket,
+  'Trophy': Trophy,
+
   // Technical skills
   'FileCode': FileCode,
   'Layers': Layers,

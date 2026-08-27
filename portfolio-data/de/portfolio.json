@@ -446,6 +446,54 @@
       "markdownFileName": "5-chifco-chifco-devops-transformation-de.md"
     }
   ],
+  "sideProjects": [
+    {
+      "id": 101,
+      "title": "Automedon",
+      "company": "Open Source",
+      "role": "Ersteller & Maintainer",
+      "description": "Ein KI-gestütztes digitales Zwillings-Portfolio - genau die Seite, die Sie gerade lesen. Statt eine statische Seite zu durchscrollen, sprechen Besucher mit einem Assistenten, der ausschließlich auf meinem Lebenslauf und meiner Projekthistorie basiert. Aufgebaut auf Next.js 15 und React 19, erscheint es in vier Sprachen mit vollständiger RTL-Unterstützung und erkennt seine Locales selbst im Dateisystem: Eine neue Sprache ist ein Verzeichnis, keine Codeänderung.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1anaitBe_qz8wAGo7anO7gDQAkugpf1Qb"
+      },
+      "technologies": [
+        {
+          "name": "Next.js",
+          "icon": {
+            "url": "https://cdn.simpleicons.org/nextdotjs/888888"
+          }
+        },
+        {
+          "name": "React",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+          }
+        },
+        {
+          "name": "TypeScript",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+          }
+        },
+        {
+          "name": "Tailwind CSS",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "github": "https://github.com/Makros-24/Automedon"
+      },
+      "markdownFileName": "101-automedon-ki-digitales-zwillings-portfolio-de.md"
+    }
+  ],
   "skillCategories": [
     {
       "name": "Backend-Entwicklung",

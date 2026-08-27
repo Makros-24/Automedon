@@ -96,6 +96,11 @@ export function useProjects() {
   return { projects: data?.projects || [], loading, error };
 }
 
+export function useSideProjects() {
+  const { data, loading, error } = usePortfolioData();
+  return { sideProjects: data?.sideProjects || [], loading, error };
+}
+
 export function useSkillCategories() {
   const { data, loading, error } = usePortfolioData();
   return { skillCategories: data?.skillCategories || [], loading, error };

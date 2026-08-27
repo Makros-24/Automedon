@@ -107,6 +107,12 @@ export function validatePortfolioData(data: unknown): data is PortfolioData {
     return false;
   }
 
+  // Validate side projects array (optional - absent is valid)
+  if (obj.sideProjects !== undefined &&
+      (!Array.isArray(obj.sideProjects) || !obj.sideProjects.every(validateProject))) {
+    return false;
+  }
+
   // Validate skill categories array
   if (!Array.isArray(obj.skillCategories) || !obj.skillCategories.every(validateSkillCategory)) {
     return false;

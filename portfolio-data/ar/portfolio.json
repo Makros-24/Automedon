@@ -446,6 +446,54 @@
       "markdownFileName": "5-chifco-chifco-devops-ar.md"
     }
   ],
+  "sideProjects": [
+    {
+      "id": 101,
+      "title": "Automedon",
+      "company": "مفتوح المصدر",
+      "role": "المؤسس والمشرف",
+      "description": "محفظة أعمال بتقنية التوأم الرقمي المدعوم بالذكاء الاصطناعي - وهو الموقع الذي تتصفحه الآن. بدلاً من تصفح صفحة ثابتة، يتحدث الزائر مع مساعد يعتمد حصرياً على سيرتي الذاتية وسجل مشاريعي. بُني على Next.js 15 وReact 19، ويتوفر بأربع لغات مع دعم كامل للاتجاه من اليمين إلى اليسار، ويكتشف اللغات المتاحة تلقائياً من نظام الملفات: إضافة لغة جديدة تعني إنشاء مجلد وليس تعديل الكود.",
+      "image": {
+        "url": "https://lh3.googleusercontent.com/d/1anaitBe_qz8wAGo7anO7gDQAkugpf1Qb"
+      },
+      "technologies": [
+        {
+          "name": "Next.js",
+          "icon": {
+            "url": "https://cdn.simpleicons.org/nextdotjs/888888"
+          }
+        },
+        {
+          "name": "React",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+          }
+        },
+        {
+          "name": "TypeScript",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+          }
+        },
+        {
+          "name": "Tailwind CSS",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
+          }
+        },
+        {
+          "name": "Docker",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+          }
+        }
+      ],
+      "links": {
+        "github": "https://github.com/Makros-24/Automedon"
+      },
+      "markdownFileName": "101-automedon-portfolio-tawam-raqmi-ar.md"
+    }
+  ],
   "skillCategories": [
     {
       "name": "تطوير Backend",

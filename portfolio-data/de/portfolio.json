@@ -492,6 +492,48 @@
         "github": "https://github.com/Makros-24/Automedon"
       },
       "markdownFileName": "101-automedon-ki-digitales-zwillings-portfolio-de.md"
+    },
+    {
+      "id": 102,
+      "title": "whitelisted-ngrok",
+      "company": "Open Source",
+      "role": "Ersteller & Maintainer",
+      "description": "Ein in Go geschriebenes CLI-Werkzeug, das ngrok um eine IP-Whitelist erweitert, damit ein lokaler Rechner aus dem Internet erreichbar ist, ohne für alle offen zu stehen. Jede eingehende Verbindung wird geprüft, bevor auch nur ein Byte weitergeleitet wird: Erlaubte Adressen erhalten einen transparenten bidirektionalen Proxy, alle anderen werden sofort geschlossen. Unterstützt TCP- und HTTP-Tunnel und verschickt die Tunnel-URL auf Wunsch direkt per E-Mail.",
+      "image": {
+        "url": "https://opengraph.githubassets.com/1/Makros-24/whitelisted-ngrok"
+      },
+      "technologies": [
+        {
+          "name": "Go",
+          "icon": {
+            "url": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/go/go-original.svg"
+          }
+        },
+        {
+          "name": "ngrok",
+          "icon": {
+            "url": "https://cdn.simpleicons.org/ngrok/888888"
+          }
+        },
+        {
+          "name": "Cobra",
+          "icon": "Terminal"
+        },
+        {
+          "name": "YAML",
+          "icon": {
+            "url": "https://cdn.simpleicons.org/yaml/888888"
+          }
+        },
+        {
+          "name": "SMTP",
+          "icon": "Mail"
+        }
+      ],
+      "links": {
+        "github": "https://github.com/Makros-24/whitelisted-ngrok"
+      },
+      "markdownFileName": "102-whitelisted-ngrok-tunnel-mit-ip-whitelist-de.md"
     }
   ],
   "skillCategories": [

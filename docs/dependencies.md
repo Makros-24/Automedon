@@ -303,6 +303,29 @@ npm audit --audit-level high
 - **First Load JS**: < 130KB
 - **Route Bundles**: < 50KB per route
 
+#### Container Footprint vs Browser Bundle
+
+Browser bundle size and *installed* dependency size are different problems, and the second
+one dominates the Docker image. Production `node_modules` in the image is **508MB**:
+
+| Package | Installed | Needed at runtime? |
+|---|---|---|
+| `@next/swc-linux-x64-gnu` | 137 MB | ❌ build-time compiler |
+| `@next/swc-linux-x64-musl` | 137 MB | ❌ build-time, wrong libc for our base |
+| `next` | 155 MB | ✅ |
+| `lucide-react` | 43 MB | tree-shaken at build; full package still installs |
+
+The prebuilt image compiles nothing, yet `npm ci --only=production` pulls both SWC variants
+because `next` declares them as optional platform dependencies. Auditing installed size is
+therefore worth doing separately from bundle analysis:
+
+```bash
+docker run --rm --entrypoint sh <image> -c "du -sm /app/web/node_modules/* | sort -rn | head -12"
+```
+
+`output: 'standalone'` is the structural fix - Next.js traces the actual runtime module set
+rather than installing the declared dependency tree. See `architecture.md`.
+
 #### Performance Monitoring
 ```json
 {

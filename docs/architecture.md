@@ -10,7 +10,7 @@ This document outlines the system architecture, design patterns, and technical d
 ├─────────────────────────────────────────────────────────────────┤
 │  Next.js App Router (SSR/SSG)                                 │
 │  ├── Hero Section (Animated Background + CTA)                 │
-│  ├── Work Portfolio (Project Showcase + Tech Icons)           │
+│  ├── Work Portfolio (Client / Personal Tabs + Tech Icons)     │
 │  ├── About Section (Skills Categories + Achievements)         │
 │  ├── Contact Section (Social Links + CTA)                     │
 │  └── AI Chat Interface (Modal Overlay)                        │
@@ -185,11 +185,22 @@ interface PortfolioData {
     title: string;
     description: string;
   };
-  projects: Project[];
+  projects: Project[];        // Client work
+  sideProjects?: Project[];   // Personal / open-source projects
   skillCategories: SkillCategory[];
   achievements: Achievement[];
   contactInfo: ContactInfo;
   footer: FooterData;
+}
+
+interface WorkData {
+  title: string;
+  description: string;
+  // Optional per-tab metadata. Absent -> single untabbed grid.
+  tabs?: {
+    client: ProjectTabMeta;   // { label, description }
+    personal: ProjectTabMeta;
+  };
 }
 
 interface Project {
@@ -399,6 +410,36 @@ const AccessibleMotion = motion.div.attrs({
 2. **Bundle Optimization**: Tree shaking, code splitting
 3. **Asset Optimization**: Image optimization, CSS purging
 4. **Static Generation**: Pre-render static pages
+
+### Container Image Composition
+
+The production image uses a **prebuilt** strategy: Next.js is built on the host and the
+artifacts are copied in, because Tailwind CSS v4's `lightningcss` native binary does not
+resolve reliably inside the container. This makes the host build a hard prerequisite - a
+stale `.next` ships stale code silently.
+
+Current composition (`Dockerfile.prebuilt`, 713MB):
+
+| Layer | Size | Notes |
+|---|---|---|
+| `node:20-slim` base | ~200 MB | required |
+| `npm ci --only=production` | 508 MB | 274 MB of it is SWC compiler binaries |
+| `COPY .next` | 4 MB | was 195 MB before excluding `.next/cache` |
+| `portfolio-data` + config | ~2 MB | |
+
+**Design tension**: the image installs a full production `node_modules` even though it only
+runs `next start` over prebuilt artifacts. That pulls in `@next/swc-linux-x64-{gnu,musl}`
+(137 MB each) - compilers the runtime never invokes, in both libc variants, on a glibc base.
+
+`output: 'standalone'` resolves this properly: Next.js traces the exact module set the server
+needs, emitting a self-contained `.next/standalone/` that removes the `npm ci` layer
+altogether (~245 MB). The tradeoff is that the entrypoint becomes `node server.js` rather
+than `npm start`. See `troubleshooting.md` for the migration.
+
+**Invariant to preserve**: `portfolio-data/` is bind-mounted read-only at
+`PORTFOLIO_CONFIG_PATH`, deliberately *outside* the traced app directory. Content and image
+version therefore evolve independently - which is why pinning a Docker version tag (rather
+than tracking `latest`) matters for reproducible deployments.
 
 ### Performance Monitoring
 - **Core Web Vitals**: Lighthouse CI integration

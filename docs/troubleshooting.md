@@ -391,6 +391,100 @@ COPY --chown=nextjs:nodejs src/app/web/next.config.js ./next.config.js
 !next.config.js
 ```
 
+### COPY fails: "/src/app/web/public": not found
+**Symptoms**: `docker build` aborts partway through:
+
+```
+ERROR [9/10] COPY --chown=nextjs:nodejs src/app/web/public ./public
+failed to compute cache key: "/src/app/web/public": not found
+```
+
+**Root Cause**: `src/app/web/public/` has had **no git-tracked files** since commit
+`22ec182` removed the `create-next-app` default SVGs (`file.svg`, `globe.svg`, `next.svg`,
+`vercel.svg`, `window.svg`). Git does not track empty directories, so the directory stopped
+existing in the repo entirely.
+
+`Dockerfile.prebuilt` was written *after* that removal, so its `COPY` has never had a
+git-backed source. Docker's build context is the **working tree**, not git - so the build
+succeeded only for as long as an untracked `public/` happened to sit on the build machine.
+Any clean clone fails. `COPY` with a missing source is a hard error; Docker will not treat
+it as "copy nothing".
+
+**Solution**:
+```bash
+# Ensure the directory is tracked so it survives a clean clone
+touch src/app/web/public/.gitkeep
+git add src/app/web/public/.gitkeep
+```
+
+Nothing in `src/` references `public/`, and the `/icon.svg` route comes from the App Router
+convention in `src/app/icon.svg` - so an empty tracked directory is sufficient.
+
+**Diagnosing this class of bug**: when a Docker build works locally but fails elsewhere,
+compare the build context against git rather than against your disk:
+```bash
+git ls-files src/app/web/public | wc -l   # 0 means it is not in the repo
+ls src/app/web/public                     # may still exist locally - that is the trap
+```
+
+### Image is unexpectedly large (~900MB)
+**Symptoms**: `docker images` reports 900MB+ for a portfolio that serves a few MB of content.
+
+**Diagnosis** - always start from the layer breakdown, not guesswork:
+```bash
+docker history <image> --format "{{.Size}}\t{{.CreatedBy}}"
+
+# Then inspect the biggest offenders from inside the image
+docker run --rm --entrypoint sh <image> -c "du -sm /app/web/node_modules/* | sort -rn | head -12"
+docker run --rm --entrypoint sh <image> -c "du -sm /app/web/.next"
+```
+
+**Cause 1: `.next/cache` is shipped (~183MB)**
+
+`.next/cache` is local incremental webpack/SWC state. `next start` never reads it. For
+comparison, the artifacts actually needed are tiny:
+
+| `.next/` contents | Size |
+|---|---|
+| `cache` | 182.7 MB |
+| `server` | 1.5 MB |
+| `static` | 1.5 MB |
+
+The prebuilt `.dockerignore` re-includes `.next` wholesale via `!src/app/web/.next/**`,
+which sweeps the cache in with it.
+
+**Solution** - add the exclusion **below** that re-include. In `.dockerignore` the *last*
+matching rule wins, so ordering is not cosmetic:
+```
+!src/app/web/.next
+!src/app/web/.next/**
+
+src/app/web/.next/cache
+```
+Result: **905MB -> 713MB**, byte-identical application content.
+
+**Cause 2: SWC compiler binaries (~274MB)**
+
+```
+137 MB  @next/swc-linux-x64-musl
+137 MB  @next/swc-linux-x64-gnu
+```
+
+These are Rust build-time compilers. The prebuilt image compiles nothing - `.next` arrives
+prebuilt and the container only runs `next start`. npm installs *both* the musl and glibc
+variants, so on a Debian (`node:20-slim`) base the musl copy is dead weight under any
+scenario.
+
+**Solution**: `output: 'standalone'` in `next.config.js`. Next.js then traces exactly which
+modules the server needs, and the Dockerfile can drop `npm ci` entirely:
+```dockerfile
+COPY --chown=nextjs:nodejs src/app/web/.next/standalone ./
+COPY --chown=nextjs:nodejs src/app/web/.next/static ./.next/static
+CMD ["node", "server.js"]
+```
+Expected: **~245MB**. Note this changes the start command from `npm start` to
+`node server.js` and requires a fresh local `npm run build` with the new config.
+
 ### Build Artifacts Issues
 **Symptoms**: `TypeError: routesManifest.dataRoutes is not iterable`, container starts but crashes immediately
 

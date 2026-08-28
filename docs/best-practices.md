@@ -717,6 +717,54 @@ export const FadeInUp = ({ children, delay = 0 }: AnimationProps) => (
 );
 ```
 
+## Docker & Build Artifact Hygiene
+
+### Never ship build cache
+```
+# ✅ .dockerignore - exclude cache BELOW the re-include.
+# The last matching rule wins, so ordering is behaviour, not cosmetics.
+!src/app/web/.next
+!src/app/web/.next/**
+
+src/app/web/.next/cache
+```
+
+`.next/cache` is local incremental webpack/SWC state that `next start` never reads. It was
+183MB against ~3MB of artifacts the runtime actually needs.
+
+### The build context is your working tree, not git
+A `COPY` whose source exists only as untracked local state will build on your machine and
+fail on every clean clone. When adding a `COPY`, confirm the source is committed:
+
+```bash
+git ls-files <path> | wc -l    # 0 means it will not survive a fresh clone
+```
+
+Git does not track empty directories. If a directory must exist but has no content, commit a
+`.gitkeep` - otherwise it silently disappears from the repo the moment its last file is removed.
+
+### Measure before optimizing an image
+Guessing at image size wastes effort. Get the layer breakdown first:
+
+```bash
+docker history <image> --format "{{.Size}}\t{{.CreatedBy}}"
+docker run --rm --entrypoint sh <image> -c "du -sm /app/web/node_modules/* | sort -rn | head"
+```
+
+### Verify the container, not just the build
+A smaller image that does not serve is not an improvement. After any Dockerfile or
+`.dockerignore` change, confirm the app actually responds:
+
+```bash
+docker run -d --name verify -p 3100:3000 <image>
+docker exec verify node -e "require('http').get('http://localhost:3000/api/portfolio?lang=en',r=>console.log(r.statusCode))"
+docker ps --filter name=verify --format "{{.Status}}"   # expect "healthy"
+```
+
+Note that on Docker Desktop for Windows, host-side port forwarding can time out even while
+the container is healthy and serving correctly - check from *inside* the container before
+concluding the app is broken.
+
 ## Documentation Standards
 
 ### Code Documentation

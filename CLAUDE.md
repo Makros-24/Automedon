@@ -8,12 +8,15 @@ Automedon is an AI-powered digital twin portfolio application that allows recrui
 
 ## Current Development Status
 
-**Phase**: Multilingual Support Complete - Full Internationalization
+**Phase**: v1.3.0 Released - Categorized Project Showcase
 
 - **Current Status**: Fully functional portfolio with multilingual support (English, French, German, Arabic with RTL), dynamic JSON-based data loading, and enhanced UI components
+- **Latest Release**: `v1.3.0` (git tag on `main`) - Client Work / Personal Projects split
 - **Tech Stack**: React 19, Next.js 15, TypeScript, Tailwind CSS 4, Radix UI, Framer Motion
 - **Architecture**: Component-based with 40+ UI components, theme provider, animation system, multilingual system, and comprehensive technology icon management
 - **Recent Enhancements**:
+  - Split the Projects section into Client Work and Personal Projects tabs
+  - Routed remote portfolio images through the Next.js image optimizer
   - Implemented multilingual support with 4 languages (EN, FR, DE, AR)
   - Added RTL (Right-to-Left) support for Arabic language
   - Enhanced project cards with markdown support and ProjectDetailsDialog
@@ -122,6 +125,30 @@ For comprehensive project guidance, refer to these documentation files in the `d
 
 ## Recent Development Work
 
+### Project Categorization - Client Work vs Personal Projects (Completed, v1.3.0)
+- **Objective**: Separate paid client engagements from personal / open-source work
+- **Approach**: A second `sideProjects` array in the portfolio JSON, surfaced through an accessible segmented control
+- **Key Changes**:
+  - Added `sideProjects?: Project[]` to `PortfolioData` (optional, so older data still loads)
+  - Added `WorkData.tabs?: { client, personal }` for per-tab label and description
+  - Created `ProjectTabs.tsx` implementing the WAI-ARIA tabs pattern
+  - `Work.tsx` renders tabs only when *both* groups have content; a single populated
+    group falls back to an untabbed grid and follows whichever group has projects
+  - Added Automedon and Whitelisted-Ngrok as personal projects across all 4 locales
+- **Accessibility Notes**:
+  - Roving `tabIndex` - only the active tab is in the tab order, arrow keys move between tabs
+  - Arrow direction is mirrored under RTL (`ArrowRight` walks backwards in Arabic)
+  - `role="tabpanel"` is only applied when a tablist actually exists to label it
+  - Active pill uses a shared `layoutId` so motion measures real DOM positions
+
+### Remote Image Optimization (Completed, v1.3.0)
+- **Problem**: Google Drive answers inconsistently with a non-image `Content-Type`, and
+  Chrome's Opaque Response Blocking then drops the response - portfolio images silently failed
+- **Fix**: Route remote images through the Next.js optimizer so they are served from our own
+  origin, via `images.remotePatterns` in `next.config.js` **and** `next.config.ts`
+- **Important**: Both config files must be kept in sync. `next.config.js` is what ships in
+  Docker (the `.ts` variant would force a TypeScript install at container runtime).
+
 ### Multilingual Support Implementation (Completed)
 - **Objective**: Add full internationalization with multiple languages and RTL support
 - **Approach**: Language-specific JSON files with API route integration
@@ -222,7 +249,24 @@ For comprehensive project guidance, refer to these documentation files in the `d
   - Maintains full backward compatibility with existing features
 - **Status**: ✅ Fully tested - All 4 locales (ar, de, en, fr) working correctly
 
+### Docker Image Slimming (Completed)
+- **Objective**: Understand and reduce a ~905MB production image
+- **Findings**:
+  - `.next/cache` (183MB) was being shipped - local incremental webpack/SWC state that
+    `next start` never reads. Real runtime artifacts are ~3MB (`server/` + `static/`).
+  - `@next/swc-linux-x64-gnu` + `-musl` (274MB) are build-time compilers the runtime never
+    invokes; npm installs both variants even though the base image is Debian (glibc)
+- **Applied**: Excluded `src/app/web/.next/cache` in `.dockerignore`, **below** the
+  `!src/app/web/.next/**` re-include (last matching rule wins). **905MB -> 713MB.**
+- **Also fixed**: `src/app/web/public/` had no tracked files since `22ec182` removed the
+  create-next-app SVGs, and git does not track empty directories - so
+  `COPY src/app/web/public ./public` failed on any clean clone. Added a tracked `.gitkeep`.
+- **Not yet done**: `output: 'standalone'` would drop the SWC binaries and the `npm ci`
+  layer entirely (~245MB), but changes the start command to `node server.js`
+
 ### Key Files Created/Modified
+- `src/app/web/src/components/projects/ProjectTabs.tsx` - Accessible project category tabs
+- `src/app/web/src/components/Work.tsx` - Tab state, panel semantics, group fallback
 - `portfolio-data/{locale}/portfolio.json` - Locale-specific portfolio data (en, fr, de, ar)
 - `portfolio-data/{locale}/projects-md/` - Locale-specific markdown files for project details
 - `portfolio-data/diagrams/` - Shared diagram assets across all locales

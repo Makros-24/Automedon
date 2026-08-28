@@ -226,6 +226,36 @@ git tag -a v1.0.0 -m "Release version 1.0.0 - Initial portfolio launch"
 git push origin v1.0.0
 ```
 
+**Tags live on `main`.** Verify the branch is actually merged before tagging - a tag on an
+unmerged commit points at history that `main` does not contain:
+
+```bash
+git fetch origin
+git log -1 --oneline origin/main          # confirm main has the work
+git diff origin/main HEAD --stat          # empty = your branch is already merged
+git tag -a v1.3.0 <main-sha> -m "..."
+git push origin v1.3.0
+```
+
+⚠️ **`git fetch` failures are silent when piped.** If SSH auth fails, `origin/main` keeps
+reporting a stale SHA and you can tag the wrong commit without any error. Always let fetch
+print, or check its exit code.
+
+`package.json` is intentionally **not** version-bumped for releases - it has stayed at
+`0.1.0` since v1.0.0. Release versioning lives entirely in git tags and Docker image tags.
+
+### Aligning Git Tags with Docker Tags
+
+Git tag `vX.Y.Z` should correspond to Docker tags `makros24/automedon:vX.Y.Z` and `:latest`.
+
+⚠️ `build-and-push` prepends the `v` itself (`:v%VERSION%`). At the version prompt enter
+`1.3.0`, **not** `v1.3.0`, or you publish `:vv1.3.0`.
+
+Docker tags are mutable and git tags are not, so they can drift. If you rebuild and
+republish an existing version tag, the git tag still points at the same commit but anyone
+who already pulled that Docker tag has different bytes. Prefer publishing a new version over
+overwriting a released one.
+
 ### Pre-release Tags
 ```bash
 # Alpha/Beta releases

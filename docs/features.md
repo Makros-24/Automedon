@@ -18,6 +18,7 @@ This document outlines current features, planned implementations, and detailed s
 
 #### Core Portfolio Components
 - **Hero Section**: Animated background with personal introduction and multilingual call-to-action
+- **Project Categories**: Client Work and Personal Projects split across an accessible tabbed segmented control, with per-tab counts and descriptions
 - **Work Portfolio**: Project showcase with ProjectDetailsDialog, markdown rendering, and enhanced technology icons
 - **About Section**: Skills categorization with detailed technology cards, achievements showcase, and grayscale-to-color hover transitions
 - **Contact Section**: Localized social links and contact information with interactive elements
@@ -60,6 +61,75 @@ This document outlines current features, planned implementations, and detailed s
 - **Missing**: OpenAI API integration, multilingual conversation support, conversation state management
 
 ## Completed Features (Recent)
+
+### ✅ Project Categorization (Completed, v1.3.0)
+
+Separates paid client engagements from personal / open-source work.
+
+#### Data Model
+```typescript
+interface ProjectTabMeta {
+  label: string;
+  description: string;
+}
+
+interface WorkData {
+  title: string;
+  description: string;
+  // When absent, the section renders as a single untabbed grid
+  // using `description` as the paragraph.
+  tabs?: {
+    client: ProjectTabMeta;
+    personal: ProjectTabMeta;
+  };
+}
+
+interface PortfolioData {
+  projects: Project[];        // Client work
+  sideProjects?: Project[];   // Personal / open-source
+  // ...
+}
+```
+
+Both `tabs` and `sideProjects` are optional, so portfolio data written before v1.3.0 still
+loads and renders as a single grid.
+
+#### Rendering Rules
+- Tabs appear only when **both** groups have content - a lone group is not worth a switcher
+- With one populated group, the section follows whichever group actually has projects rather
+  than defaulting to `client` and rendering an empty grid
+- `role="tabpanel"` is applied only when a tablist exists to label the panel; claiming
+  tabpanel semantics without a tablist is an accessibility defect
+
+#### Accessibility (WAI-ARIA Tabs Pattern)
+- **Roving tabIndex**: only the active tab is reachable with `Tab`; arrow keys move between tabs
+- **RTL mirroring**: `ArrowRight` walks *backwards* in Arabic, matching visual order
+- **Home / End**: jump to first and last tab
+- **Shared layoutId**: the active pill animates via real DOM measurement, so it tracks
+  correctly in both LTR and RTL
+
+### ✅ Remote Image Optimization (Completed, v1.3.0)
+
+Portfolio images hosted on Google Drive were silently failing to render. Drive answers
+inconsistently with a non-image `Content-Type`, and Chrome's Opaque Response Blocking then
+drops the response.
+
+Routing images through the Next.js optimizer serves them from our own origin, sidestepping
+ORB entirely. Allowed hosts are declared in `images.remotePatterns`:
+
+```javascript
+remotePatterns: [
+  { protocol: 'https', hostname: 'lh3.googleusercontent.com' },
+  { protocol: 'https', hostname: '**.googleusercontent.com' },
+  { protocol: 'https', hostname: 'drive.google.com' },
+  { protocol: 'https', hostname: 'media.licdn.com' },
+  { protocol: 'https', hostname: 'opengraph.githubassets.com' },
+]
+```
+
+⚠️ This must be declared in **both** `next.config.js` and `next.config.ts`. The `.js` variant
+is what ships in Docker; a new host added to only one file works in dev and fails in the
+container.
 
 ### ✅ Dynamic Locale Discovery System (Completed)
 

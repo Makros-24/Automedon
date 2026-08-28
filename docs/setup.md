@@ -485,19 +485,19 @@ cd ../../..
 #### Step 2: Build Docker Image
 ```bash
 # Build the Docker image using pre-built artifacts
-docker compose -f docker-compose.prebuilt.yml build
+docker compose -f build-scripts/docker/docker-compose.prebuilt.yml build
 
 # Or build without cache (for clean build)
-docker compose -f docker-compose.prebuilt.yml build --no-cache
+docker compose -f build-scripts/docker/docker-compose.prebuilt.yml build --no-cache
 ```
 
 #### Step 3: Start Container
 ```bash
 # Start in detached mode (background)
-docker compose -f docker-compose.prebuilt.yml up -d
+docker compose -f build-scripts/docker/docker-compose.prebuilt.yml up -d
 
 # Or start in foreground to see logs
-docker compose -f docker-compose.prebuilt.yml up
+docker compose -f build-scripts/docker/docker-compose.prebuilt.yml up
 ```
 
 #### Step 4: Verify Deployment
@@ -528,12 +528,12 @@ Open your browser and navigate to:
 
 #### Stop Container
 ```bash
-docker compose -f docker-compose.prebuilt.yml down
+docker compose -f build-scripts/docker/docker-compose.prebuilt.yml down
 ```
 
 #### Restart Container
 ```bash
-docker compose -f docker-compose.prebuilt.yml restart
+docker compose -f build-scripts/docker/docker-compose.prebuilt.yml restart
 ```
 
 #### View Logs
@@ -567,10 +567,10 @@ docker exec automedon-portfolio-prebuilt printenv | grep PORTFOLIO
 cd src/app/web && npm run build && cd ../../..
 
 # 3. Rebuild Docker image
-docker compose -f docker-compose.prebuilt.yml build
+docker compose -f build-scripts/docker/docker-compose.prebuilt.yml build
 
 # 4. Recreate container
-docker compose -f docker-compose.prebuilt.yml up -d --force-recreate
+docker compose -f build-scripts/docker/docker-compose.prebuilt.yml up -d --force-recreate
 ```
 
 ### Docker Troubleshooting
@@ -600,7 +600,7 @@ lsof -i :3000                 # Linux/Mac
 If you see `EACCES` errors in logs:
 ```bash
 # Rebuild image with --no-cache
-docker compose -f docker-compose.prebuilt.yml build --no-cache
+docker compose -f build-scripts/docker/docker-compose.prebuilt.yml build --no-cache
 
 # Ensure next.config.js exists (not just .ts)
 ls src/app/web/next.config.js
@@ -609,7 +609,7 @@ ls src/app/web/next.config.js
 #### Complete Reset
 ```bash
 # Stop and remove everything
-docker compose -f docker-compose.prebuilt.yml down
+docker compose -f build-scripts/docker/docker-compose.prebuilt.yml down
 docker rmi automedon-portfolio:prebuilt
 
 # Clean build
@@ -620,9 +620,54 @@ npm run build
 cd ../../..
 
 # Rebuild from scratch
-docker compose -f docker-compose.prebuilt.yml build --no-cache
-docker compose -f docker-compose.prebuilt.yml up -d
+docker compose -f build-scripts/docker/docker-compose.prebuilt.yml build --no-cache
+docker compose -f build-scripts/docker/docker-compose.prebuilt.yml up -d
 ```
+
+### Publishing a Release to Docker Hub
+
+The scripted path handles build, tag, login and push:
+
+```bash
+# Linux/Mac
+./build-scripts/shell/build-and-push.sh
+
+# Windows
+build-scripts\shell\build-and-push.bat
+```
+
+The script prompts for a version. **Enter `1.3.0`, not `v1.3.0`** - it prepends the `v`
+itself, so typing it produces `:vv1.3.0`. Output tags are `makros24/automedon:vX.Y.Z` and
+`makros24/automedon:latest`.
+
+If it offers to skip the Next.js rebuild, only accept when `.next` is genuinely current -
+the prebuilt image copies whatever is on disk, so a stale `.next` ships stale code with no
+warning.
+
+Manual equivalent:
+
+```bash
+# 1. Build Next.js locally (NOT optional - the image builds nothing itself)
+cd src/app/web && npm ci && npm run build && cd ../../..
+
+# 2. Build with both tags
+docker build -f build-scripts/docker/Dockerfile.prebuilt \
+  -t makros24/automedon:v1.3.0 \
+  -t makros24/automedon:latest .
+
+# 3. Verify before publishing
+docker run --rm -d --name verify -p 3100:3000 makros24/automedon:v1.3.0
+docker exec verify node -e "require('http').get('http://localhost:3000/api/portfolio?lang=en',r=>console.log(r.statusCode))"
+docker rm -f verify
+
+# 4. Push
+docker login
+docker push makros24/automedon:v1.3.0
+docker push makros24/automedon:latest
+```
+
+Expected image size is **~713MB**. A sudden jump toward 900MB usually means `.next/cache`
+is being included again - see `troubleshooting.md`.
 
 ### Docker Configuration Files
 

@@ -94,12 +94,19 @@ export function LanguageProvider({
         // Initialize language selection
         if (typeof window === 'undefined') return;
 
-        // Check localStorage first
-        const savedLanguage = localStorage.getItem('language');
-        const isValidSaved = savedLanguage &&
-          data.locales.some((l: LocaleMetadata) => l.code === savedLanguage);
+        const isKnownLocale = (code: string | null): code is string =>
+          !!code && data.locales.some((l: LocaleMetadata) => l.code === code);
 
-        if (isValidSaved) {
+        // Precedence: ?lang= > localStorage > browser detection > default.
+        // The query parameter wins so a shared link opens in the language it
+        // was shared in, regardless of what the recipient last viewed.
+        const urlLanguage = new URLSearchParams(window.location.search).get('lang');
+        const savedLanguage = localStorage.getItem('language');
+
+        if (isKnownLocale(urlLanguage)) {
+          setLanguageState(urlLanguage);
+          localStorage.setItem('language', urlLanguage);
+        } else if (isKnownLocale(savedLanguage)) {
           setLanguageState(savedLanguage);
         } else if (enableLanguageDetection) {
           // Auto-detect browser language if no saved preference
@@ -164,6 +171,16 @@ export function LanguageProvider({
 
     if (typeof window !== 'undefined') {
       localStorage.setItem('language', newLanguage);
+
+      // Keep ?lang= in step with the selection. Without this a stale parameter
+      // would beat the new choice on the next reload, and it also makes the
+      // current language shareable by copying the address bar. replaceState
+      // avoids pushing a history entry for what is not a navigation.
+      const url = new URL(window.location.href);
+      if (url.searchParams.get('lang') !== newLanguage) {
+        url.searchParams.set('lang', newLanguage);
+        window.history.replaceState(null, '', url);
+      }
     }
 
     setLanguageState(newLanguage);

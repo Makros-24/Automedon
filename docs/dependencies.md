@@ -9,14 +9,14 @@ This document provides comprehensive information about project dependencies, ver
 #### React Ecosystem
 ```json
 {
-  "react": "19.1.0",
-  "react-dom": "19.1.0",
-  "next": "15.4.5"
+  "react": "^19.2.8",
+  "react-dom": "^19.2.8",
+  "next": "^16.3.3"
 }
 ```
-- **React 19.1.0**: Latest React with concurrent features and improved performance
-- **React DOM 19.1.0**: DOM renderer for React with enhanced hydration
-- **Next.js 15.4.5**: App Router, SSR/SSG, and advanced optimization features
+- **React 19.2**: Latest React with concurrent features and improved performance
+- **React DOM 19.2**: DOM renderer for React with enhanced hydration
+- **Next.js 16.3**: App Router, SSR/SSG, and advanced optimization features
 
 **Rationale**: Using latest stable versions for cutting-edge features and performance improvements. React 19 brings significant rendering optimizations and concurrent features.
 
@@ -107,22 +107,33 @@ This document provides comprehensive information about project dependencies, ver
 #### Icons & Visual Elements
 ```json
 {
-  "lucide-react": "^0.539.0"
+  "lucide-react": "^1.35.0"
 }
 ```
 - **Lucide React**: Modern icon library with 1000+ icons
 - Tree-shakeable for optimal bundle size
 - Consistent design language
 
+**v1 breaking change - brand icons removed.** `Github`, `Linkedin` and `Twitter` no longer
+exist upstream (trademark reasons). They are rebuilt locally in
+`src/components/icons/brands.ts` via lucide's own `createLucideIcon`, so they stay real
+`LucideIcon` values: same `size` / `className` / ref behaviour, and they still satisfy the
+`Record<string, LucideIcon>` map in `iconMapper.ts`.
+
+**Contract when hand-writing an `iconNode`**: every entry needs its own `key` in its attrs.
+`Icon.mjs` renders children with a bare `iconNode.map(([tag, attrs]) => createElement(tag, attrs))`
+and adds no key, so an entry without one triggers a React key warning that appears to point
+at your JSX rather than at the library. Upstream-generated icons all carry one.
+
 ### Animation & Interactions
 
 #### Motion Libraries
 ```json
 {
-  "motion": "^12.23.12"
+  "motion": "^13.1.1"
 }
 ```
-- **Motion (Framer Motion 12)**: Declarative animations and gestures
+- **Motion (Framer Motion successor, v13)**: Declarative animations and gestures
 - Spring-based animations for natural feel
 - Layout animations and shared element transitions
 
@@ -210,7 +221,7 @@ This document provides comprehensive information about project dependencies, ver
 ```json
 {
   "eslint": "^9",
-  "eslint-config-next": "15.4.5",
+  "eslint-config-next": "^16.3.3",
   "@eslint/eslintrc": "^3"
 }
 ```

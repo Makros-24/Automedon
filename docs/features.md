@@ -35,7 +35,7 @@ This document outlines current features, planned implementations, and detailed s
 - **Work In Progress Dialog**: User-friendly dialog for AI assistant feature (coming soon)
 
 #### Technical Infrastructure
-- **Next.js 15 App Router**: Server-side rendering with language-aware routing
+- **Next.js 16 App Router**: Server-side rendering with language-aware routing
 - **TypeScript**: Full type safety with strict mode configuration
 - **Tailwind CSS 4**: Utility-first styling with RTL support and custom design system
 - **Radix UI**: 40+ accessible component primitives

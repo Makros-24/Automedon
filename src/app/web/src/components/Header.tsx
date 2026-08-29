@@ -16,11 +16,14 @@ export function Header() {
   const { theme, setTheme } = useTheme();
   const { personalInfo } = usePersonalInfo();
 
-  // Get avatar source with fallback
-  const avatarSrc = getAvatarSource(
-    personalInfo?.avatar,
-    'https://media.licdn.com/dms/image/v2/D4D03AQGgMTxGLlkEEw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1702848448399?e=1764806400&v=beta&t=5RvrhDBleeUQ1ZBMknfra5uoekMPReLZ5wJdkYGT_n0'
-  );
+  /*
+   * No hardcoded fallback URL: the avatar comes from portfolio.json like the
+   * rest of the content. The previous fallback was a LinkedIn CDN link whose
+   * signature expired on 2025-12-04, so every first paint - before the
+   * portfolio data resolves - fetched it and got a 403. A placeholder covers
+   * that window instead.
+   */
+  const avatarSrc = getAvatarSource(personalInfo?.avatar);
   const avatarAlt = personalInfo?.name || 'Profile';
 
   useEffect(() => {
@@ -145,15 +148,24 @@ export function Header() {
                 }}
                 transition={{ duration: 0.3 }}
               >
-                <Image
-                  src={avatarSrc}
-                  alt={avatarAlt}
-                  width={48}
-                  height={48}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  priority
-                  unoptimized={avatarSrc.startsWith('data:')}
-                />
+                {avatarSrc ? (
+                  <Image
+                    src={avatarSrc}
+                    alt={avatarAlt}
+                    width={48}
+                    height={48}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    priority
+                    unoptimized={avatarSrc.startsWith('data:')}
+                  />
+                ) : (
+                  // Shown until the portfolio data resolves. next/image rejects
+                  // an empty src, so this cannot just be a blank <Image>.
+                  <div
+                    aria-hidden="true"
+                    className="w-full h-full bg-gradient-to-br from-blue-400/30 to-purple-500/30"
+                  />
+                )}
                 <div className="absolute inset-0 rounded-full ring-1 ring-inset ring-white/10 transition-opacity duration-300 group-hover:ring-white/20" />
                 
                 {/* Subtle glow effect on hover */}

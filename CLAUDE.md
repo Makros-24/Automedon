@@ -12,7 +12,7 @@ Automedon is an AI-powered digital twin portfolio application that allows recrui
 
 - **Current Status**: Fully functional portfolio with multilingual support (English, French, German, Arabic with RTL), dynamic JSON-based data loading, and enhanced UI components
 - **Latest Release**: `v1.3.0` (git tag on `main`) - Client Work / Personal Projects split
-- **Tech Stack**: React 19, Next.js 15, TypeScript, Tailwind CSS 4, Radix UI, Framer Motion
+- **Tech Stack**: React 19, Next.js 16, TypeScript, Tailwind CSS 4, Radix UI, Motion
 - **Architecture**: Component-based with 40+ UI components, theme provider, animation system, multilingual system, and comprehensive technology icon management
 - **Recent Enhancements**:
   - Split the Projects section into Client Work and Personal Projects tabs
@@ -124,6 +124,36 @@ For comprehensive project guidance, refer to these documentation files in the `d
 - **Icon Processing Pipeline**: Multi-step system for handling technology icons (base64 → URL → Lucide fallback)
 
 ## Recent Development Work
+
+### Single-Source Portfolio Data Fetching (Completed)
+- **Problem**: A single page load issued **six** `/api/portfolio` requests
+- **Cause**: Three independent fetchers, each doubled by React StrictMode's dev-only
+  effect re-invocation:
+  1. `app/layout.tsx` - `PortfolioDataProvider` (the intended one)
+  2. `app/page.tsx` - a **second** `PortfolioDataProvider` nested inside the first
+  3. `components/Footer.tsx` - bypassed the context and called `getPortfolioData()` itself
+- **Fix**:
+  - Removed the nested provider from `page.tsx`. It shadowed the layout's provider, so
+    every page component read from the inner instance while the outer fetched for nobody
+  - Added a `useFooter()` hook and pointed `Footer.tsx` at the shared context
+- **Second bug found in passing**: `Footer` called `getPortfolioData()` with **no
+  argument**, so it defaulted to `'en'` and never refetched on a language switch - the
+  footer stayed English while the rest of the page translated
+- **Result**: 2 requests in dev (StrictMode), **1 in production**. The 2 `/api/locales`
+  calls are the same StrictMode doubling of one `LanguageProvider` effect and are correct
+- **Invariant**: `PortfolioDataProvider` is mounted **once**, in the root layout. Components
+  needing portfolio data consume a hook from `PortfolioDataContext` - never fetch privately
+
+### Custom Lucide Icons Need an Explicit `key` (Completed)
+- **Symptom**: `Each child in a list should have a unique "key" prop` pointing at
+  `Contact.tsx`, but only for the three social icons - `Mail` / `MapPin` were silent
+- **Cause**: lucide-react v1 renders icon children with a bare
+  `iconNode.map(([tag, attrs]) => createElement(tag, attrs))` and supplies no key itself.
+  Every upstream-generated icon carries `key` *inside its attrs* (see
+  `node_modules/lucide-react/dist/esm/icons/mail.mjs`); the hand-rebuilt brand marks in
+  `components/icons/brands.ts` omitted it
+- **Fix**: Added a `key` to each path's attrs in `brands.ts`
+- **Rule**: any icon built with `createLucideIcon` must give every `iconNode` entry a `key`
 
 ### Project Categorization - Client Work vs Personal Projects (Completed, v1.3.0)
 - **Objective**: Separate paid client engagements from personal / open-source work
@@ -277,6 +307,8 @@ For comprehensive project guidance, refer to these documentation files in the `d
 - `src/app/web/src/components/sections/ProjectDetailsDialog.tsx` - Project details modal with markdown
 - `src/app/web/src/components/ui/WIPDialog.tsx` - Work In Progress dialog component
 - `src/app/web/src/contexts/LanguageContext.tsx` - Dynamic language state management
+- `src/app/web/src/contexts/PortfolioDataContext.tsx` - Sole portfolio fetcher; per-slice hooks
+- `src/app/web/src/components/icons/brands.ts` - Local brand marks (lucide v1 dropped them)
 - `src/app/web/src/components/LanguageSwitcher.tsx` - Dynamic locale switching UI
 - `src/app/web/src/utils/dataLoader.ts` - Updated to support language-specific loading
 - `src/app/web/src/utils/technologyIconManager.ts` - Technology icon processing system

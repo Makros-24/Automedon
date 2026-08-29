@@ -43,7 +43,7 @@ This document outlines the system architecture, design patterns, and technical d
 ## Technology Stack & Rationale
 
 ### Frontend Framework
-- **Next.js 15** - App Router for modern React patterns, SSR/SSG capabilities, and excellent developer experience
+- **Next.js 16** - App Router for modern React patterns, SSR/SSG capabilities, and excellent developer experience
 - **React 19** - Latest React features, concurrent rendering, and improved performance
 - **TypeScript 5** - Type safety, better IDE support, and reduced runtime errors
 
@@ -110,6 +110,40 @@ const useInViewOnce = (threshold = 0.1) => {
 - **Theme Context**: Dark/light mode preferences with system detection
 - **Portfolio Data Context**: Language-aware portfolio data with API integration
 - **Scoped to specific concerns**: Single responsibility, avoid god objects
+
+#### Provider Hierarchy - Mount Each Provider Exactly Once
+
+The full tree is declared in `app/layout.tsx` and nowhere else:
+
+```
+LanguageProvider          # owns `language`; fetches /api/locales once
+└── PortfolioDataProvider # refetches /api/portfolio when `language` changes
+    └── ThemeProvider
+        └── {children}    # app/page.tsx renders content only - no providers
+```
+
+Two failure modes this ordering is meant to prevent, both of which have actually occurred:
+
+1. **A duplicate provider deeper in the tree.** `page.tsx` once mounted a second
+   `PortfolioDataProvider`. React resolves `useContext` to the *nearest* provider, so the
+   inner instance served every page component while the outer fetched the same payload for
+   no consumer. Nothing breaks visibly - the cost is silent, doubled network traffic.
+2. **A component fetching privately instead of consuming the context.** `Footer.tsx` called
+   `getPortfolioData()` in its own effect. Besides the extra request, it passed no language
+   argument, so it pinned itself to `'en'` and never followed a language switch.
+
+**Rule**: a component needing portfolio data consumes a hook from `PortfolioDataContext`
+(`usePersonalInfo`, `useWork`, `useProjects`, `useContactInfo`, `useFooter`, …). Calling
+`getPortfolioData()` from a component is always a bug - language-awareness lives in the
+provider, and a private call opts out of it.
+
+**Auditing**: a correct page load issues **one** `/api/portfolio` and **one** `/api/locales`.
+React StrictMode double-invokes effects in development, so expect exactly *two* of each with
+`npm run dev` and one of each in production. Any other count means a duplicate fetcher:
+
+```bash
+grep -rn "getPortfolioData\|PortfolioDataProvider" src/
+```
 
 #### Local State for Components
 - **Component-specific data**: Form inputs, modal states, dialog visibility

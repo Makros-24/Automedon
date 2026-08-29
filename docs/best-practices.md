@@ -122,6 +122,33 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
 };
 ```
 
+#### Shared Data: Consume the Context, Never Refetch
+Portfolio data has exactly one fetcher - `PortfolioDataProvider` in `app/layout.tsx`. A
+component that needs a slice of it takes a hook, and never reaches for the loader itself.
+
+```typescript
+// ❌ Bad - a private fetch. Two costs, one of them invisible:
+//    1. a duplicate network request on every page load
+//    2. no `language` argument, so it defaults to 'en' forever and the component
+//       silently stops matching the rest of the page after a language switch
+export function Footer() {
+  const [footerData, setFooterData] = useState<FooterInfo | null>(null);
+  useEffect(() => {
+    getPortfolioData().then(data => setFooterData(data.footer));
+  }, []);
+}
+
+// ✅ Good - one line, language-aware for free, no extra request
+export function Footer() {
+  const { footer, loading } = useFooter();
+}
+```
+
+The same rule governs providers: mount each **once**, at the root. A second
+`PortfolioDataProvider` nested lower down does not error or render wrong - `useContext`
+quietly binds to the nearest one, and the outer instance fetches for no consumer. Duplicate
+providers are found by counting requests, not by reading the UI.
+
 #### State Management Patterns
 ```typescript
 // ✅ Good - useReducer for complex state

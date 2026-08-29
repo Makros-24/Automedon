@@ -103,6 +103,76 @@ const getImageSrc = (filename: string) => {
 };
 ```
 
+#### Duplicate `/api/portfolio` Requests
+**Symptoms**: DevTools Network shows the same `portfolio?lang=en` fetched 4, 6, or more
+times on a single page load. Nothing renders wrong - the only signal is the request count.
+
+**First, subtract StrictMode.** `reactStrictMode: true` makes React mount → unmount → mount
+every component in development, so *every* effect-driven fetch appears exactly twice. Two
+requests is correct in `npm run dev`; one is correct in a production build. Divide the
+observed count by two before assuming there is a bug.
+
+**Then find the extra fetchers.** The remaining multiple is the number of independent
+callers:
+
+```bash
+grep -rn "getPortfolioData\|PortfolioDataProvider" src/
+```
+
+Two shapes to look for:
+
+```tsx
+// ❌ A second provider deeper in the tree. useContext resolves to the NEAREST
+//    provider, so this one serves the page while the layout's fetches for nobody.
+export default function Home() {
+  return <PortfolioDataProvider><AppContent /></PortfolioDataProvider>;
+}
+
+// ❌ A component fetching privately. Extra request, and no `language` argument
+//    means it silently pins itself to 'en' and ignores every language switch.
+useEffect(() => { getPortfolioData().then(d => setFooterData(d.footer)); }, []);
+
+// ✅ Consume the shared context
+const { footer, loading } = useFooter();
+```
+
+`PortfolioDataProvider` and `LanguageProvider` are mounted once, in `app/layout.tsx`. See
+`architecture.md` for the full hierarchy.
+
+#### `Each child in a list should have a unique "key" prop` from an Icon
+**Symptoms**: A key warning whose stack frame points at `<Icon />` in your own JSX and
+mentions `ForwardRef` / `at path`, while other icons on the same screen stay silent.
+
+**Not your `.map()`.** The warning is about the `<path>` elements *inside* the icon.
+lucide-react v1 renders them with no key of its own:
+
+```js
+// node_modules/lucide-react/dist/esm/Icon.mjs
+iconNode.map(([tag, attrs]) => createElement(tag, attrs))
+```
+
+The key is expected to travel *inside each entry's attrs*. Every upstream-generated icon
+has one:
+
+```js
+// node_modules/lucide-react/dist/esm/icons/mail.mjs
+["path", { d: "m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7", key: "132q7q" }]
+```
+
+So only hand-written icons warn - which is why `Mail` was quiet and the brand marks in
+`components/icons/brands.ts` were not.
+
+**Solution**: give every `iconNode` entry passed to `createLucideIcon` its own `key`:
+
+```ts
+export const GithubIcon: LucideIcon = createLucideIcon('Github', [
+  ['path', { fill: 'currentColor', stroke: 'none', key: 'github-mark', d: 'M12 .297…' }],
+]);
+```
+
+This applies to anything built with `createLucideIcon`. Brand icons live locally because
+lucide-react v1 removed them upstream for trademark reasons.
+
 ### TypeScript Issues
 
 #### Type Definition Errors

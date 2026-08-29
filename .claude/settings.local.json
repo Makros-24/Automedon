@@ -6,7 +6,24 @@
       "Bash(npm install:*)",
       "Bash(npm test:*)",
       "Bash(cat:*)",
-      "Bash(npm run build)"
+      "Bash(npm run build)",
+      "Bash(curl:*)",
+      "Bash(npm outdated:*)",
+      "Bash(timeout /t 5 /nobreak)",
+      "Bash(nul)",
+      "Bash(npx tsc:*)",
+      "Bash(docker logs:*)",
+      "Bash(docker ps:*)",
+      "Bash(docker exec:*)",
+      "Bash(docker compose:*)",
+      "WebSearch",
+      "Bash(node create-language-markdown.js:*)",
+      "Bash(node update-json-structure.js:*)",
+      "Bash(if [ -d \"C:\\Projects\\personal\\Automedon\\scripts\" ])",
+      "Bash(then ls -la \"C:\\Projects\\personal\\Automedon\\scripts\")",
+      "Bash(else echo \"scripts directory does not exist\")",
+      "Bash(fi)",
+      "Bash(git mv:*)"
     ],
     "deny": []
   }

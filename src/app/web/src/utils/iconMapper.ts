@@ -28,14 +28,13 @@ import {
   Trophy,
   Workflow,
   Mail,
-  Github,
-  Linkedin,
   MapPin,
   Phone,
   Send,
-  Twitter,
   type LucideIcon
 } from 'lucide-react';
+// lucide-react v1 dropped brand icons; these are local rebuilds.
+import { GithubIcon, LinkedinIcon, TwitterIcon } from '@/components/icons/brands';
 import { type SkillCategory as SkillCategoryType, type Achievement as AchievementType, type ContactInfo as ContactInfoType } from '@/types';
 
 // Icon name to Lucide icon mapping
@@ -75,12 +74,12 @@ const iconMap: Record<string, LucideIcon> = {
 
   // Contact
   'Mail': Mail,
-  'Github': Github,
-  'Linkedin': Linkedin,
+  'Github': GithubIcon,
+  'Linkedin': LinkedinIcon,
   'MapPin': MapPin,
   'Phone': Phone,
   'Send': Send,
-  'Twitter': Twitter,
+  'Twitter': TwitterIcon,
 };
 
 /**

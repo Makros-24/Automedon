@@ -39,11 +39,13 @@ const techData = [
 export function TechRadarChart() {
   const { ref: chartRef, isInView } = useInViewOnce({ threshold: 0.3, rootMargin: '0px 0px -10% 0px' });
 
-  // Custom dot component with glass morphism effect
+  // Custom dot component with glass morphism effect.
+  // recharts types cx/cy/payload as optional on the dot renderer, so they are
+  // optional here too and the dot is skipped when the point is not resolvable.
   interface CustomDotProps {
-    cx: number;
-    cy: number;
-    payload: {
+    cx?: number;
+    cy?: number;
+    payload?: {
       name: string;
       strength: number;
       category: string;
@@ -53,8 +55,13 @@ export function TechRadarChart() {
 
   const CustomDot = (props: CustomDotProps) => {
     const { cx, cy, payload } = props;
+
+    if (cx === undefined || cy === undefined || !payload) {
+      return null;
+    }
+
     const strength = payload.strength / 100;
-    
+
     return (
       <g>
         {/* Glass morphism outer ring */}

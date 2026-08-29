@@ -168,7 +168,14 @@ desktop.ini
 # `next start` never reads, and it dwarfs the artifacts we actually need
 # (~183MB of cache vs ~3MB of server/ + static/). Must stay below the
 # re-include above: in .dockerignore, the last matching rule wins.
+# Turbopack's filesystem caching (default in Next.js 16) grows this further -
+# measured at 375MB after a build plus a dev session.
 src/app/web/.next/cache
+
+# Nor the dev server output. Next.js 16 gives `next dev` its own directory so it
+# can run concurrently with `next build`; it is pure development state that
+# `next start` never reads, and it was 124MB on a single dev run.
+src/app/web/.next/dev
 
 # Keep public assets
 !src/app/web/public

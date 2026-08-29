@@ -144,6 +144,11 @@ export function useContactInfo() {
   return { contactInfo: data?.contactInfo || null, loading, error };
 }
 
+export function useFooter() {
+  const { data, loading, error } = usePortfolioData();
+  return { footer: data?.footer || null, loading, error };
+}
+
 interface PortfolioDataContextType {
     data: PortfolioData | null;
     loading: boolean;

@@ -1,28 +1,14 @@
 import { motion } from 'motion/react';
-import { getPortfolioData } from '../utils/dataLoader';
 import { useEffect, useState, useRef } from 'react';
-import { FooterInfo } from '../types';
+import { useFooter } from '@/contexts/PortfolioDataContext';
 
 export function Footer() {
-  const [footerData, setFooterData] = useState<FooterInfo | null>(null);
-  const [loading, setLoading] = useState(true);
+  // Reads the shared provider rather than fetching independently. The previous
+  // private fetch called getPortfolioData() with no argument, so the footer was
+  // permanently pinned to English and never followed a language switch.
+  const { footer: footerData, loading } = useFooter();
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const data = await getPortfolioData();
-        setFooterData(data.footer);
-      } catch (error) {
-        console.error('Error loading footer data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    loadData();
-  }, []);
 
   useEffect(() => {
     if (loading || !footerData || !sectionRef.current) return;

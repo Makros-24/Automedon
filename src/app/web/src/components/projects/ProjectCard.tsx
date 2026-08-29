@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { motion, type Variants } from 'motion/react';
 import Image from 'next/image';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
+// lucide-react v1 dropped brand icons; this is a local rebuild.
+import { GithubIcon as Github } from '@/components/icons/brands';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { processProjectTechnologies } from '@/utils/technologyIconManager';

@@ -1,6 +1,8 @@
 import { motion } from 'motion/react';
 import { useInViewOnce } from '../hooks/useInViewOnce';
-import { Mail, MapPin, Phone, Send, Linkedin as LinkedinIcon, Github as GithubIcon, Twitter as TwitterIcon, MessageCircle, Calendar } from 'lucide-react';
+import { Mail, MapPin, Phone, Send, MessageCircle, Calendar } from 'lucide-react';
+// lucide-react v1 dropped brand icons; these are local rebuilds.
+import { GithubIcon, LinkedinIcon, TwitterIcon } from '@/components/icons/brands';
 import { Button } from './ui/button';
 import { useContactInfo } from '@/contexts/PortfolioDataContext';
 

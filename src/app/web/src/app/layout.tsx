@@ -27,8 +27,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // globals.css sets `scroll-behavior: smooth` on <html> for the anchor-based
+  // section navigation. As of Next.js 16 the router no longer suppresses that
+  // during route transitions unless `data-scroll-behavior` opts back in, which
+  // would otherwise make navigations animate instead of jumping.
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body>
         <LanguageProvider defaultLanguage="en" enableLanguageDetection={true}>
           <PortfolioDataProvider>

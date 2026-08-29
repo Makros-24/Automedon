@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { ExternalLink, Github, Building2, Briefcase, X } from 'lucide-react';
+import { ExternalLink, Building2, Briefcase, X } from 'lucide-react';
+// lucide-react v1 dropped brand icons; this is a local rebuild.
+import { GithubIcon as Github } from '@/components/icons/brands';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
@@ -32,10 +34,24 @@ export const ProjectDetailsDialog = ({
   // Get current language for markdown loading
   const { language } = useLanguage();
 
-  // State for markdown content
-  const [markdownContent, setMarkdownContent] = useState<string | null>(null);
-  const [isLoadingMarkdown, setIsLoadingMarkdown] = useState(false);
-  const [_markdownError, setMarkdownError] = useState(false);
+  /*
+   * Identifies the markdown the dialog currently wants, or null when there is
+   * nothing to load. Deriving the loading and content state from this key means
+   * closing the dialog no longer needs a synchronous setState to reset it, and
+   * reopening shows the already-fetched content without a loading flash.
+   */
+  const markdownKey =
+    open && project.markdownFileName
+      ? `${project.markdownFileName}::${language}`
+      : null;
+
+  // `content: null` records a failed attempt, which falls back to the short
+  // description below - the previous explicit error flag was never rendered.
+  const [loaded, setLoaded] = useState<{ key: string; content: string | null } | null>(null);
+
+  const hasCurrentMarkdown = markdownKey !== null && loaded?.key === markdownKey;
+  const markdownContent = hasCurrentMarkdown ? loaded.content : null;
+  const isLoadingMarkdown = markdownKey !== null && !hasCurrentMarkdown;
 
   // Process technologies with enhanced icons
   const processedTechnologies = React.useMemo(
@@ -48,17 +64,13 @@ export const ProjectDetailsDialog = ({
 
   // Fetch markdown content when dialog opens or language changes
   useEffect(() => {
-    // Reset state when dialog closes or no markdown file
-    if (!open || !project.markdownFileName) {
-      setMarkdownContent(null);
-      setMarkdownError(false);
-      return;
-    }
+    if (markdownKey === null) return;
+
+    // Stops a slow response for a previous project or language from landing
+    // after the dialog has moved on.
+    let cancelled = false;
 
     const fetchMarkdown = async () => {
-      setIsLoadingMarkdown(true);
-      setMarkdownError(false);
-
       try {
         const response = await fetch(
           `/api/markdown/${project.markdownFileName}?lang=${language}`
@@ -69,18 +81,20 @@ export const ProjectDetailsDialog = ({
         }
 
         const content = await response.text();
-        setMarkdownContent(content);
+        if (!cancelled) setLoaded({ key: markdownKey, content });
       } catch (error) {
+        if (cancelled) return;
         console.error('Markdown fetch error:', error);
-        setMarkdownError(true);
-        setMarkdownContent(null);
-      } finally {
-        setIsLoadingMarkdown(false);
+        setLoaded({ key: markdownKey, content: null });
       }
     };
 
     fetchMarkdown();
-  }, [open, project.markdownFileName, language]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [markdownKey, project.markdownFileName, language]);
 
   // Determine what content to display
   const displayContent = markdownContent || project.description;

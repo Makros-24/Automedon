@@ -16,6 +16,13 @@ jest.mock('react', () => ({
   })),
 }));
 
+// @types/react 19 types ReactElement['props'] as `unknown` rather than `any`,
+// so prop assertions have to narrow it explicitly. React.createElement is mocked
+// above, so what comes back is the plain { type, props } shape from that mock.
+const propsOf = (
+  element: ReturnType<typeof getTechnologyIconElement>
+): Record<string, unknown> => element.props as Record<string, unknown>;
+
 describe('Technology Icon Manager', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -76,10 +83,10 @@ describe('Technology Icon Manager', () => {
       
       // Check that it's an img element with correct props
       expect(result.type).toBe('img');
-      expect(result.props.src).toBe(iconData.base64);
-      expect(result.props.alt).toBe(`${techName} icon`);
-      expect(result.props.className).toBe('w-4 h-4 transition-all duration-300 ease-out');
-      expect(result.props.loading).toBe('lazy');
+      expect(propsOf(result).src).toBe(iconData.base64);
+      expect(propsOf(result).alt).toBe(`${techName} icon`);
+      expect(propsOf(result).className).toBe('w-4 h-4 transition-all duration-300 ease-out');
+      expect(propsOf(result).loading).toBe('lazy');
     });
 
     it('should create img element for URL', () => {
@@ -92,10 +99,10 @@ describe('Technology Icon Manager', () => {
       
       // Check that it's an img element with correct props
       expect(result.type).toBe('img');
-      expect(result.props.src).toBe(iconData.url);
-      expect(result.props.alt).toBe(`${techName} icon`);
-      expect(result.props.className).toBe('w-4 h-4 transition-all duration-300 ease-out');
-      expect(result.props.loading).toBe('lazy');
+      expect(propsOf(result).src).toBe(iconData.url);
+      expect(propsOf(result).alt).toBe(`${techName} icon`);
+      expect(propsOf(result).className).toBe('w-4 h-4 transition-all duration-300 ease-out');
+      expect(propsOf(result).loading).toBe('lazy');
     });
 
     it('should create Lucide icon element for string', () => {
@@ -133,7 +140,7 @@ describe('Technology Icon Manager', () => {
 
       const result = getTechnologyIconElement(iconData, techName, customClass);
 
-      expect(result.props.className).toBe(`${customClass} transition-all duration-300 ease-out`);
+      expect(propsOf(result).className).toBe(`${customClass} transition-all duration-300 ease-out`);
     });
   });
 
@@ -324,7 +331,7 @@ describe('Technology Icon Manager', () => {
 
       const result = getTechnologyIconElement(iconData, techName);
       
-      expect(result.props.alt).toBe('C++ & Assembly icon');
+      expect(propsOf(result).alt).toBe('C++ & Assembly icon');
     });
 
     it('should handle very long technology names', () => {
@@ -335,7 +342,7 @@ describe('Technology Icon Manager', () => {
 
       const result = getTechnologyIconElement(iconData, longTechName);
       
-      expect(result.props.alt).toBe(`${longTechName} icon`);
+      expect(propsOf(result).alt).toBe(`${longTechName} icon`);
     });
 
     it('should handle concurrent processing of multiple technologies', () => {

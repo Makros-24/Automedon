@@ -131,3 +131,6 @@ temp/
 
 # Local data files (personal information)
 local-data/
+
+# Docker build marker (written by build-scripts/shell/build-and-push.*)
+.docker-build-ready

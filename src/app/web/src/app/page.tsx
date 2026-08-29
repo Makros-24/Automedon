@@ -9,7 +9,6 @@ import { About } from '@/components/About';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
 import { Toaster } from '@/components/ui/sonner';
-import { PortfolioDataProvider } from '@/contexts/PortfolioDataContext';
 
 function AppContent() {
   useEffect(() => {
@@ -40,10 +39,8 @@ function AppContent() {
   );
 }
 
+// PortfolioDataProvider lives in the root layout - mounting a second one here
+// would shadow it and fetch the same data twice.
 export default function Home() {
-  return (
-    <PortfolioDataProvider>
-      <AppContent />
-    </PortfolioDataProvider>
-  );
+  return <AppContent />;
 }

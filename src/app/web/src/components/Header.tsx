@@ -6,7 +6,7 @@ import { useTheme } from './ThemeProvider';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from './ui/sheet';
 import { LanguageSwitcher } from './LanguageSwitcher';
-import { usePersonalInfo } from '@/contexts/PortfolioDataContext';
+import { usePersonalInfo, useRecommendations } from '@/contexts/PortfolioDataContext';
 import { getAvatarSource } from '@/utils/avatarHelper';
 
 export function Header() {
@@ -15,6 +15,14 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const { personalInfo } = usePersonalInfo();
+  const { recommendations } = useRecommendations();
+
+  /*
+   * The Recommendations section renders nothing when a locale has no items, so
+   * advertising it unconditionally would leave a nav entry scrolling to an
+   * anchor that does not exist.
+   */
+  const hasRecommendations = (recommendations?.items?.length ?? 0) > 0;
 
   /*
    * No hardcoded fallback URL: the avatar comes from portfolio.json like the
@@ -39,7 +47,11 @@ export function Header() {
   // Simplified and more stable section highlighting
   useEffect(() => {
     const updateActiveSection = () => {
-      const sections = ['hero', 'work', 'about', 'contact'];
+      // Must stay in document order - the loop below breaks on the first
+      // section that has not been scrolled past. Absent ids are skipped by the
+      // getElementById guard, so listing 'recommendations' is safe even when
+      // the section is not rendered.
+      const sections = ['hero', 'work', 'recommendations', 'about', 'contact'];
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
       const offset = windowHeight * 0.3; // 30% of viewport height as offset
@@ -88,6 +100,9 @@ export function Header() {
 
   const navItems = [
     { name: 'Projects', href: '#work', id: 'work' },
+    ...(hasRecommendations
+      ? [{ name: 'Recommendations', href: '#recommendations', id: 'recommendations' }]
+      : []),
     { name: 'About', href: '#about', id: 'about' },
     { name: 'Contact', href: '#contact', id: 'contact' },
   ];

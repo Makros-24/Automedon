@@ -185,6 +185,42 @@ export interface WorkData {
   };
 }
 
+// A single recommendation, curated from LinkedIn into portfolio.json.
+//
+// LinkedIn exposes no API for recommendations (the rich Profile API died with
+// the 2019 v1 deprecation), so these are transcribed by hand. `linkedinUrl`
+// points at the recommender's profile so the quote stays verifiable.
+export interface Recommendation {
+  id: number
+  name: string
+  title: string          // The recommender's LinkedIn headline
+  // Optional: LinkedIn exposes a single headline, not a separate employer, so
+  // most transcribed recommendations have no company to record.
+  company?: string
+  relationship?: string  // e.g. "Managed Mohamed directly"
+  date?: string          // e.g. "March 2024"
+  quote: string
+  /*
+   * A hand-picked sentence from `quote`, shown as the card's pull quote.
+   * Must be an exact excerpt - paraphrasing would put words the recommender
+   * never wrote next to their name. Omit it and the card falls back to
+   * clamping the opening lines of `quote`, which reads as an arbitrary cut.
+   */
+  highlight?: string
+  avatar?: ImageData | string
+  linkedinUrl?: string
+}
+
+// Section copy plus its items in one optional key: the section either exists in
+// a locale file or it does not, so consumers need a single undefined check.
+export interface RecommendationsData {
+  title: string
+  description: string
+  ctaLabel?: string
+  ctaUrl?: string
+  items: Recommendation[]
+}
+
 // Complete portfolio data structure
 export interface PortfolioData {
   personalInfo: PersonalInfo
@@ -192,6 +228,7 @@ export interface PortfolioData {
   work: WorkData;
   projects: Project[]
   sideProjects?: Project[] // Personal / open-source projects
+  recommendations?: RecommendationsData // Optional, so pre-v1.4 data still loads
   skillCategories: SkillCategory[]
   achievements: Achievement[]
   contactInfo: ContactInfo

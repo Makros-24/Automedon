@@ -154,13 +154,38 @@ at your JSX rather than at the library. Upstream-generated icons all carry one.
 #### Interactive Components
 ```json
 {
-  "embla-carousel-react": "^8.6.0",
   "react-slick": "^0.31.0"
 }
 ```
-- **Embla Carousel**: Lightweight, extensible carousel
 - **React Slick**: Feature-rich carousel component
-- Both provide different UX patterns for project showcases
+
+⚠️ **This section previously listed `embla-carousel-react@^8.6.0`. It has never been installed** -
+the entry was documentation drift. Verify before relying on any package listed here:
+
+```bash
+node -e "const p=require('./package.json');console.log(({...p.dependencies,...p.devDependencies})['embla-carousel-react'] || 'NOT INSTALLED')"
+```
+
+⚠️ **`react-slick` is installed but effectively unused.** Its only consumer,
+`src/components/CoreSkillsCarousel.tsx`, is imported nowhere, hardcodes English content, and
+depends on `slick-carousel`'s stylesheet - a package that is *also* not installed. Reviving it
+would render unstyled. Treat it as a removal candidate, not as the house carousel.
+
+#### Carousels are hand-rolled here - and that is deliberate
+
+`projects/ProjectTabs.tsx` and `recommendations/RecommendationCarousel.tsx` are both written from
+scratch against CSS scroll-snap and the Pointer Events API rather than pulling in a library. The
+reasoning, when the Recommendations carousel was built:
+
+- The only installed option (`react-slick`) is jQuery-derived with weak RTL support, and RTL is
+  first-class in this project
+- The requirements were specific enough that a library would have been fought rather than used:
+  three-copy modular wrapping, RTL-aware `scrollLeft` handling, sub-pixel drift, and only one of
+  three DOM copies exposed to assistive tech
+- `ProjectTabs.tsx` had already set the precedent at ~110 lines, WAI-ARIA-correct and RTL-aware
+
+`motion`'s shared `layoutId` covers the one genuinely hard part - animating an indicator between
+sibling elements - and it is already a dependency.
 
 ### Form Handling
 

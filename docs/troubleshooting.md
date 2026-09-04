@@ -173,6 +173,150 @@ export const GithubIcon: LucideIcon = createLucideIcon('Github', [
 This applies to anything built with `createLucideIcon`. Brand icons live locally because
 lucide-react v1 removed them upstream for trademark reasons.
 
+#### Tailwind's `rtl:` variant produces no CSS in this project
+**Symptoms**: A class like `rtl:-scale-x-100` is present in the DOM on an RTL page, DevTools
+shows the element with `transform: none`, and nothing is mirrored. No error anywhere.
+
+**Cause**: the `rtl:` variant is not emitted by this Tailwind build. The class name renders into
+the `class` attribute exactly as written - it simply matches no rule, so it silently does
+nothing. This fails in the direction that is hardest to notice: the markup looks correct.
+
+**Solution**: use the project's own convention, defined in `globals.css`:
+
+```css
+[dir="rtl"] .rtl-flip { transform: scaleX(-1); }
+```
+
+```tsx
+<Quote className="w-5 h-5 rtl-flip" />
+```
+
+For positioning, prefer logical CSS properties over any direction-specific utility - they follow
+`dir` natively with no build support needed:
+
+```tsx
+// ❌ Fixed to one side regardless of direction
+<Quote className="absolute right-3" />
+
+// ✅ Follows dir
+<Quote className="absolute" style={{ insetInlineEnd: '0.75rem' }} />
+```
+
+Same class of bug as `text-align` inheritance under `dir="auto"` - see the RTL notes in
+`architecture.md`.
+
+#### A horizontally scrolling track clips its children (hover lift, drop shadow)
+**Symptoms**: Two versions of the same bug, reported quite differently.
+
+1. Cards inside a horizontal carousel look cut off along the top **when hovered**. Fine at rest,
+   and fine outside the track.
+2. A soft shadow behind the row **ends in a straight horizontal line** - most obvious under the
+   row, fainter above it, and present in both light and dark themes.
+
+**Cause**: not a `z-index` or `overflow-hidden` problem. Per the CSS overflow spec, when one axis
+is `visible` and the other is not, the `visible` axis computes to `auto`. So `overflow-x: auto`
+(from `overflow-x-auto`) silently makes `overflow-y: auto` too, and the scrollport clips at the
+**padding box**. A `mask-image` on a wrapper clips at exactly the same edge. Anything a child
+paints outside that box - a `whileHover={{ y: -4 }}` lift, or a drop shadow - is cut with a hard
+straight line.
+
+**Solution**: enough vertical padding that whatever escapes the card has already faded to nothing
+before it reaches the edge. This is headroom, not spacing, and the two sides usually need
+different amounts - so say so in a comment or it gets "tidied" back to a symmetric value.
+
+Work out the reach from the shadow itself. **A blur radius extends half its length beyond the
+shadow box**, so for `.glass` (`0 8px 32px`, becoming `0 12px 40px` on `.glass-hover`):
+
+| | rest | hover | hover + `-4px` lift |
+|---|---|---|---|
+| below the card | `8 + 16` = **24px** | `12 + 20` = **32px** | 28px |
+| above the card | `16 - 8` = **8px** | `20 - 12` = **8px** | **12px** |
+
+```tsx
+// pt-5 = 17.5px (needs 12), pb-10 = 35px (needs 32) at this project's 1rem = 14px.
+<div className="flex gap-4 overflow-x-auto pt-5 pb-10">
+```
+
+⚠️ **This project's root font-size is 14px, not 16px.** `py-4` is 14px here, not 16px - which was
+exactly enough to clear the 8px rest-state shadow above a card and never enough for the 24px one
+below it. Hence "sharp at the bottom, less apparent at the top". Read computed values rather than
+assuming the Tailwind scale:
+
+```js
+getComputedStyle(track).paddingBottom   // "35px", not "40px"
+```
+
+**Verify by arithmetic, not by eye** - the failing state may be a hover state you are not in when
+you look:
+
+```js
+const m = maskEl.getBoundingClientRect(), c = card.getBoundingClientRect();
+console.log({ above: c.top - m.top, below: m.bottom - c.bottom });  // must clear 12 and 32
+```
+
+Adding a vertical fade to the mask is the wrong fix here: it feathers the cards' own top and
+bottom edges too, and it treats a symptom that only exists because the box is too small.
+
+#### An infinite carousel only loops in one direction
+**Symptoms**: The track wraps endlessly when moving forwards, but scrolling or dragging backwards
+hits a hard stop at the beginning. The wrap handler appears correct and never fires.
+
+**Cause**: browsers clamp `scrollLeft` at 0 **before** dispatching the scroll event. By the time
+any handler runs, the position has already been pinned to the edge - there is nothing left to
+intercept. Two duplicated copies of the list therefore only ever provide forward runway.
+
+**Solution**: three copies, resting in the middle one, so there is a full set of runway in both
+directions:
+
+```ts
+const COPIES = 3;
+// Park at the start of the middle copy
+el.scrollLeft = isRTL ? -setWidth.current : setWidth.current;
+```
+
+RTL is a separate branch, not a sign flip on the same comparison - `scrollLeft` runs 0 → negative
+there:
+
+```ts
+if (isRTL) {
+  if (el.scrollLeft > -set) el.scrollLeft -= set;
+  else if (el.scrollLeft <= -2 * set) el.scrollLeft += set;
+} else {
+  if (el.scrollLeft < set) el.scrollLeft += set;
+  else if (el.scrollLeft >= 2 * set) el.scrollLeft -= set;
+}
+```
+
+**Also wrap in `onScroll`, not only in the animation loop.** If the track pauses while the reader
+touches it, the loop is not running to catch a wheel or trackpad scroll past the edge - so
+auto-drift loops forever while manual scrolling still dead-ends.
+
+Remember to `aria-hidden` every copy but one. Three copies in the DOM means a screen reader
+announces each item three times otherwise.
+
+#### A carousel animation looks slow and clunky at any speed
+**Symptoms**: Raising the speed constant does not help. The motion reads as stuttering rather
+than as slow.
+
+**Cause**: usually not the speed. Check for a layout-forcing read (`scrollWidth`, `offsetWidth`,
+`getBoundingClientRect`) inside the `requestAnimationFrame` callback, and for sub-pixel loss from
+reading `scrollLeft` back each frame. Both are covered with fixes in `best-practices.md` under
+*requestAnimationFrame loops must not read layout*.
+
+**Diagnose by measuring**, since the eye cannot separate "slow" from "stuttering":
+
+```js
+// In the browser console: count zero-delta frames over one second
+let last = el.scrollLeft; const deltas = [];
+const tick = () => { deltas.push(el.scrollLeft - last); last = el.scrollLeft;
+  if (deltas.length < 60) requestAnimationFrame(tick);
+  else console.log({ stalled: deltas.filter(d => d === 0).length,
+                     subPixel: deltas.filter(d => Math.abs(d) < 1).length }); };
+requestAnimationFrame(tick);
+```
+
+A healthy loop reports **0 stalled frames**. Sub-pixel deltas are expected, not a fault.
+
 ### TypeScript Issues
 
 #### Type Definition Errors

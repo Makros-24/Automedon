@@ -11,6 +11,7 @@ This document outlines the system architecture, design patterns, and technical d
 │  Next.js App Router (SSR/SSG)                                 │
 │  ├── Hero Section (Animated Background + CTA)                 │
 │  ├── Work Portfolio (Client / Personal Tabs + Tech Icons)     │
+│  ├── Recommendations (Infinite Drift Carousel + Pull Quotes)  │
 │  ├── About Section (Skills Categories + Achievements)         │
 │  ├── Contact Section (Social Links + CTA)                     │
 │  └── AI Chat Interface (Modal Overlay)                        │
@@ -221,6 +222,7 @@ interface PortfolioData {
   };
   projects: Project[];        // Client work
   sideProjects?: Project[];   // Personal / open-source projects
+  recommendations?: RecommendationsData;  // Curated LinkedIn testimonials
   skillCategories: SkillCategory[];
   achievements: Achievement[];
   contactInfo: ContactInfo;
@@ -255,6 +257,27 @@ interface Project {
 interface TechnologyWithIcon {
   name: string;
   icon?: ImageData | string; // Enhanced or legacy format
+}
+
+interface RecommendationsData {
+  title: string;         // Localized
+  description: string;   // Localized
+  ctaLabel?: string;     // Localized
+  ctaUrl?: string;
+  items: Recommendation[];  // NOT localized - byte-identical across locales
+}
+
+interface Recommendation {
+  id: number;
+  name: string;
+  title: string;         // The recommender's LinkedIn headline
+  company?: string;      // Usually absent - LinkedIn exposes one headline, not an employer
+  relationship?: string; // e.g. "Managed Mohamed directly"
+  date?: string;
+  quote: string;         // Verbatim, in the language it was written
+  highlight?: string;    // Exact excerpt of `quote` - the card's pull quote
+  avatar?: ImageData | string;
+  linkedinUrl?: string;
 }
 
 interface ImageData {
@@ -631,6 +654,27 @@ portfolio-data/
 - **Primary**: URL query parameter (?lang=en)
 - **Fallback**: localStorage for user preference
 - **Default**: English (en) if no preference
+
+### Content That Is Deliberately Not Translated
+
+`recommendations.items` is **byte-identical in all four locale files**. Words attributed to a
+named third party are quoted, not authored, so translating them would put sentences that person
+never wrote next to their name. Only the section chrome - `title`, `description`, `ctaLabel` -
+is localized.
+
+Two consequences fall out of this and both are handled in `RecommendationCard.tsx`:
+
+- An English quote renders inside the Arabic RTL page. `dir="auto"` resolves direction from the
+  first strong character rather than inheriting the page's.
+- `text-align` still inherits. `globals.css` sets `text-align: right` on `[dir="rtl"]`, and
+  `dir="auto"` changes direction but not alignment - so without `text-start` the quote resolves
+  to LTR yet stays flushed right, splitting it from its attribution row. Logical alignment is
+  load-bearing here, not decoration.
+
+The items array is duplicated four times on disk. There is no shared-content mechanism for JSON
+today (`portfolio-data/diagrams/` is shared, but only for binary assets), and introducing one is
+a larger change than this warrants. **Editing one locale's items without the other three is a
+bug**, not a partial translation.
 
 ## Future Architecture Enhancements
 

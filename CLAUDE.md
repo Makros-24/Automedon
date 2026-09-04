@@ -8,13 +8,15 @@ Automedon is an AI-powered digital twin portfolio application that allows recrui
 
 ## Current Development Status
 
-**Phase**: v1.3.0 Released - Categorized Project Showcase
+**Phase**: v1.3.0 Released - Categorized Project Showcase · Recommendations section unreleased on `feat/Recommendations`
 
 - **Current Status**: Fully functional portfolio with multilingual support (English, French, German, Arabic with RTL), dynamic JSON-based data loading, and enhanced UI components
 - **Latest Release**: `v1.3.0` (git tag on `main`) - Client Work / Personal Projects split
+- **Unreleased**: Recommendations section (curated LinkedIn testimonials, infinite drift carousel) on `feat/Recommendations`
 - **Tech Stack**: React 19, Next.js 16, TypeScript, Tailwind CSS 4, Radix UI, Motion
 - **Architecture**: Component-based with 40+ UI components, theme provider, animation system, multilingual system, and comprehensive technology icon management
 - **Recent Enhancements**:
+  - Added a Recommendations section between Work and About, sourced from curated JSON
   - Split the Projects section into Client Work and Personal Projects tabs
   - Routed remote portfolio images through the Next.js image optimizer
   - Implemented multilingual support with 4 languages (EN, FR, DE, AR)
@@ -91,7 +93,7 @@ For comprehensive project guidance, refer to these documentation files in the `d
 
 #### Components
 - **Glass Components**: Components using glass morphism design (backdrop-blur, transparency)
-- **Section Components**: Main portfolio sections (Hero, Work, About, Contact)
+- **Section Components**: Main portfolio sections (Hero, Work, Recommendations, About, Contact)
 - **UI Components**: Reusable Radix UI-based components
 - **Theme Components**: Components related to dark/light theme switching
 
@@ -101,6 +103,7 @@ For comprehensive project guidance, refer to these documentation files in the `d
 - **Portfolio Showcase**: Featured work with detailed project dialogs, markdown support, and technology badges
 - **Skills Categories**: Detailed technology categorization with interactive cards and enhanced icons
 - **Achievements Showcase**: Key metrics and professional accomplishments
+- **Recommendations**: Curated LinkedIn testimonials in a continuously drifting infinite carousel; quotes are stored verbatim and never translated
 - **Technology Icons**: Enhanced icon system supporting base64/URL icons with card-level hover effects
 - **Project Details**: Modal dialogs with markdown rendering, accessibility features, and screen reader support
 
@@ -122,8 +125,63 @@ For comprehensive project guidance, refer to these documentation files in the `d
 - **Portfolio API**: RESTful endpoint (`/api/portfolio`) for serving portfolio data with validation and caching
 - **Locales API**: RESTful endpoint (`/api/locales`) for providing discovered locale metadata to clients
 - **Icon Processing Pipeline**: Multi-step system for handling technology icons (base64 → URL → Lucide fallback)
+- **Pull Quote / `highlight`**: A hand-picked *exact excerpt* of a recommendation, shown on the card in place of the full text. Never a paraphrase - see the verbatim rule below
+- **Infinite Drift Carousel**: Continuously auto-scrolling track built from three duplicated copies of the list, wrapping modularly so it has no ends
 
 ## Recent Development Work
+
+### Recommendations Section (Completed, unreleased)
+- **Objective**: Add third-party social proof - LinkedIn recommendations - to a portfolio that
+  otherwise only carries the owner's own claims
+- **Live LinkedIn consumption is impossible**, and this is a constraint, not a preference:
+  - The rich Profile API died with the 2019 v1 deprecation. What remains is *Sign In with
+    LinkedIn via OpenID Connect* (`openid`, `profile`, `email`) - name, headline, picture,
+    email, nothing else
+  - The partner programs (Marketing Developer Platform, Talent Solutions) do not cover
+    recommendations and gate on an approved company partnership
+  - Scraping needs an authenticated session, violates the User Agreement §8.2, and is actively
+    blocked. Proxycurl, the best-known third-party scraper, shut down in 2025 under LinkedIn
+    legal pressure
+  - Embedding is out too: LinkedIn's only widget is the profile badge, and the CSP in
+    `next.config.js` is `default-src 'self'` with no `frame-src`
+- **Approach**: Curated content in `portfolio-data/{locale}/portfolio.json`, exactly like every
+  other piece of content. Each card links back to the recommender's profile, which keeps the
+  claim verifiable without an integration. Mirrors the v1.3.0 `sideProjects` addition - one new
+  optional key, one new hook, one new section, no change to the fetch architecture
+- **⚠️ Verbatim rule**: `items` is **byte-identical across all four locale files**. Quotes,
+  names, titles and dates are never translated - attributing translated words to a named person
+  misrepresents what they wrote. Only `title`, `description` and `ctaLabel` are localized.
+  `highlight` must be an exact substring of `quote` for the same reason
+- **Key Changes**:
+  - `Recommendation` / `RecommendationsData` types plus `recommendations?` on `PortfolioData`
+    (optional, so pre-existing data still validates)
+  - `validateRecommendations` in `dataLoader.ts` - absent is valid, present must be well-formed
+  - `useRecommendations()` slice hook; no provider changes
+  - `RecommendationCarousel.tsx` - hand-rolled infinite drift track, no new dependency
+  - `RecommendationCard.tsx` - compact glass card showing the pull quote, not the full text
+  - `Header.tsx` - nav item and scroll-spy array (two separate arrays, both need updating)
+- **Carousel design notes** (all of these were bugs first):
+  - **Three copies, resting in the middle.** Two only loops forwards: browsers clamp
+    `scrollLeft` at 0 and the scroll event fires *after* the clamp, so backwards navigation hits
+    an end no handler can intercept
+  - **`wrap()` runs on `onScroll` as well as in the rAF loop.** The track is paused while the
+    reader touches it, so the loop is not running to catch a wheel or drag past the edge
+  - **Never read `scrollWidth` inside the animation loop** - it forces layout twice a frame.
+    Cache it, recompute on `ResizeObserver`
+  - **Keep the scroll position in a float accumulator.** At sub-pixel per-frame speeds, reading
+    `scrollLeft` back each frame loses the fraction to rounding: the track stalls, then jumps
+  - **`pt-5 pb-10` on the track is headroom, not spacing.** An x-scrolling container resolves
+    `overflow-y` to `auto` and clips at the padding box, as does the mask - so both the hover
+    lift and the `.glass` drop shadow were sliced into a hard horizontal line. The two sides
+    differ because a `0 8px 32px` shadow reaches 24px below the card and 8px above it. Note
+    `1rem = 14px` in this project, so the Tailwind scale is not what it looks like
+  - Dots only, no arrows. The active highlight is one element travelling on a shared `layoutId`
+- **Accessibility**: `role="group" aria-roledescription="carousel"`; only the middle copy is
+  exposed as slides (the outer two are `aria-hidden`, otherwise every recommendation is
+  announced three times); motion pauses on hover, focus and drag, and never starts under
+  `prefers-reduced-motion` (WCAG 2.2.2)
+- **Known gap**: the full `quote` is stored and validated but no longer surfaced on-page - the
+  card shows only the pull quote. Restoring it would mean a dialog
 
 ### Single-Source Portfolio Data Fetching (Completed)
 - **Problem**: A single page load issued **six** `/api/portfolio` requests
@@ -295,6 +353,9 @@ For comprehensive project guidance, refer to these documentation files in the `d
   layer entirely (~245MB), but changes the start command to `node server.js`
 
 ### Key Files Created/Modified
+- `src/app/web/src/components/Recommendations.tsx` - Recommendations section shell
+- `src/app/web/src/components/recommendations/RecommendationCarousel.tsx` - Infinite drift track
+- `src/app/web/src/components/recommendations/RecommendationCard.tsx` - Compact testimonial card
 - `src/app/web/src/components/projects/ProjectTabs.tsx` - Accessible project category tabs
 - `src/app/web/src/components/Work.tsx` - Tab state, panel semantics, group fallback
 - `portfolio-data/{locale}/portfolio.json` - Locale-specific portfolio data (en, fr, de, ar)

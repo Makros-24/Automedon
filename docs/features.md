@@ -20,6 +20,7 @@ This document outlines current features, planned implementations, and detailed s
 - **Hero Section**: Animated background with personal introduction and multilingual call-to-action
 - **Project Categories**: Client Work and Personal Projects split across an accessible tabbed segmented control, with per-tab counts and descriptions
 - **Work Portfolio**: Project showcase with ProjectDetailsDialog, markdown rendering, and enhanced technology icons
+- **Recommendations**: Curated LinkedIn testimonials in a continuously drifting infinite carousel, navigable by scroll, drag or dots
 - **About Section**: Skills categorization with detailed technology cards, achievements showcase, and grayscale-to-color hover transitions
 - **Contact Section**: Localized social links and contact information with interactive elements
 - **Navigation System**: Smooth scrolling navigation with active section highlighting
@@ -61,6 +62,99 @@ This document outlines current features, planned implementations, and detailed s
 - **Missing**: OpenAI API integration, multilingual conversation support, conversation state management
 
 ## Completed Features (Recent)
+
+### ✅ Recommendations (Completed, unreleased)
+
+Third-party social proof, sitting between Work and About - the portfolio otherwise carries only
+the owner's own account of themselves.
+
+#### Why the data is curated, not fetched
+
+Live consumption from LinkedIn is **not possible**. This is worth recording because it looks
+like an integration gap and is not one:
+
+| Route | Status |
+|---|---|
+| Profile API (v1) | Deprecated 2019. Recommendations went with it |
+| Sign In with LinkedIn (OIDC) | Returns `openid`, `profile`, `email` only - name, headline, picture, email |
+| Marketing Developer Platform / Talent Solutions | Do not cover recommendations; gated on an approved company partnership |
+| Scraping | Needs an authenticated session, violates User Agreement §8.2, actively blocked. Proxycurl shut down in 2025 under LinkedIn legal pressure |
+| Profile badge embed | Name + headline only, and the CSP (`default-src 'self'`, no `frame-src`) blocks the iframe regardless |
+
+So recommendations enter the app the way all other content does - through
+`portfolio-data/{locale}/portfolio.json`. Each card links back to the recommender's profile,
+which keeps the claim verifiable without an integration.
+
+#### Data Model
+
+```typescript
+interface RecommendationsData {
+  title: string;         // Localized
+  description: string;   // Localized - the LinkedIn link lives inside this sentence
+  ctaLabel?: string;     // Localized
+  ctaUrl?: string;
+  items: Recommendation[];
+}
+
+interface Recommendation {
+  id: number;
+  name: string;
+  title: string;         // The recommender's LinkedIn headline
+  company?: string;
+  relationship?: string;
+  date?: string;
+  quote: string;         // Verbatim
+  highlight?: string;    // Exact excerpt of `quote`
+  avatar?: ImageData | string;
+  linkedinUrl?: string;
+}
+```
+
+`recommendations` is optional on `PortfolioData`, so portfolio data written before this change
+still validates and the section simply does not render.
+
+#### ⚠️ Verbatim rule
+
+`items` is **byte-identical across all four locale files** - quote, name, headline, relationship
+and date. Only the section chrome is translated. Attributing translated words to a named person
+misrepresents what they wrote.
+
+`highlight` is bound by the same rule: it must be an **exact excerpt** of `quote`, never a
+paraphrase or a stitched-together summary. The card shows it in place of the full text, so a
+paraphrase would put invented sentences in quotation marks under someone's name and photo.
+
+#### Presentation
+
+- **Pull quote, not full text.** A hand-picked sentence keeps the card compact enough to drift
+  past legibly. Without a `highlight` the card clamps the opening lines instead, which reads as
+  an arbitrary cut
+- **Infinite drift carousel** - the track auto-scrolls against the reading direction and wraps
+  modularly, so it has no ends to reach
+- **Dots only.** Arrows were bulk beside a track that already moves on its own. Navigation is
+  wheel, drag, dots or keyboard
+- **The LinkedIn link sits on its own line under the description**, in the section header rather
+  than in a button under the track. It was originally inline at the end of the sentence, but the
+  label is long enough that it almost never fitted on the same line and broke mid-phrase
+- Avatars are inline base64 in the locale JSON. ⚠️ **Never `media.licdn.com`** - those URLs are
+  signed and time-limited and start returning 403 (`Header.tsx` documents one that did)
+
+#### Accessibility
+
+- `role="group" aria-roledescription="carousel"`; each slide `aria-roledescription="slide"`
+  labelled `"{n} of {total}"`
+- The track holds three copies of the list but **only the middle one is exposed** - the outer
+  copies are `aria-hidden`, or every recommendation would be announced three times
+- Motion pauses on hover, on focus and while dragging, and never starts under
+  `prefers-reduced-motion`. Text moving for more than five seconds needs a pause mechanism
+  under WCAG 2.2.2, and hovering to read is the most natural one available
+- Dots keep a constant box with an 18px hit area; the highlight travels between them on a
+  shared `layoutId`
+
+#### Known gap
+
+The full `quote` is stored and validated but no longer surfaced on-page - the earlier "read the
+full recommendation" expander was removed when the track became a drifting marquee. Only the
+pull quote and the LinkedIn link reach the reader. Restoring it means a dialog.
 
 ### ✅ Project Categorization (Completed, v1.3.0)
 

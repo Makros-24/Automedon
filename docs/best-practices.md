@@ -744,6 +744,97 @@ export const FadeInUp = ({ children, delay = 0 }: AnimationProps) => (
 );
 ```
 
+#### Not every CSS property can be transitioned
+
+`transition-all` is not a guarantee. A CSS transition interpolates between two computed values,
+so a property with no interpolable representation simply snaps, however long the duration is.
+`background-image` - which is what every Tailwind `bg-gradient-to-*` produces - is the one that
+bites here.
+
+```tsx
+// ❌ The size animates; the gradient appears instantly. Reads as a broken transition,
+//    and no amount of duration tuning fixes it.
+className={`rounded-full transition-all duration-300 ${
+  isActive ? 'w-2.5 h-2.5 bg-gradient-to-r from-blue-400 to-purple-500'
+           : 'w-1.5 h-1.5 bg-foreground/20'
+}`}
+
+// ✅ One element that travels. Motion measures both DOM positions and tweens between
+//    them, so what moves is a transform - which does interpolate.
+{isActive && (
+  <motion.span
+    layoutId="recommendation-dot"
+    className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400 to-purple-500"
+    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+  />
+)}
+```
+
+There is a second reason the class-swap version could not work: the active and inactive dots are
+*different elements*. A CSS transition needs one element changing state. Moving a highlight
+between siblings is a shared-layout problem, and `layoutId` is the tool for it - the same
+treatment `ProjectTabs.tsx` uses for its active pill.
+
+Keep the containers a fixed size when doing this. Resizing the active item itself reflows
+everything after it, so the whole row shifts sideways on each change.
+
+#### requestAnimationFrame loops must not read layout
+
+Two mistakes turn a smooth loop into a stuttering one, and both look like "the animation is too
+slow" rather than like bugs:
+
+```ts
+// ❌ scrollWidth is a layout-forcing read. Inside the loop it means a synchronous
+//    layout every frame - twice, if two helpers each take it.
+const step = () => {
+  const set = el.scrollWidth / COPIES;
+  el.scrollLeft += SPEED / 60;
+  requestAnimationFrame(step);
+};
+
+// ✅ Cache it. It only changes when the element resizes, so let ResizeObserver own it.
+const setWidth = useRef(0);
+useEffect(() => {
+  const observer = new ResizeObserver(() => { setWidth.current = el.scrollWidth / COPIES; });
+  observer.observe(el);
+  return () => observer.disconnect();
+}, []);
+```
+
+The subtler one is **sub-pixel loss**. At any reasonable speed a frame advances well under a
+pixel. `scrollLeft` rounds, so reading it back and adding to it discards the fraction - the
+element sits still for several frames, then jumps a whole pixel:
+
+```ts
+// ❌ 0.47px per frame, rounded away every frame
+el.scrollLeft = el.scrollLeft + SPEED * (elapsed / 1000);
+
+// ✅ Keep the true position; write the rounded one out
+position.current += SPEED * (elapsed / 1000);
+el.scrollLeft = position.current;
+```
+
+**Verify by measuring, not by watching.** Sample `scrollLeft` over consecutive animation frames
+and count how many deltas are zero. A correct loop has none, and deltas below 1px are the
+expected shape - not evidence of a problem.
+
+#### Quoting real people
+
+Content attributed to a named third party - testimonials, recommendations, reviews - is quoted,
+not authored. Two rules follow, and both are correctness rules rather than style preferences:
+
+- **Never translate it.** A localized build must ship the original words. Translating them puts
+  sentences the person never wrote next to their name and photo.
+- **Excerpt, never paraphrase.** When a card shows a shortened pull quote, that short form must
+  be an exact substring of the full text. Enforce it in whatever script generates the data:
+
+  ```js
+  const normalise = (s) => s.replace(/\s+/g, ' ').trim();
+  if (!normalise(item.quote).includes(normalise(item.highlight))) {
+    throw new Error(`highlight is not an exact excerpt of quote for "${item.name}"`);
+  }
+  ```
+
 ## Docker & Build Artifact Hygiene
 
 ### Never ship build cache

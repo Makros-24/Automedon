@@ -58,10 +58,22 @@ Object.defineProperty(window, 'matchMedia', {
 // Mock window.scrollTo
 global.scrollTo = jest.fn()
 
-// Mock Image constructor for Next.js Image component
+// jsdom implements no layout, so it ships neither of these. The recommendations
+// carousel scrolls its track on every dot press.
+Element.prototype.scrollIntoView = jest.fn()
+Element.prototype.scrollTo = jest.fn()
+
+// Mock Image constructor for Next.js Image component.
+//
+// The callback fires on a timer, so it lands in whichever test happens to be
+// running when it does - and images without an onload handler are perfectly
+// normal. Calling it unconditionally threw "this.onload is not a function"
+// inside an unrelated, later test.
 Object.defineProperty(global.Image.prototype, 'src', {
   set() {
-    setTimeout(() => this.onload())
+    setTimeout(() => {
+      if (typeof this.onload === 'function') this.onload()
+    })
   },
 })
 

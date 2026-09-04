@@ -1,4 +1,4 @@
-import type { PortfolioData, ImageData, PersonalInfo, Project, SkillCategory, Achievement, ContactInfo, Language } from '@/types';
+import type { PortfolioData, ImageData, PersonalInfo, Project, SkillCategory, Achievement, ContactInfo, Language, Recommendation, RecommendationsData } from '@/types';
 
 /**
  * Load portfolio data from API endpoint with language support
@@ -113,6 +113,11 @@ export function validatePortfolioData(data: unknown): data is PortfolioData {
     return false;
   }
 
+  // Validate recommendations (optional - absent is valid)
+  if (obj.recommendations !== undefined && !validateRecommendations(obj.recommendations)) {
+    return false;
+  }
+
   // Validate skill categories array
   if (!Array.isArray(obj.skillCategories) || !obj.skillCategories.every(validateSkillCategory)) {
     return false;
@@ -177,6 +182,44 @@ function validateProject(project: unknown): project is Project {
            (typeof tech === 'object' && tech !== null && typeof (tech as Record<string, unknown>).name === 'string')
          ) &&
          hasValidLinks;
+}
+
+/**
+ * Validate the recommendations section
+ *
+ * The key is optional, but a malformed one is fatal: /api/portfolio rejects the
+ * whole payload with a 400 when validation fails, so a typo here takes the
+ * entire portfolio down rather than just this section.
+ */
+function validateRecommendations(recommendations: unknown): recommendations is RecommendationsData {
+  if (!recommendations || typeof recommendations !== 'object') return false;
+  const obj = recommendations as Record<string, unknown>;
+
+  return typeof obj.title === 'string' &&
+         typeof obj.description === 'string' &&
+         (obj.ctaLabel === undefined || typeof obj.ctaLabel === 'string') &&
+         (obj.ctaUrl === undefined || typeof obj.ctaUrl === 'string') &&
+         Array.isArray(obj.items) &&
+         obj.items.every(validateRecommendation);
+}
+
+/**
+ * Validate a single recommendation
+ */
+function validateRecommendation(recommendation: unknown): recommendation is Recommendation {
+  if (!recommendation || typeof recommendation !== 'object') return false;
+  const obj = recommendation as Record<string, unknown>;
+
+  return typeof obj.id === 'number' &&
+         typeof obj.name === 'string' &&
+         typeof obj.title === 'string' &&
+         typeof obj.quote === 'string' &&
+         (obj.company === undefined || typeof obj.company === 'string') &&
+         (obj.highlight === undefined || typeof obj.highlight === 'string') &&
+         (obj.relationship === undefined || typeof obj.relationship === 'string') &&
+         (obj.date === undefined || typeof obj.date === 'string') &&
+         (obj.linkedinUrl === undefined || typeof obj.linkedinUrl === 'string') &&
+         (obj.avatar === undefined || validateImageData(obj.avatar) || typeof obj.avatar === 'string');
 }
 
 /**

@@ -5,6 +5,7 @@ import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { Header } from '@/components/Header';
 import { Hero } from '@/components/Hero';
 import { Work } from '@/components/Work';
+import { Recommendations } from '@/components/Recommendations';
 import { About } from '@/components/About';
 import { Contact } from '@/components/Contact';
 import { Footer } from '@/components/Footer';
@@ -28,6 +29,7 @@ function AppContent() {
         <main>
           <Hero />
           <Work />
+          <Recommendations />
           <About />
           <Contact />
 		  <Footer />

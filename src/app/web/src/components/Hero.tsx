@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from 'motion/react';
 import { ChevronDown, Download, Eye, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
 import { usePersonalInfo } from '@/contexts/PortfolioDataContext';
+import { AchievementRow } from './achievements/AchievementRow';
 import { Loading } from './ui/loading';
 
 export function Hero() {
@@ -76,11 +77,29 @@ export function Hero() {
   return (
     <motion.section
       id="hero"
-      className="relative min-h-screen flex items-center justify-center px-6 overflow-hidden"
+      // items-start below md, because `align-items: center` does not grow a
+      // container for an over-tall item - it centres it and lets it overflow
+      // both edges, which overflow-hidden then clips. On a phone this content
+      // plus its gutters exceeds the viewport, so the section has to be allowed
+      // to grow past min-h-screen instead.
+      className="relative min-h-screen flex items-start md:items-center justify-center px-6 overflow-hidden"
       style={{ y, opacity }}
     >
-      {/* Hero Content */}
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
+      {/*
+        Hero Content
+
+        Two things overlap this content on small screens and neither is in the
+        layout: the fixed header above, and the scroll indicator below, which is
+        absolutely positioned. Once the stats moved into the hero, the second row
+        landed straight on top of the indicator.
+
+        The padding reserves both gutters. Together they push the box past the
+        viewport, so the section grows past min-h-screen rather than centring -
+        which is the point: on a phone this content does not fit between a 68px
+        header and an 80px indicator, and squeezing it up only buried the name
+        under the header instead.
+      */}
+      <div className="relative z-10 max-w-4xl mx-auto text-center pt-24 pb-28 md:py-0">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -120,12 +139,22 @@ export function Hero() {
             {personalInfo.description}
           </motion.p>
 
+          {/* Key achievements */}
+          <motion.div
+            className="pt-8 md:pt-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.9 }}
+          >
+            <AchievementRow />
+          </motion.div>
+
           {/* CTAs */}
           <motion.div
             className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 pt-8"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
+            transition={{ duration: 0.8, delay: 1.05 }}
           >
             {/* Primary CTA */}
             <Button

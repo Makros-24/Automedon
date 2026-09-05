@@ -1,8 +1,7 @@
 import { motion } from 'motion/react';
 import { useInViewOnce } from '../hooks/useInViewOnce';
-import { useSkillCategories, useAchievements, useAbout } from '@/contexts/PortfolioDataContext';
+import { useSkillCategories, useAbout } from '@/contexts/PortfolioDataContext';
 import { SkillCategory } from './skills/SkillCategory';
-import { Achievement } from './achievements/Achievement';
 import { SkeletonGrid } from './ui/loading';
 
 const containerVariants = {
@@ -23,7 +22,6 @@ const itemVariants = {
 export function About() {
   const { about } = useAbout();
   const { skillCategories, loading: skillsLoading, error: skillsError } = useSkillCategories();
-  const { achievements, loading: achievementsLoading, error: achievementsError } = useAchievements();
   const { ref: sectionRef, isInView } = useInViewOnce({ threshold: 0.05, rootMargin: '0px 0px -50px 0px' });
 
   return (
@@ -57,7 +55,9 @@ export function About() {
           </p>
         </motion.div>
 
-        <motion.div className="space-y-16" variants={containerVariants}>
+        {/* Key Achievements now open the Projects section as a hairline rail -
+            see components/Achievements.tsx. */}
+        <motion.div variants={containerVariants}>
           {/* Skills & Technologies */}
           <div>
             <motion.h3
@@ -84,36 +84,6 @@ export function About() {
               >
                 {skillCategories.map((category) => (
                   <SkillCategory key={category.name} category={category} variants={itemVariants} />
-                ))}
-              </motion.div>
-            )}
-          </div>
-
-          {/* Key Achievements */}
-          <div>
-            <motion.h3
-              className="text-3xl font-semibold text-foreground mb-12 text-center"
-              variants={itemVariants}
-            >
-              {about?.achievementsTitle || 'Key Achievements'}
-            </motion.h3>
-            {achievementsLoading ? (
-              <SkeletonGrid className="grid-cols-1 md:grid-cols-2 lg:grid-cols-4" columns={4} rows={1} />
-            ) : achievementsError ? (
-              <motion.div className="text-center py-12" variants={itemVariants}>
-                <p className="text-lg text-red-500">Error loading achievements: {achievementsError}</p>
-              </motion.div>
-            ) : achievements.length === 0 ? (
-              <motion.div className="text-center py-12" variants={itemVariants}>
-                <p className="text-lg text-foreground/70">No achievements data available</p>
-              </motion.div>
-            ) : (
-              <motion.div
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-fr"
-                variants={containerVariants}
-              >
-                {achievements.map((achievement) => (
-                  <Achievement key={achievement.title} achievement={achievement} variants={itemVariants} />
                 ))}
               </motion.div>
             )}

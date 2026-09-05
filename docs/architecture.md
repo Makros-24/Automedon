@@ -9,10 +9,10 @@ This document outlines the system architecture, design patterns, and technical d
 │                           Client Layer                         │
 ├─────────────────────────────────────────────────────────────────┤
 │  Next.js App Router (SSR/SSG)                                 │
-│  ├── Hero Section (Animated Background + CTA)                 │
+│  ├── Hero Section (Animated Background + Achievements + CTA)  │
 │  ├── Work Portfolio (Client / Personal Tabs + Tech Icons)     │
 │  ├── Recommendations (Infinite Drift Carousel + Pull Quotes)  │
-│  ├── About Section (Skills Categories + Achievements)         │
+│  ├── About Section (Skills Categories)                        │
 │  ├── Contact Section (Social Links + CTA)                     │
 │  └── AI Chat Interface (Modal Overlay)                        │
 ├─────────────────────────────────────────────────────────────────┤
@@ -214,7 +214,10 @@ interface PortfolioData {
     title: string;
     description: string;
     skillsTitle: string;
-    achievementsTitle: string;
+    // Still lives under `about`, but is consumed by the Hero's achievement row
+  // as the list's aria-label. Left here to avoid a four-locale data migration
+  // for a string that is never visible.
+  achievementsTitle: string;
   };
   work: {
     title: string;

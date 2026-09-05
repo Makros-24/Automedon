@@ -8,14 +8,17 @@ Automedon is an AI-powered digital twin portfolio application that allows recrui
 
 ## Current Development Status
 
-**Phase**: v1.3.0 Released - Categorized Project Showcase · Recommendations section unreleased on `feat/Recommendations`
+**Phase**: v1.3.1 Released · Recommendations merged to `main` · Hero achievements unreleased on `feat/hero-achievements`
 
 - **Current Status**: Fully functional portfolio with multilingual support (English, French, German, Arabic with RTL), dynamic JSON-based data loading, and enhanced UI components
-- **Latest Release**: `v1.3.0` (git tag on `main`) - Client Work / Personal Projects split
-- **Unreleased**: Recommendations section (curated LinkedIn testimonials, infinite drift carousel) on `feat/Recommendations`
+- **Latest Release**: `v1.3.1` (git tag on `main`, at `d807aae`) - bug fixes and maintenance. `v1.3.0` was the Client Work / Personal Projects split
+- **Merged since the last tag**: Recommendations section (curated LinkedIn testimonials, infinite drift carousel)
+- **Unreleased**: Key Achievements moved into the Hero on `feat/hero-achievements`
+- **Section order**: Hero (with achievements) → Work → Recommendations → About → Contact
 - **Tech Stack**: React 19, Next.js 16, TypeScript, Tailwind CSS 4, Radix UI, Motion
 - **Architecture**: Component-based with 40+ UI components, theme provider, animation system, multilingual system, and comprehensive technology icon management
 - **Recent Enhancements**:
+  - Moved Key Achievements out of About and into the Hero as surface-less figures
   - Added a Recommendations section between Work and About, sourced from curated JSON
   - Split the Projects section into Client Work and Personal Projects tabs
   - Routed remote portfolio images through the Next.js image optimizer
@@ -102,7 +105,7 @@ For comprehensive project guidance, refer to these documentation files in the `d
 - **Digital Twin**: AI chatbot representing the portfolio owner (UI implemented with WIP dialog, backend pending)
 - **Portfolio Showcase**: Featured work with detailed project dialogs, markdown support, and technology badges
 - **Skills Categories**: Detailed technology categorization with interactive cards and enhanced icons
-- **Achievements Showcase**: Key metrics and professional accomplishments
+- **Achievements Showcase**: Key metrics as surface-less figures inside the Hero, between the description and the CTAs. Descriptions surface on hover or keyboard focus rather than costing layout height
 - **Recommendations**: Curated LinkedIn testimonials in a continuously drifting infinite carousel; quotes are stored verbatim and never translated
 - **Technology Icons**: Enhanced icon system supporting base64/URL icons with card-level hover effects
 - **Project Details**: Modal dialogs with markdown rendering, accessibility features, and screen reader support
@@ -130,7 +133,45 @@ For comprehensive project guidance, refer to these documentation files in the `d
 
 ## Recent Development Work
 
-### Recommendations Section (Completed, unreleased)
+### Key Achievements Moved Into the Hero (Completed, unreleased)
+- **Objective**: The six achievements led the second half of About as tall glass cards, a long
+  way from anything they support. They are the evidence behind the hero paragraph's claims, so
+  they now sit directly under it and introduce the CTAs
+- **Key Changes**:
+  - `achievements/AchievementRow.tsx` - bare labelled list; **no loading branch**, because Hero
+    gates on the same context and only renders it with data in hand
+  - `achievements/AchievementStat.tsx` - replaces `Achievement.tsx` (deleted)
+  - `Hero.tsx` - owns the spacing and the entrance beat (figures 0.9, CTAs 1.05, indicator 1.2)
+  - `About.tsx` - keeps only Technologies
+  - No `Header.tsx` change: the figures live inside `#hero`, so nav and scroll-spy are untouched
+- **⚠️ Three design passes, do not re-tread them.** The brief was "small and efficient":
+  1. **Hairline rail** - no glass, no icons, opaque cells divided by 1px grid gaps. Rejected:
+     *"not similar to the other components and it feels out of place."* Deliberate contrast
+     against the surrounding glass grids read as pasted in from another site
+  2. **Six compact glass cards** - the house card treatment at half height. Rejected:
+     *"I don't want cards anymore"* - a fourth card grid on a page that already has three
+  3. **One glass bar** holding six segments, echoing the header nav and the Projects tab pill.
+     Superseded when the row moved into the hero, where any surface competes with it
+  - Landing point: **no surface at all**. The accent lives in interaction instead - hover or
+    focus draws a gradient rule under the number, reusing the hero's own accent beneath the job
+    title, and reveals the description
+- **Descriptions are on hover/focus, not in the layout.** That is the only reason six figures
+  fit inside a hero that was already full. Each figure is focusable so the text is reachable
+  without a pointer, and it is never `aria-hidden`, so screen readers get it from the flow
+- **⚠️ Hero no longer centres below `md`.** Between the fixed 68px header and the absolutely
+  positioned scroll indicator, this content does not fit in a phone viewport. `align-items:
+  center` does **not** grow a container for an over-tall item - it centres it and lets it
+  overflow both edges, which the hero's `overflow-hidden` then clips. `items-start md:items-center`
+  lets the section grow past `min-h-screen`. Verified clearances: +11px under the header,
+  +18px above the indicator
+- **Tooltip opens downward** into the gap above the CTAs; upward lands on the hero description.
+  It is `pointer-events-none`, so it never intercepts a click meant for a button
+- **Numbers carry `dir="ltr"`** - Arabic otherwise reorders `20K+` into `+20K` and `80%` into
+  `%80`, because the trailing character is a bidi-neutral
+- **Untouched on purpose**: `processAchievement` in `iconMapper.ts` still builds an icon element
+  that nothing renders now. Left as-is rather than pulled out of the shared context pipeline
+
+### Recommendations Section (Completed, merged to `main`)
 - **Objective**: Add third-party social proof - LinkedIn recommendations - to a portfolio that
   otherwise only carries the owner's own claims
 - **Live LinkedIn consumption is impossible**, and this is a constraint, not a preference:
@@ -353,6 +394,9 @@ For comprehensive project guidance, refer to these documentation files in the `d
   layer entirely (~245MB), but changes the start command to `node server.js`
 
 ### Key Files Created/Modified
+- `src/app/web/src/components/achievements/AchievementRow.tsx` - Hero achievement figures
+- `src/app/web/src/components/achievements/AchievementStat.tsx` - Single surface-less figure
+- `src/app/web/src/components/Hero.tsx` - Hosts the achievement row; `items-start` below `md`
 - `src/app/web/src/components/Recommendations.tsx` - Recommendations section shell
 - `src/app/web/src/components/recommendations/RecommendationCarousel.tsx` - Infinite drift track
 - `src/app/web/src/components/recommendations/RecommendationCard.tsx` - Compact testimonial card

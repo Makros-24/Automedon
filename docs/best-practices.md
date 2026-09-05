@@ -818,6 +818,57 @@ el.scrollLeft = position.current;
 and count how many deltas are zero. A correct loop has none, and deltas below 1px are the
 expected shape - not evidence of a problem.
 
+#### Dividers inside a glass panel need a foreground token, not white
+
+The `.glass` utilities border themselves with `border-white/20 dark:border-white/10`, which works
+because they sit against the page. A divider *inside* one of those panels does not:
+
+```tsx
+// ❌ Invisible in light mode. White on a white-tinted panel.
+<li className="lg:border-s lg:border-white/10" />
+
+// ✅ The foreground token flips with the theme, so one value covers both
+<li className="lg:border-s lg:border-foreground/10" />
+```
+
+This fails in the direction that is easy to miss - it looks right in whichever theme you happen
+to be testing. Check both, and read the computed colour rather than the class.
+
+#### Declare wrapping-grid dividers only where they cannot conflict
+
+Per-item borders in a grid that reflows need a different "which item starts a row" rule at every
+breakpoint, and those rules land at equal specificity, so each has to undo the last:
+
+```tsx
+// ❌ Four rules fighting over one border. Whichever wins depends on emitted order,
+//    and any change to the item count silently breaks the arithmetic.
+"border-s [&:nth-child(2n+1)]:border-s-0
+ md:[&:nth-child(2n+1)]:border-s md:[&:nth-child(3n+1)]:border-s-0
+ lg:[&:nth-child(3n+1)]:border-s lg:[&:nth-child(6n+1)]:border-s-0"
+
+// ✅ Declared only at the breakpoint where the row does not wrap. Nothing to undo,
+//    and `first:` beats the base rule on specificity rather than on ordering.
+"lg:border-s lg:border-foreground/10 lg:first:border-s-0"
+```
+
+If dividers are genuinely needed at every breakpoint, draw them with `gap-px` over a tinted
+container background instead - the gaps between opaque cells become the hairlines, and that is
+correct at any column count for free. The tradeoff is that the cells must be opaque, so it costs
+you whatever sits behind them.
+
+#### Match the design system; do not contrast with it
+
+A new component's job is to look like it was always there. Deliberately contrasting with the
+surrounding visual language - dropping glass on a glass page to make a section "stand out" -
+reliably reads as a component pasted in from a different site, however defensible the reasoning.
+This cost three passes on the hero achievements (see `CLAUDE.md`).
+
+When compactness is the goal, take it out of *content and interaction*, not out of the design
+vocabulary: move secondary text onto hover or focus, shrink type, drop an icon. Reach for the
+existing idioms - `.glass` / `.glass-hover`, `rounded-2xl`, the blue→purple→teal accent, a shared
+`layoutId` indicator - before inventing a new one. And if a surface would compete with what it
+sits inside, use no surface at all rather than a different one.
+
 #### Quoting real people
 
 Content attributed to a named third party - testimonials, recommendations, reviews - is quoted,

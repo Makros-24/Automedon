@@ -21,7 +21,8 @@ This document outlines current features, planned implementations, and detailed s
 - **Project Categories**: Client Work and Personal Projects split across an accessible tabbed segmented control, with per-tab counts and descriptions
 - **Work Portfolio**: Project showcase with ProjectDetailsDialog, markdown rendering, and enhanced technology icons
 - **Recommendations**: Curated LinkedIn testimonials in a continuously drifting infinite carousel, navigable by scroll, drag or dots
-- **About Section**: Skills categorization with detailed technology cards, achievements showcase, and grayscale-to-color hover transitions
+- **Hero Achievements**: Six key metrics as surface-less figures between the hero description and the CTAs - no card, no glass, no border. A gradient rule and the full description appear on hover or keyboard focus
+- **About Section**: Skills categorization with detailed technology cards and grayscale-to-color hover transitions
 - **Contact Section**: Localized social links and contact information with interactive elements
 - **Navigation System**: Smooth scrolling navigation with active section highlighting
 - **Project Details Dialog**: Modal with markdown support, accessibility features, and responsive design
@@ -63,7 +64,57 @@ This document outlines current features, planned implementations, and detailed s
 
 ## Completed Features (Recent)
 
-### ✅ Recommendations (Completed, unreleased)
+### ✅ Hero Achievements (Completed, unreleased)
+
+Six key metrics - years, projects, institutions, users, coverage, certifications - moved out of
+the About section and into the Hero, directly under the description paragraph and above the CTAs.
+
+#### Why they moved
+
+They are the evidence behind the claims in the hero paragraph. Sitting halfway down the About
+section, they were a long way from anything they supported, and cost six full-height glass cards
+to say six numbers.
+
+#### Presentation
+
+- **No surface at all** - no card, no glass, no border, no icon. Only the number and its label
+- **The accent is in the interaction**: hover or keyboard focus draws a gradient rule under the
+  number, reusing the accent the hero already has beneath the job title. Only the rule's *width*
+  animates - the gradient itself is static, because `background-image` does not interpolate
+- **Descriptions are on hover/focus, not in the layout.** That is the only reason six figures fit
+  inside a hero that was already full. The tooltip opens downward into the gap above the CTAs and
+  is `pointer-events-none`, so it never intercepts a click meant for a button
+- 3 columns on phones, 6 from `md`, filling the hero's own `max-w-4xl` so the longest label
+  ("Financial Institutions") stays on one line and the row stays level
+
+#### ⚠️ Three rejected design passes
+
+Recorded so they are not re-tried. The brief was "small and efficient":
+
+| Pass | Treatment | Outcome |
+|---|---|---|
+| 1 | Hairline rail - no glass, opaque cells, 1px grid-gap dividers | *"feels out of place"* - contrast against the surrounding glass read as another site |
+| 2 | Six compact glass cards | *"I don't want cards anymore"* - a fourth card grid on a page with three |
+| 3 | One glass bar of six segments | Superseded by the move into the hero, where any surface competes |
+
+The general rule that came out of it is in `best-practices.md`: match the design system rather
+than contrast with it, and take compactness out of content and interaction instead.
+
+#### Accessibility
+
+- The list carries an `aria-label` from `about.achievementsTitle` rather than a visible heading -
+  a section header inside the hero would cost more height than the figures
+- Each figure is focusable, so the description is reachable without a pointer
+- The description is never `aria-hidden`, so screen readers get it from the flow either way
+- Numbers carry `dir="ltr"`; Arabic otherwise renders `20K+` as `+20K` and `80%` as `%80`
+
+#### ⚠️ Hero layout change
+
+The Hero no longer centres below `md`. Between the fixed 68px header and the absolutely
+positioned scroll indicator, this content does not fit in a phone viewport, and `align-items:
+center` does not grow a container for an over-tall item. See `troubleshooting.md`.
+
+### ✅ Recommendations (Completed, merged to `main`)
 
 Third-party social proof, sitting between Work and About - the portfolio otherwise carries only
 the owner's own account of themselves.

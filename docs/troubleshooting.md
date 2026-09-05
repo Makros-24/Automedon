@@ -205,6 +205,70 @@ For positioning, prefer logical CSS properties over any direction-specific utili
 Same class of bug as `text-align` inheritance under `dir="auto"` - see the RTL notes in
 `architecture.md`.
 
+#### A Tailwind utility loses to a plain rule in `globals.css`, whatever its specificity
+**Symptoms**: A utility like `focus-visible:outline-offset-[-3px]` is on the element, DevTools
+shows the class present, and the computed value is still the old one. Raising specificity does
+not help.
+
+**Cause**: Tailwind v4 emits utilities inside a real `@layer utilities`. **Any unlayered rule
+beats every layered rule regardless of specificity** - that is what CSS layers are for. Several
+rules in `globals.css` are written outside any layer, so they win unconditionally:
+
+```css
+/* globals.css - unlayered, so it beats .focus-visible\:outline-offset-\[-3px\]:focus-visible */
+:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.5);
+  outline-offset: 2px;
+}
+```
+
+**Solution**: change the rule in `globals.css`, or accept the global value. Do not leave the
+losing utility on the element - it reads as working and is the same silent-failure trap as the
+`rtl:` variant above.
+
+**Diagnosing**: compare what you set against what resolved, rather than trusting the class list.
+
+```js
+getComputedStyle(el).outlineOffset   // "2px", not the "-3px" you asked for
+```
+
+#### Content overflows a `min-h-screen` section instead of growing it
+**Symptoms**: A full-height section gains content and the top gets clipped, or an absolutely
+positioned child (a scroll indicator, a badge) ends up underneath the content. The section's
+measured height stays exactly `100vh` even though its content is plainly taller.
+
+**Cause**: `align-items: center` on a flex container does **not** grow the container for an item
+taller than it. It centres the item and lets it overflow *both* edges equally - so an
+`overflow-hidden` parent clips the top and the bottom. `min-h-screen` sets a floor, not a
+behaviour, and centring silently overrides the growth you expected.
+
+```js
+// The tell: the box is taller than the section, and hangs off both ends
+hero.getBoundingClientRect().height   // 844 - pinned to the viewport
+content.getBoundingClientRect().top   // -21 - already above the section
+```
+
+**Solution**: stop centring at the breakpoint where the content does not fit.
+
+```tsx
+// Grows past min-h-screen on phones; still centred once there is room
+className="min-h-screen flex items-start md:items-center justify-center"
+```
+
+⚠️ **Padding is not a fix.** Adding `pb` to lift content off a bottom-anchored element shifts it
+up by only *half* the padding, because centring re-centres the taller box - and it pushes the
+top of the content under the fixed header by the same amount. Both ends have to be measured:
+
+```js
+// Both must be positive
+h1.getBoundingClientRect().top - header.getBoundingClientRect().bottom
+indicator.getBoundingClientRect().top - lastChild.getBoundingClientRect().bottom
+```
+
+⚠️ Absolutely positioned children are invisible to overflow checks - they do not contribute to
+`scrollHeight`. `hero.scrollHeight === hero.offsetHeight` reported "no overflow" while the
+content sat directly on top of the scroll indicator. Measure the rectangles, not the scroll box.
+
 #### A horizontally scrolling track clips its children (hover lift, drop shadow)
 **Symptoms**: Two versions of the same bug, reported quite differently.
 

@@ -1,8 +1,8 @@
 {
   "personalInfo": {
     "name": "Mohamed IBEN EL ABED",
-    "title": "Senior Backend Engineer",
-    "description": "Senior Backend Engineer with 6 years building regulated financial platforms for banking and insurance. I own the architecture of a multi-tenant corporate banking product where 7 financial institutions run on a single codebase, built with Java, Spring Boot, Domain-Driven Design, and Hexagonal Architecture. Production experience with MongoDB, Elasticsearch, Kafka, AWS, and Kubernetes.",
+    "title": "Senior Software Engineer",
+    "description": "6 years building regulated financial platforms for banking and insurance. I own the architecture of a multi-tenant corporate banking product where 7 financial institutions run on a single codebase, built with Java, Spring Boot, Domain-Driven Design, and Hexagonal Architecture. Production experience with MongoDB, Elasticsearch, Kafka, AWS, and Kubernetes.",
     "avatar": {
       "url": "https://lh3.googleusercontent.com/d/1JxR6_v1q40TSt5FzgJdKvEeONXoe2Mk1"
     },
@@ -536,9 +536,9 @@
     }
   ],
   "recommendations": {
-    "title": "Recommendations",
+    "title": "Testimonials",
     "description": "What colleagues, managers and clients have said about working with me.",
-    "ctaLabel": "See all recommendations on LinkedIn",
+    "ctaLabel": "See all testimonials on LinkedIn",
     "ctaUrl": "https://www.linkedin.com/in/mohamed-iben-el-abed/details/recommendations/",
     "items": [
       {

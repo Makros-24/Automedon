@@ -65,7 +65,7 @@ export function Recommendations() {
         {/* Section header */}
         <motion.div className="text-center mb-8" variants={itemVariants}>
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent mb-3">
-            {recommendations?.title || 'Recommendations'}
+            {recommendations?.title || 'Testimonials'}
           </h2>
           <p className="text-base text-foreground/70 max-w-2xl mx-auto">
             {recommendations?.description || 'What colleagues and clients have said about working with me.'}
@@ -100,13 +100,13 @@ export function Recommendations() {
           <SkeletonGrid className="grid-cols-1" columns={1} rows={1} />
         ) : error ? (
           <motion.div className="text-center py-12" variants={itemVariants}>
-            <p className="text-lg text-red-500">Error loading recommendations: {error}</p>
+            <p className="text-lg text-red-500">Error loading testimonials: {error}</p>
           </motion.div>
         ) : (
           <motion.div variants={itemVariants}>
             <RecommendationCarousel
               items={items}
-              label={recommendations?.title || 'Recommendations'}
+              label={recommendations?.title || 'Testimonials'}
             />
           </motion.div>
         )}

@@ -1,8 +1,8 @@
 {
   "personalInfo": {
     "name": "Mohamed IBEN EL ABED",
-    "title": "Senior Backend Engineer",
-    "description": "Senior Backend Engineer mit 6 Jahren Erfahrung im Aufbau regulierter Finanzplattformen für Banken und Versicherungen. Ich verantworte die Architektur eines mandantenfähigen Firmenkundenbanking-Produkts, in dem 7 Finanzinstitute auf einer einzigen Codebasis laufen — entwickelt mit Java, Spring Boot, Domain-Driven Design und Hexagonaler Architektur. Produktionserfahrung mit MongoDB, Elasticsearch, Kafka, AWS und Kubernetes.",
+    "title": "Senior Software Engineer",
+    "description": "6 Jahre Erfahrung im Aufbau regulierter Finanzplattformen für Banken und Versicherungen. Ich verantworte die Architektur eines mandantenfähigen Firmenkundenbanking-Produkts, in dem 7 Finanzinstitute auf einer einzigen Codebasis laufen — entwickelt mit Java, Spring Boot, Domain-Driven Design und Hexagonaler Architektur. Produktionserfahrung mit MongoDB, Elasticsearch, Kafka, AWS und Kubernetes.",
     "avatar": {
       "url": "https://lh3.googleusercontent.com/d/1JxR6_v1q40TSt5FzgJdKvEeONXoe2Mk1"
     },
@@ -537,9 +537,9 @@
     }
   ],
   "recommendations": {
-    "title": "Empfehlungen",
+    "title": "Testimonials",
     "description": "Was Kolleginnen und Kollegen, Vorgesetzte und Kunden über die Zusammenarbeit mit mir sagen.",
-    "ctaLabel": "Alle Empfehlungen auf LinkedIn ansehen",
+    "ctaLabel": "Alle Testimonials auf LinkedIn ansehen",
     "ctaUrl": "https://www.linkedin.com/in/mohamed-iben-el-abed/details/recommendations/",
     "items": [
       {

@@ -359,7 +359,7 @@ export const RecommendationCarousel = ({ items, label }: RecommendationCarouselP
               key={item.id}
               type="button"
               onClick={() => goTo(index)}
-              aria-label={`Go to recommendation ${index + 1} of ${items.length}`}
+              aria-label={`Go to testimonial ${index + 1} of ${items.length}`}
               aria-current={isActive}
               /*
                * Every dot keeps the same box whether or not it is active, so

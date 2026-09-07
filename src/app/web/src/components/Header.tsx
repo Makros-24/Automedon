@@ -101,7 +101,7 @@ export function Header() {
   const navItems = [
     { name: 'Projects', href: '#work', id: 'work' },
     ...(hasRecommendations
-      ? [{ name: 'Recommendations', href: '#recommendations', id: 'recommendations' }]
+      ? [{ name: 'Testimonials', href: '#recommendations', id: 'recommendations' }]
       : []),
     { name: 'About', href: '#about', id: 'about' },
     { name: 'Contact', href: '#contact', id: 'contact' },

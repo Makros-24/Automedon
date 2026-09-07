@@ -1,8 +1,8 @@
 {
   "personalInfo": {
     "name": "محمد ابن العابد",
-    "title": "مهندس Backend أول",
-    "description": "مهندس Backend أول يتمتع بخبرة 6 سنوات في بناء المنصات المالية الخاضعة للتنظيم في قطاعي المصارف والتأمين. أتولى مسؤولية هندسة منتج مصرفي للشركات متعدد المستأجرين تعمل فيه 7 مؤسسات مالية على قاعدة كود واحدة، مبني باستخدام Java وSpring Boot والتصميم الموجه بالمجال والهندسة السداسية. خبرة إنتاجية مع MongoDB وElasticsearch وKafka وAWS وKubernetes.",
+    "title": "مهندس برمجيات أول",
+    "description": "خبرة 6 سنوات في بناء المنصات المالية الخاضعة للتنظيم في قطاعي المصارف والتأمين. أتولى مسؤولية هندسة منتج مصرفي للشركات متعدد المستأجرين تعمل فيه 7 مؤسسات مالية على قاعدة كود واحدة، مبني باستخدام Java وSpring Boot والتصميم الموجه بالمجال والهندسة السداسية. خبرة إنتاجية مع MongoDB وElasticsearch وKafka وAWS وKubernetes.",
     "avatar": {
       "url": "https://lh3.googleusercontent.com/d/1JxR6_v1q40TSt5FzgJdKvEeONXoe2Mk1"
     },
@@ -537,9 +537,9 @@
     }
   ],
   "recommendations": {
-    "title": "التوصيات",
+    "title": "شهادات",
     "description": "ما قاله الزملاء والمديرون والعملاء عن العمل معي.",
-    "ctaLabel": "عرض جميع التوصيات على LinkedIn",
+    "ctaLabel": "عرض جميع الشهادات على LinkedIn",
     "ctaUrl": "https://www.linkedin.com/in/mohamed-iben-el-abed/details/recommendations/",
     "items": [
       {

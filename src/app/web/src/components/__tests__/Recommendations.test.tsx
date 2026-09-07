@@ -51,7 +51,7 @@ function setup({
 } = {}) {
   const recommendations =
     data === undefined
-      ? ({ title: 'Recommendations', description: 'What people said.', items } as RecommendationsData)
+      ? ({ title: 'Testimonials', description: 'What people said.', items } as RecommendationsData)
       : data;
 
   mockUseRecommendations.mockReturnValue({ recommendations, loading, error });
@@ -62,11 +62,11 @@ function setup({
 /** The active slide is whichever dot is marked aria-current. */
 function activeIndex(): number {
   return screen
-    .getAllByRole('button', { name: /Go to recommendation/ })
+    .getAllByRole('button', { name: /Go to testimonial/ })
     .findIndex((dot) => dot.getAttribute('aria-current') === 'true');
 }
 
-const carousel = () => screen.getByRole('group', { name: 'Recommendations' });
+const carousel = () => screen.getByRole('group', { name: 'Testimonials' });
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -77,8 +77,8 @@ describe('Recommendations', () => {
   // everything in ThemeProvider, which injects its own script tag, so the
   // container is never literally empty.
   const expectSectionAbsent = () => {
-    expect(screen.queryByRole('heading', { name: 'Recommendations' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('group', { name: 'Recommendations' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: 'Testimonials' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('group', { name: 'Testimonials' })).not.toBeInTheDocument();
   };
 
   it('renders nothing when the locale has no recommendations key', () => {
@@ -93,7 +93,15 @@ describe('Recommendations', () => {
 
   it('still renders while loading, so the section does not pop in and shift the page', () => {
     setup({ items: [], loading: true });
-    expect(screen.getByRole('heading', { name: 'Recommendations' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Testimonials' })).toBeInTheDocument();
+  });
+
+  it('falls back to "Testimonials" when a locale supplies no title', () => {
+    setup({ data: { description: 'What people said.', items: three } as RecommendationsData });
+    // Same word labels the carousel, so the heading and the group do not
+    // disagree for a screen reader.
+    expect(screen.getByRole('heading', { name: 'Testimonials' })).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: 'Testimonials' })).toBeInTheDocument();
   });
 
   describe('infinite track', () => {
@@ -121,22 +129,22 @@ describe('Recommendations', () => {
   describe('controls', () => {
     it('has no arrow buttons', () => {
       setup();
-      expect(screen.queryByRole('button', { name: /Next recommendation/ })).not.toBeInTheDocument();
+      expect(screen.queryByRole('button', { name: /Next testimonial/ })).not.toBeInTheDocument();
       expect(
-        screen.queryByRole('button', { name: /Previous recommendation/ })
+        screen.queryByRole('button', { name: /Previous testimonial/ })
       ).not.toBeInTheDocument();
     });
 
     it('shows one dot per recommendation, the first current', () => {
       setup();
-      expect(screen.getAllByRole('button', { name: /Go to recommendation/ })).toHaveLength(3);
+      expect(screen.getAllByRole('button', { name: /Go to testimonial/ })).toHaveLength(3);
       expect(activeIndex()).toBe(0);
     });
 
     it('jumps to a recommendation when its dot is pressed', async () => {
       setup();
       await userEvent.click(
-        screen.getByRole('button', { name: 'Go to recommendation 3 of 3' })
+        screen.getByRole('button', { name: 'Go to testimonial 3 of 3' })
       );
       expect(activeIndex()).toBe(2);
     });
@@ -184,7 +192,7 @@ describe('Recommendations', () => {
     it('sits on its own line under the description, not in a button below the track', () => {
       setup({
         data: {
-          title: 'Recommendations',
+          title: 'Testimonials',
           description: 'What people said.',
           ctaLabel: 'See them on LinkedIn',
           ctaUrl: 'https://www.linkedin.com/in/example/',

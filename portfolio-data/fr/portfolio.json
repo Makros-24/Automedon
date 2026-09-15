@@ -13,7 +13,9 @@
     "title": "À Propos de Moi",
     "description": "Ingénieur backend avec 6 ans d'expérience dans la construction de systèmes financiers critiques pour des clients de la banque et de l'assurance en Tunisie, en Côte d'Ivoire et en Afrique de l'Ouest. Je suis spécialisé en Java et Spring Boot, appliquant le Domain-Driven Design et l'Architecture Hexagonale pour livrer des solutions évolutives et maintenables.\n\nJe me concentre sur l'impact mesurable — concevoir une plateforme multi-tenant qui fait fonctionner 7 institutions financières sur une base de code partagée, maintenir 80% de couverture de tests et livrer 1 à 2 mises en production par sprint de 3 semaines avec des cycles de déploiement de moins de 10 minutes. Passionné par l'architecture propre et l'évolution itérative qui s'adapte aux besoins changeants de l'entreprise.\n\nEn dehors du code, j'explore les technologies émergentes dans mon home lab, je détiens des certifications en AWS Cloud et en applications d'IA, et j'apprécie le football et la callisthénie.",
     "skillsTitle": "Technologies",
-    "achievementsTitle": "Réalisations Clés"
+    "achievementsTitle": "Réalisations Clés",
+    "domainsLabel": "Domaines",
+    "toolsLabel": "outils"
   },
   "work": {
     "title": "Projets",

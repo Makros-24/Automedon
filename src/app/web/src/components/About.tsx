@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { useInViewOnce } from '../hooks/useInViewOnce';
 import { useSkillCategories, useAbout } from '@/contexts/PortfolioDataContext';
-import { SkillCategory } from './skills/SkillCategory';
+import { SkillsLens } from './skills/SkillsLens';
 import { SkeletonGrid } from './ui/loading';
 
 const containerVariants = {
@@ -78,13 +78,12 @@ export function About() {
                 <p className="text-lg text-foreground/70">No skills data available</p>
               </motion.div>
             ) : (
-              <motion.div
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr"
-                variants={containerVariants}
-              >
-                {skillCategories.map((category) => (
-                  <SkillCategory key={category.name} category={category} variants={itemVariants} />
-                ))}
+              <motion.div variants={itemVariants}>
+                <SkillsLens
+                  categories={skillCategories}
+                  domainsLabel={about?.domainsLabel}
+                  toolsLabel={about?.toolsLabel}
+                />
               </motion.div>
             )}
           </div>

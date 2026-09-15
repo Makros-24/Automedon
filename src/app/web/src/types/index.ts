@@ -166,6 +166,10 @@ export interface AboutData {
   description: string;
   skillsTitle: string;
   achievementsTitle: string;
+  /** Eyebrow above the SkillsLens domain rail. Optional - falls back to English. */
+  domainsLabel?: string;
+  /** Noun following the tool count in SkillsLens. Optional - falls back to English. */
+  toolsLabel?: string;
 }
 
 // Metadata for a single tab in the Projects section

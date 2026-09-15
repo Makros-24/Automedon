@@ -13,7 +13,9 @@
     "title": "Über Mich",
     "description": "Backend Engineer mit 6 Jahren Erfahrung im Aufbau geschäftskritischer Finanzsysteme für Banken- und Versicherungskunden in Tunesien, der Elfenbeinküste und Westafrika. Ich bin auf Java und Spring Boot spezialisiert und setze Domain-Driven Design sowie Hexagonale Architektur ein, um skalierbare und wartbare Lösungen zu liefern.\n\nIch konzentriere mich auf messbare Wirkung — die Architektur einer mandantenfähigen Plattform, auf der 7 Finanzinstitute eine gemeinsame Codebasis nutzen, durchgehend 80% Testabdeckung und 1-2 Produktionsreleases pro 3-Wochen-Sprint mit Deployment-Zyklen unter 10 Minuten. Begeistert von sauberer Architektur und iterativer Weiterentwicklung, die sich an verändernde Geschäftsanforderungen anpasst.\n\nAbseits des Codes erkunde ich neue Technologien in meinem Home Lab, halte Zertifizierungen in AWS Cloud und KI-Anwendungen und spiele gerne Fußball und mache Calisthenics.",
     "skillsTitle": "Technologien",
-    "achievementsTitle": "Wichtige Erfolge"
+    "achievementsTitle": "Wichtige Erfolge",
+    "domainsLabel": "Bereiche",
+    "toolsLabel": "Tools"
   },
   "work": {
     "title": "Projekte",
